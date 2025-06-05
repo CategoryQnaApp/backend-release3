@@ -49,15 +49,13 @@ jobs:
         payload: |
           {
             "channel": "report",
-            "attachments": 
-            [
+            "attachments": [
               {
                 "color": "#36a64f",
                 "title": "${{ github.repository }}",
-                "title_link": "https://github.com/${{github.repository}}",
+                "title_link": "https://github.com/${{ github.repository }}",
                 "text": "GitHub Action 성공",
-                "fields": 
-                [
+                "fields": [
                   {
                     "title": "Repository",
                     "value": "${{ github.repository }}",
@@ -68,7 +66,7 @@ jobs:
                     "value": "${{ github.ref_name }}",
                     "short": true
                   }
-                ]      
+                ]
               }
             ]
           }
