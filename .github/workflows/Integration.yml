@@ -72,7 +72,7 @@ jobs:
             ]
           }
       env:
-        SLACK_WEBHOOK_URL: "https://hooks.slack.com/services/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"
+        SLACK_WEBHOOK_URL: ${{secrets.SLACK_API_URL}}
         SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
 
 
@@ -106,5 +106,5 @@ jobs:
             ]
           }
       env:
-        SLACK_WEBHOOK_URL: "https://hooks.slack.com/services/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"
+        SLACK_WEBHOOK_URL: ${{secrets.SLACK_API_URL}}
         SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
