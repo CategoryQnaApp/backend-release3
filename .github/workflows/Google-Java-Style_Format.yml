@@ -6,7 +6,7 @@ jobs:
   formatting:
     runs-on: ubuntu-latest # 워크플로우의 이름
     steps:
-      - uses: actions/checkout@v2 # 깃허브 저장소를 체크아웃 하는 액션
+      - uses: actions/checkout@v3 # 깃허브 저장소를 체크아웃 하는 액션
       - uses: axel-op/googlejavaformat-action@v3 # 본격적인 google-java-format 실행
         with:
           args: "--replace" # --replace (파일을 수정한다)
