@@ -1,6 +1,5 @@
 package xyz.catequest.spring.domain.question.dto.response;
 
-
 import lombok.Getter;
 import xyz.catequest.spring.domain.question.entity.Question;
 
@@ -19,6 +18,10 @@ public class QuestionResponse {
   }
 
   public static QuestionResponse from(Question question) {
-    return new QuestionResponse(question.getId(), question.getQuestion(), question.getCategory(), question.getCategoryInId());
+    return new QuestionResponse(
+        question.getId(),
+        question.getQuestion(),
+        question.getCategory(),
+        question.getCategoryInId());
   }
 }

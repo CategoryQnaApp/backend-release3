@@ -1,6 +1,5 @@
 package xyz.catequest.spring.domain.question.service;
 
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import xyz.catequest.spring.domain.question.dto.response.QuestionResponse;

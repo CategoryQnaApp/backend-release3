@@ -1,7 +1,6 @@
 package xyz.catequest.spring.domain.question.controller;
 
 import ch.qos.logback.core.model.Model;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import xyz.catequest.spring.domain.question.dto.request.CreateQuestionRequest;
-import xyz.catequest.spring.domain.question.dto.request.QuestionRequestDto;
 import xyz.catequest.spring.domain.question.dto.response.QuestionResponse;
 import xyz.catequest.spring.domain.question.entity.Question;
 import xyz.catequest.spring.domain.question.service.QuestionService;
@@ -32,9 +30,11 @@ public class QuestionController {
   }
 
   @PostMapping("/api/v1/question")
-  public ResponseEntity<QuestionResponse> saveQuestion(@RequestBody CreateQuestionRequest createQuestionRequest) {
-    QuestionResponse questionResponse = questionService.saveQuestion(
-        createQuestionRequest.getQuestion(), createQuestionRequest.getCategory());
+  public ResponseEntity<QuestionResponse> saveQuestion(
+      @RequestBody CreateQuestionRequest createQuestionRequest) {
+    QuestionResponse questionResponse =
+        questionService.saveQuestion(
+            createQuestionRequest.getQuestion(), createQuestionRequest.getCategory());
     return new ResponseEntity<>(questionResponse, HttpStatus.CREATED); // httpStatus 201 created 감
   }
 
