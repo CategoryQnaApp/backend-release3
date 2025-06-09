@@ -1,13 +1,16 @@
 package xyz.catequest.spring.domain.question.repository;
 
-import java.util.List;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import xyz.catequest.spring.domain.question.entity.Question;
 
 @Repository
-public interface QuestionRepository extends JpaRepository<Question, Long> {
-  List<Question> findQuestionById(Long id);
+public interface QuestionRepository extends JpaRepository<Question,Long> {
 
-  List<Question> findByCategoryAndCategory_in_id(String category, Long category_in_id);
+  Optional<Question> findById(Long id);
+
+  Question findByCategoryAndCategoryInId(String category, Long categoryInId);
+
+  Long countByCategory(String category);
 }

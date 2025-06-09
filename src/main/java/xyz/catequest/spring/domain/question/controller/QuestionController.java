@@ -3,9 +3,16 @@ package xyz.catequest.spring.domain.question.controller;
 import ch.qos.logback.core.model.Model;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import xyz.catequest.spring.domain.question.dto.request.CreateQuestionRequest;
+import xyz.catequest.spring.domain.question.dto.request.QuestionRequestDto;
+import xyz.catequest.spring.domain.question.dto.response.QuestionResponse;
 import xyz.catequest.spring.domain.question.entity.Question;
 import xyz.catequest.spring.domain.question.service.QuestionService;
 
@@ -20,12 +27,19 @@ public class QuestionController {
   //    }
 
   @GetMapping("/12")
-  public List<Question> questionMethod3(@RequestParam Long id, Model model) {
+  public Question questionMethod3(@RequestParam Long id, Model model) {
     return questionService.findQuestionById(id);
   }
 
+  @PostMapping("/api/v1/question")
+  public ResponseEntity<QuestionResponse> saveQuestion(@RequestBody CreateQuestionRequest createQuestionRequest) {
+    QuestionResponse questionResponse = questionService.saveQuestion(
+        createQuestionRequest.getQuestion(), createQuestionRequest.getCategory());
+    return new ResponseEntity<>(questionResponse, HttpStatus.CREATED); // httpStatus 201 created 감
+  }
+
   @GetMapping("/")
-  public List<Question> questionMethod4(@RequestParam String category, Long category_in_id) {
-    return questionService.findAll(category, category_in_id);
+  public Question questionMethod4() {
+    return questionService.find("건강", 1L);
   }
 }

@@ -3,6 +3,7 @@ package xyz.catequest.spring.domain.question.service;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import xyz.catequest.spring.domain.question.dto.response.QuestionResponse;
 import xyz.catequest.spring.domain.question.entity.Question;
 import xyz.catequest.spring.domain.question.repository.QuestionRepository;
 
@@ -11,16 +12,26 @@ import xyz.catequest.spring.domain.question.repository.QuestionRepository;
 public class QuestionService {
   private final QuestionRepository questionRepository;
 
-  public List<Question> findQuestionById(Long id) {
-    return questionRepository.findQuestionById(id);
+  public Question findQuestionById(Long id) {
+    return questionRepository.findById(id).orElse(null);
   }
 
-  //    public void createQuestion(String que) {
-  //        Question question = new Question(que);
-  //        questionRepository.save(question);
-  //    }
+  public void createQuestion() {
+    Question question = new Question("question", "건강", 1L);
+    questionRepository.save(question);
+  }
 
-  public List<Question> findAll(String category, Long category_in_id) {
-    return questionRepository.findByCategoryAndCategory_in_id(category, category_in_id);
+  public Question find(String category, Long categoryInId) {
+    return questionRepository.findByCategoryAndCategoryInId(category, categoryInId);
+  }
+
+  public QuestionResponse saveQuestion(String question, String category) {
+    Question saveQuesiton = new Question(question, category);
+
+    Long categoryInId = questionRepository.countByCategory(category);
+    saveQuesiton.setCategoryInId(categoryInId == 0 ? 1L : categoryInId + 1);
+
+    Question saved = questionRepository.save(saveQuesiton);
+    return QuestionResponse.from(saved);
   }
 }

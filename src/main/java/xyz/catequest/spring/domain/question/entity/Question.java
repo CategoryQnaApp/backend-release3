@@ -1,9 +1,15 @@
 package xyz.catequest.spring.domain.question.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Getter
@@ -18,11 +24,17 @@ public class Question {
 
   @Column private String category;
 
-  @Column private Long category_in_id;
+  @Setter
+  @Column(name = "category_in_id")
+  private Long categoryInId;
 
-  public Question(String question, String category, Long category_in_id) {
+  public Question(String question, String category) {
     this.question = question;
     this.category = category;
-    this.category_in_id = category_in_id;
+  }
+
+  public Question(String question, String category, Long categoryInId) {
+    this(question, category);
+    this.categoryInId = categoryInId;
   }
 }
