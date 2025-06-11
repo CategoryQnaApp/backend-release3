@@ -1,5 +1,6 @@
 package xyz.catequest.spring.domain.question.service;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import xyz.catequest.spring.domain.question.dto.response.QuestionResponse;
@@ -20,8 +21,8 @@ public class QuestionService {
     questionRepository.save(question);
   }
 
-  public Question find(String category, Long categoryInId) {
-    return questionRepository.findByCategoryAndCategoryInId(category, categoryInId);
+  public List<Question> findQuestions(String category) {
+    return questionRepository.findByCategory(category);
   }
 
   public QuestionResponse saveQuestion(String question, String category) {

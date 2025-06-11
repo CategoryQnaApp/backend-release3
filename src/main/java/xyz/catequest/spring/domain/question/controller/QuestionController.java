@@ -1,6 +1,7 @@
 package xyz.catequest.spring.domain.question.controller;
 
 import ch.qos.logback.core.model.Model;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,8 +39,10 @@ public class QuestionController {
     return new ResponseEntity<>(questionResponse, HttpStatus.CREATED); // httpStatus 201 created 감
   }
 
-  @GetMapping("/")
-  public Question questionMethod4() {
-    return questionService.find("건강", 1L);
+  @GetMapping("/api/v1/questions")
+  public List<Question> selectQuestions(@RequestParam String category) {
+//    QuestionResponse questionResponse = (QuestionResponse) questionService.findQuestions(category);
+//    return new ResponseEntity<>(questionResponse, HttpStatus.OK);
+    return questionService.findQuestions(category);
   }
 }
