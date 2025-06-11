@@ -41,8 +41,9 @@ public class QuestionController {
 
   @GetMapping("/api/v1/questions")
   public List<Question> selectQuestions(@RequestParam String category) {
-//    QuestionResponse questionResponse = (QuestionResponse) questionService.findQuestions(category);
-//    return new ResponseEntity<>(questionResponse, HttpStatus.OK);
+    //    QuestionResponse questionResponse = (QuestionResponse)
+    // questionService.findQuestions(category);
+    //    return new ResponseEntity<>(questionResponse, HttpStatus.OK);
     return questionService.findQuestions(category);
   }
 }
