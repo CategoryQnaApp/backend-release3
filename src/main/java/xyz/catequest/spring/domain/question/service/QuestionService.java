@@ -1,6 +1,7 @@
 package xyz.catequest.spring.domain.question.service;
 
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import xyz.catequest.spring.domain.question.dto.response.QuestionResponse;
@@ -23,6 +24,11 @@ public class QuestionService {
 
   public List<Question> findQuestions(String category) {
     return questionRepository.findByCategory(category);
+  }
+
+  public Question categoryAndCategoryInId(String category, Long categoryInId) {
+    return questionRepository.findByCategoryAndCategoryInId(category, categoryInId)
+                        .orElseThrow(() -> new RuntimeException("NullPointerException"));
   }
 
   public QuestionResponse saveQuestion(String question, String category) {

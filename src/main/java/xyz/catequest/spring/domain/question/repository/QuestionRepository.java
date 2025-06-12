@@ -13,7 +13,7 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
 
   List<Question> findByCategory(String category);
 
-  Question findByCategoryAndCategoryInId(String category, Long categoryInId);
+  Optional<Question> findByCategoryAndCategoryInId(String category, Long categoryInId);
 
   Long countByCategory(String category);
 }

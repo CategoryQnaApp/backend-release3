@@ -40,10 +40,15 @@ public class QuestionController {
   }
 
   @GetMapping("/api/v1/questions")
-  public List<Question> selectQuestions(@RequestParam String category) {
+  public ResponseEntity<List<Question>> selectQuestions(@RequestParam String category) {
     //    QuestionResponse questionResponse = (QuestionResponse)
     // questionService.findQuestions(category);
     //    return new ResponseEntity<>(questionResponse, HttpStatus.OK);
-    return questionService.findQuestions(category);
+    return new ResponseEntity<>(questionService.findQuestions(category), HttpStatus.OK);
+  }
+
+  @GetMapping("/api/v1/questions/1")
+  public ResponseEntity<Question> selectQuestions(@RequestParam String category, @RequestParam Long categoryInId) {
+    return new ResponseEntity<>(questionService.categoryAndCategoryInId(category, categoryInId), HttpStatus.OK);
   }
 }
