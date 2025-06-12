@@ -48,7 +48,9 @@ public class QuestionController {
   }
 
   @GetMapping("/api/v1/questions/1")
-  public ResponseEntity<Question> selectQuestions(@RequestParam String category, @RequestParam Long categoryInId) {
-    return new ResponseEntity<>(questionService.categoryAndCategoryInId(category, categoryInId), HttpStatus.OK);
+  public ResponseEntity<Question> selectQuestions(
+      @RequestParam String category, @RequestParam Long categoryInId) {
+    return new ResponseEntity<>(
+        questionService.categoryAndCategoryInId(category, categoryInId), HttpStatus.OK);
   }
 }
