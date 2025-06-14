@@ -13,6 +13,10 @@ public class QuestionResponse {
   private final Long categoryInId;
 
   public static QuestionResponse from(Question question) {
-    return new QuestionResponse(question.getId(), question.getQuestion(), question.getCategory(), question.getCategoryInId());
+    return new QuestionResponse(
+        question.getId(),
+        question.getQuestion(),
+        question.getCategory(),
+        question.getCategoryInId());
   }
 }

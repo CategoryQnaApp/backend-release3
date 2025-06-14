@@ -1,9 +1,8 @@
 package xyz.catequest.spring.domain.question.controller;
 
 import ch.qos.logback.core.model.Model;
-import java.util.List;
-
 import jakarta.validation.Valid;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +33,7 @@ public class QuestionController {
 
   @PostMapping("/api/v1/question")
   public ResponseEntity<QuestionResponse> saveQuestion(
-          @Valid @RequestBody CreateQuestionRequest createQuestionRequest) {
+      @Valid @RequestBody CreateQuestionRequest createQuestionRequest) {
     QuestionResponse questionResponse =
         questionService.saveQuestion(
             createQuestionRequest.getQuestion(), createQuestionRequest.getCategory());

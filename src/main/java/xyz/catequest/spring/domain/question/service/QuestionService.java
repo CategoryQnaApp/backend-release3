@@ -1,13 +1,12 @@
 package xyz.catequest.spring.domain.question.service;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import xyz.catequest.spring.domain.question.dto.response.QuestionResponse;
 import xyz.catequest.spring.domain.question.entity.Question;
 import xyz.catequest.spring.domain.question.repository.QuestionRepository;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
