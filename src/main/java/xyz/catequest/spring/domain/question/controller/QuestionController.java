@@ -55,23 +55,22 @@ public class QuestionController {
   }
 
   @PatchMapping("/api/v1/question/{id}/{qnc}")
-  public void updateQuestion(@PathVariable Long id, @PathVariable String qnc,
+  public void updateQuestion(
+      @PathVariable Long id,
+      @PathVariable String qnc,
       @RequestBody UpdateQuestionRequest updateQuestionRequest) {
-        if(qnc.equals("q")) {
-          questionService.updateQuestion(id ,
-              updateQuestionRequest.getQuestion());
-        }
-        else {
-          questionService.updateCategory(id ,
-              updateQuestionRequest.getCategory());
-        }
+    if (qnc.equals("q")) {
+      questionService.updateQuestion(id, updateQuestionRequest.getQuestion());
+    } else {
+      questionService.updateCategory(id, updateQuestionRequest.getCategory());
+    }
   }
 
   @PutMapping("/api/v1/question/{id}")
-  public void updateQuestionAndCategory(@PathVariable Long id,
-      @RequestBody UpdateQuestionRequest updateQuestionRequest) {
-    questionService.updateQuestionAndCategory(id ,
-        updateQuestionRequest.getQuestion(), updateQuestionRequest.getCategory());
+  public void updateQuestionAndCategory(
+      @PathVariable Long id, @RequestBody UpdateQuestionRequest updateQuestionRequest) {
+    questionService.updateQuestionAndCategory(
+        id, updateQuestionRequest.getQuestion(), updateQuestionRequest.getCategory());
   }
 
   @DeleteMapping("/api/v1/question/{id}/del")

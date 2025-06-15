@@ -22,11 +22,9 @@ public class Question {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Setter
-  @Column private String question;
+  @Setter @Column private String question;
 
-  @Setter
-  @Column private String category;
+  @Setter @Column private String category;
 
   @Setter
   @Column(name = "category_in_id")
@@ -41,5 +39,4 @@ public class Question {
     this(question, category);
     this.categoryInId = categoryInId;
   }
-
 }
