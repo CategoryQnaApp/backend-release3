@@ -7,6 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,13 +16,16 @@ import lombok.Setter;
 @Getter
 @Table(name = "questions")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 public class Question {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  @Setter
   @Column private String question;
 
+  @Setter
   @Column private String category;
 
   @Setter
@@ -37,4 +41,5 @@ public class Question {
     this(question, category);
     this.categoryInId = categoryInId;
   }
+
 }
