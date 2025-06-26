@@ -16,20 +16,20 @@ import xyz.catequest.spring.global.entity.BaseEntity;
 @Table(name = "ANSWERS")
 public class Answer extends BaseEntity {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-	@Column(name = "contents")
-	private String contents;
+  @Column(name = "contents")
+  private String contents;
 
-	// @Column(name = "post_page")
-	// private String postPage;
-	//
-	// @Column(name = "item_count")
-	// private Long characterLimitItemCount;
+  // @Column(name = "post_page")
+  // private String postPage;
+  //
+  // @Column(name = "item_count")
+  // private Long characterLimitItemCount;
 
-	public Answer(String answer) {
-		this.contents = answer;
-	}
+  public Answer(String answer) {
+    this.contents = answer;
+  }
 }

@@ -1,22 +1,19 @@
 package xyz.catequest.spring.global.entity;
 
-import java.time.LocalDateTime;
-
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
+import java.time.LocalDateTime;
 import lombok.Getter;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 @Getter
 @MappedSuperclass
 public abstract class BaseEntity {
 
-	@CreatedDate
-	@Column(updatable = false)
-	private LocalDateTime createdAt;
+  @CreatedDate
+  @Column(updatable = false)
+  private LocalDateTime createdAt;
 
-	@LastModifiedDate
-	private LocalDateTime updatedAt;
+  @LastModifiedDate private LocalDateTime updatedAt;
 }

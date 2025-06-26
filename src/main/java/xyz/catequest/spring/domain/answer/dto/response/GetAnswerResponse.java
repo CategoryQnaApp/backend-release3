@@ -1,7 +1,5 @@
 package xyz.catequest.spring.domain.answer.dto.response;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import xyz.catequest.spring.domain.answer.entity.Answer;
@@ -10,13 +8,13 @@ import xyz.catequest.spring.domain.answer.entity.Answer;
 @NoArgsConstructor
 public class GetAnswerResponse {
 
-	private String answer;
+  private String answer;
 
-	public GetAnswerResponse(String answer) {
-		this.answer = answer;
-	}
+  public GetAnswerResponse(String answer) {
+    this.answer = answer;
+  }
 
-	public static GetAnswerResponse from(Answer answer) {
-		return new GetAnswerResponse(answer.getContents());
-	}
+  public static GetAnswerResponse from(Answer answer) {
+    return new GetAnswerResponse(answer.getContents());
+  }
 }

@@ -1,7 +1,7 @@
 package xyz.catequest.spring.domain.answer.contoller;
 
-import java.util.List;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import lombok.RequiredArgsConstructor;
 import xyz.catequest.spring.domain.answer.dto.request.CreateAnswerRequest;
 import xyz.catequest.spring.domain.answer.dto.response.CreateAnswerResponse;
 import xyz.catequest.spring.domain.answer.dto.response.GetAnswerResponse;
@@ -22,27 +20,22 @@ import xyz.catequest.spring.domain.answer.service.AnswerService;
 @RequiredArgsConstructor
 public class AnswerController {
 
-	private final AnswerService answerService;
+  private final AnswerService answerService;
 
+  @PostMapping("/v1/questions/{questionId}/answers")
+  public ResponseEntity<CreateAnswerResponse> saveAnswer(
+      @PathVariable Long questionId, @RequestBody CreateAnswerRequest createAnswerRequest
+      // todo : 인증 추가하기
+      ) {
+    answerService.saveAnswer(questionId, createAnswerRequest.getAnswer());
 
-	@PostMapping("/v1/questions/{questionId}/answers")
-	public ResponseEntity<CreateAnswerResponse> saveAnswer(
-		@PathVariable Long questionId,
-		@RequestBody CreateAnswerRequest createAnswerRequest
-		// todo : 인증 추가하기
-	) {
-		answerService.saveAnswer(questionId, createAnswerRequest.getAnswer());
+    return new ResponseEntity<>(CreateAnswerResponse.isOk(), HttpStatus.OK);
+  }
 
-		return new ResponseEntity<>(CreateAnswerResponse.isOk(), HttpStatus.OK);
-	}
+  @GetMapping("/v1/answers/{answerId}")
+  public ResponseEntity<GetAnswerResponse> getAnswers(@PathVariable Long answerId) {
+    GetAnswerResponse answer = answerService.getAnswer(answerId);
 
-	@GetMapping("/v1/answers/{answerId}")
-	public ResponseEntity<GetAnswerResponse> getAnswers(
-		@PathVariable Long answerId
-	) {
-		GetAnswerResponse answer = answerService.getAnswer(answerId);
-
-		return new ResponseEntity<>(answer, HttpStatus.OK);
-	}
-
+    return new ResponseEntity<>(answer, HttpStatus.OK);
+  }
 }
