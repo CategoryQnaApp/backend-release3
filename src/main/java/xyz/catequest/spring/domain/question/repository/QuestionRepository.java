@@ -16,4 +16,6 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
   Optional<Question> findByCategoryAndCategoryInId(String category, Long categoryInId);
 
   Long countByCategory(String category);
+
+	Long question(String question);
 }

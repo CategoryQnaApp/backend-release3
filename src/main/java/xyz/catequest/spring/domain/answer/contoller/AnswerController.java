@@ -25,7 +25,7 @@ public class AnswerController {
   @PostMapping("/v1/questions/{questionId}/answers")
   public ResponseEntity<CreateAnswerResponse> saveAnswer(
       @PathVariable Long questionId, @RequestBody CreateAnswerRequest createAnswerRequest
-      // todo : 인증 추가하기
+      // todo : 인증 추가하기 (이건 아직임)
       ) {
     answerService.saveAnswer(questionId, createAnswerRequest.getAnswer());
 
