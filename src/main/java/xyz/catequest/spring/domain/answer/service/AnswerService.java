@@ -1,8 +1,6 @@
 package xyz.catequest.spring.domain.answer.service;
 
 
-import java.util.Optional;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import xyz.catequest.spring.domain.answer.dto.response.GetAnswerResponse;
@@ -20,8 +18,10 @@ public class AnswerService {
 
   public void saveAnswer(Long questionId, String answer) {
     // todo : question 추가하기
-    Question question = questionRepository.findById(questionId).orElseThrow(
-            () -> new RuntimeException("에러코드 이유가없ㅇ등ㄹ등"));
+    Question question =
+        questionRepository
+            .findById(questionId)
+            .orElseThrow(() -> new RuntimeException("에러코드 이유가없ㅇ등ㄹ등"));
     Answer saveAnswer = new Answer(answer);
     saveAnswer.setQuestion(question);
 

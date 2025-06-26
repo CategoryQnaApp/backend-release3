@@ -17,5 +17,5 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
 
   Long countByCategory(String category);
 
-	Long question(String question);
+  Long question(String question);
 }

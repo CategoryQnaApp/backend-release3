@@ -1,6 +1,5 @@
 package xyz.catequest.spring.domain.answer.contoller;
 
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

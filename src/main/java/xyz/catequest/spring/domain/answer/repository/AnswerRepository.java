@@ -1,6 +1,5 @@
 package xyz.catequest.spring.domain.answer.repository;
 
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import xyz.catequest.spring.domain.answer.entity.Answer;
 
