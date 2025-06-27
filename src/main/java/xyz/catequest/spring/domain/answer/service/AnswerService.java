@@ -1,8 +1,6 @@
 package xyz.catequest.spring.domain.answer.service;
 
-
 import java.util.List;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,7 +21,8 @@ public class AnswerService {
   public void saveAnswer(Long questionId, String answer) {
     // todo : question 추가하기
     Answer saveAnswer = new Answer(answer);
-    Question question = questionRepository.findById(questionId).orElseThrow(() -> new RuntimeException("NotFound"));
+    Question question =
+        questionRepository.findById(questionId).orElseThrow(() -> new RuntimeException("NotFound"));
     saveAnswer.setQuestion(question);
     answerRepository.save(saveAnswer);
   }

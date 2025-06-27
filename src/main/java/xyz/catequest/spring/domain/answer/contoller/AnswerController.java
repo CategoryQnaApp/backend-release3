@@ -1,9 +1,7 @@
 package xyz.catequest.spring.domain.answer.contoller;
 
-
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.autoconfigure.graphql.GraphQlProperties.Http;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,7 +23,7 @@ public class AnswerController {
 
   private final AnswerService answerService;
 
-//  답변 전달
+  //  답변 전달
   @PostMapping("/v1/questions/{questionId}/answers")
   public ResponseEntity<CreateAnswerResponse> saveAnswer(
       @PathVariable Long questionId, @RequestBody CreateAnswerRequest createAnswerRequest
@@ -36,13 +34,13 @@ public class AnswerController {
     return new ResponseEntity<>(CreateAnswerResponse.isOk(), HttpStatus.OK);
   }
 
-//  답변 확인
+  //  답변 확인
   @GetMapping("/v1/questions/{questionId}/answers")
   public ResponseEntity<List<Answer>> getAnswerByQuestion(@PathVariable Long questionId) {
     return new ResponseEntity<>(answerService.getAnswerByQuestionId(questionId), HttpStatus.OK);
   }
 
-//  답변 단건 조회
+  //  답변 단건 조회
   @GetMapping("/v1/questions/answers/{answersId}")
   public ResponseEntity<GetAnswerResponse> getAnswers(@PathVariable Long answerId) {
     GetAnswerResponse answer = answerService.getAnswer(answerId);
@@ -50,7 +48,7 @@ public class AnswerController {
     return new ResponseEntity<>(answer, HttpStatus.OK);
   }
 
-//  답변 다건 조회
+  //  답변 다건 조회
   @GetMapping("/v1/questions/answers")
   public ResponseEntity<List<Answer>> getAllAnswer() {
     return new ResponseEntity<>(answerService.getAllAnswer(), HttpStatus.OK);

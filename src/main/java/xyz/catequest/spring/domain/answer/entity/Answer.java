@@ -13,13 +13,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import xyz.catequest.spring.domain.question.entity.Question;
-import xyz.catequest.spring.global.entity.BaseEntity;
 
 @Getter
 @NoArgsConstructor
 @Entity
 @Table(name = "ANSWERS")
-public class Answer {//extends BaseEntity {
+public class Answer { // extends BaseEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,7 +29,7 @@ public class Answer {//extends BaseEntity {
 
   @Setter
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name="question_id", updatable = false)
+  @JoinColumn(name = "question_id", updatable = false)
   private Question question;
 
   // @Column(name = "post_page")
