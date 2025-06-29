@@ -1,5 +1,6 @@
 package xyz.catequest.spring.domain.answer.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -35,12 +36,24 @@ public class AnswerService {
   }
 
   @Transactional(readOnly = true)
-  public List<Answer> getAllAnswer() {
-    return answerRepository.findAll();
+  public List<GetAnswerResponse> getAnswers() {
+    List<Answer> answers = answerRepository.findAll();
+    List<GetAnswerResponse> answerResponses = new ArrayList<>();
+    for(Answer answer : answers) {
+      GetAnswerResponse dto = GetAnswerResponse.from(answer);
+      answerResponses.add(dto);
+    }
+    return answerResponses;
   }
 
   @Transactional(readOnly = true)
-  public List<Answer> getAnswerByQuestionId(Long questionId) {
-    return answerRepository.findByQuestion_Id(questionId);
+  public List<GetAnswerResponse> getAnswerByQuestionId(Long questionId) {
+    List<Answer> answers = answerRepository.findByQuestion_Id(questionId);
+    List<GetAnswerResponse> answerResponses = new ArrayList<>();
+    for(Answer answer : answers) {
+      GetAnswerResponse dto = GetAnswerResponse.from(answer);
+      answerResponses.add(dto);
+    }
+    return answerResponses;
   }
 }
