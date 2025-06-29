@@ -1,6 +1,5 @@
 package xyz.catequest.spring.domain.answer.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -31,7 +30,7 @@ public class Answer { // extends BaseEntity {
   @Setter
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "question_id", updatable = false)
-//  @JsonIgnore
+  //  @JsonIgnore
   private Question question;
 
   // @Column(name = "post_page")

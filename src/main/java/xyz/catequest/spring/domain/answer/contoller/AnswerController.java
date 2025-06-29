@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 import xyz.catequest.spring.domain.answer.dto.request.CreateAnswerRequest;
 import xyz.catequest.spring.domain.answer.dto.response.CreateAnswerResponse;
 import xyz.catequest.spring.domain.answer.dto.response.GetAnswerResponse;
-import xyz.catequest.spring.domain.answer.entity.Answer;
 import xyz.catequest.spring.domain.answer.service.AnswerService;
 
 @RestController
@@ -32,13 +31,13 @@ public class AnswerController {
 
     answerService.saveAnswer(questionId, createAnswerRequest.getAnswer());
 
-
     return new ResponseEntity<>(CreateAnswerResponse.isOk(), HttpStatus.OK);
   }
 
   //  답변 확인
   @GetMapping("/v1/questions/{questionId}/answers")
-  public ResponseEntity<List<GetAnswerResponse>> getAnswerByQuestion(@PathVariable Long questionId) {
+  public ResponseEntity<List<GetAnswerResponse>> getAnswerByQuestion(
+      @PathVariable Long questionId) {
     return new ResponseEntity<>(answerService.getAnswerByQuestionId(questionId), HttpStatus.OK);
   }
 

@@ -39,7 +39,7 @@ public class AnswerService {
   public List<GetAnswerResponse> getAnswers() {
     List<Answer> answers = answerRepository.findAll();
     List<GetAnswerResponse> answerResponses = new ArrayList<>();
-    for(Answer answer : answers) {
+    for (Answer answer : answers) {
       GetAnswerResponse dto = GetAnswerResponse.from(answer);
       answerResponses.add(dto);
     }
@@ -50,7 +50,7 @@ public class AnswerService {
   public List<GetAnswerResponse> getAnswerByQuestionId(Long questionId) {
     List<Answer> answers = answerRepository.findByQuestion_Id(questionId);
     List<GetAnswerResponse> answerResponses = new ArrayList<>();
-    for(Answer answer : answers) {
+    for (Answer answer : answers) {
       GetAnswerResponse dto = GetAnswerResponse.from(answer);
       answerResponses.add(dto);
     }
