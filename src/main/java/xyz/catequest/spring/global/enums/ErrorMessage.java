@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 import static org.springframework.http.HttpStatus.*;
 
 @Getter
-@RequiredArgsConstructor(staticName = "of")
+@RequiredArgsConstructor
 public enum ErrorMessage {
 
     /* 4xx */
