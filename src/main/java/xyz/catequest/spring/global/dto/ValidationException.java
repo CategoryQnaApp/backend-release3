@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ValidationException {
 
-	private final String code;
-	private final String field;
-	private final String message;
+  private final String code;
+  private final String field;
+  private final String message;
 }

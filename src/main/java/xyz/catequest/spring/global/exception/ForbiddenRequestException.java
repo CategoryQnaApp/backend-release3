@@ -8,5 +8,5 @@ import xyz.catequest.spring.global.enums.ErrorMessage;
 @RequiredArgsConstructor
 public class ForbiddenRequestException extends RuntimeException {
 
-    private final ErrorMessage errorMessage;
+  private final ErrorMessage errorMessage;
 }
