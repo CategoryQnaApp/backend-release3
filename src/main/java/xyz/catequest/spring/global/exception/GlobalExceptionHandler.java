@@ -160,7 +160,7 @@ public class GlobalExceptionHandler {
     ErrorMessage errorMessage = ErrorMessage.NO_HANDLER_FOUND;
     log.error("[NoHandlerFoundException]: ", ex);
 
-    response.setStatus(ErrorMessage.NO_HANDLER_FOUND.getStatus().value());
+    response.setStatus(errorMessage.getStatus().value());
     return Response.fail(errorMessage.getStatus(), new CustomException(errorMessage));
   }
 
@@ -175,7 +175,7 @@ public class GlobalExceptionHandler {
 
   @ExceptionHandler(Exception.class)
   public Response<CustomException> exHandler(final Exception ex, HttpServletResponse response) {
-    ErrorMessage errorMessage = ErrorMessage.ERROR;
+    ErrorMessage errorMessage = ErrorMessage.UNKNOWN_ERROR;
     log.error("[Exception]: ", ex);
 
     response.setStatus(errorMessage.getStatus().value());
