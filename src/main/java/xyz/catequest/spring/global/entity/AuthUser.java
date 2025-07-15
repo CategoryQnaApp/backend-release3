@@ -16,11 +16,10 @@ public class AuthUser {
   private final List<GrantedAuthority> authorities;
 
   public String getRole() {
-    if( authorities.isEmpty() ) {
+    if (authorities.isEmpty()) {
       throw new ServerException(ErrorMessage.UNKNOWN_ERROR);
     }
     return authorities.get(0).getAuthority();
-
   }
 
   // todo : 정적 팩토리 메소드 추가하기 from
