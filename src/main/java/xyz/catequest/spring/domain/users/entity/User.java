@@ -22,21 +22,27 @@ public class User extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
-    @Pattern(regexp = RegularExpression.EMAIL)
+    @Column(unique = true, nullable = false, length = 30)
     private String email;
 
-    @NotBlank
+    @Column(nullable = false, length = 30)
     private String password;
 
-    @Setter
-    @NotBlank
-    @Size(min = 1, max = 20)
+    @Column(nullable = false, length = 20)
     private String nickname;
 
-    @Setter
+    @Column(nullable = false, length = 30)
     private String profileImage;
 
-    @Setter
     private Long booksId;
+
+    public void updateProfileImage(String profileImage) {
+        this.profileImage = profileImage;
+    }
+    public void updateNickname(String nickname) {
+        this.nickname = nickname;
+    }
+    public void updateBooksId(Long booksId) {
+        this.booksId = booksId;
+    }
 }

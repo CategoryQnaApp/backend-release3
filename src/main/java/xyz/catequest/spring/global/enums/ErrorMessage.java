@@ -11,8 +11,14 @@ import org.springframework.http.HttpStatus;
 public enum ErrorMessage {
 
   /* 4xx */
+  INVALID_JWT_SIGNATURE(BAD_REQUEST,"유효하지 않는 JWT 서명 입니다."),
+  INVALID_REFRESH_TOKEN(BAD_REQUEST, "유효하지 않은 Refresh Token입니다."),
+  EXPIRED_REFRESH_TOKEN(BAD_REQUEST, "만료된 Refresh Token입니다."),
+
+  UNSUPPORTED_JWT_TOKEN(BAD_REQUEST, "지원되지 않는 JWT 토큰 입니다."),
   TYPE_MISMATCH(BAD_REQUEST, "올바른 값을 입력해주세요."),
   FORBIDDEN_USER(FORBIDDEN, "권한이 없습니다."),
+  INVALID_USER_ROLE(BAD_REQUEST, "유효하지 않는 권한입니다."),
 
   NO_HANDLER_FOUND(NOT_FOUND, "요청한 리소스를 찾을 수 없습니다."),
 

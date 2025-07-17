@@ -17,12 +17,6 @@ public class UserController {
     private final UserService userService;
 //  todo : API 만들기
 
-//    @GetMapping("/v1/users")
-//    public ResponseEntity<GetUserResponse> getUser(
-//            @AuthUser AuthUser user
-//    ) {
-//        Long userId = user.getId();
-//        return userService.getUser(userId);
-//    }
+
 
 }

@@ -35,7 +35,7 @@ public class UserService {
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new RuntimeException("User not found"));
 
-        user.setNickname(nickname);
+        user.updateNickname(nickname);
     }
 
     public void updatePassword(Long userId, String password) {
@@ -49,7 +49,7 @@ public class UserService {
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new RuntimeException("User not found"));
 
-        user.setBooksId(npcId);
+        user.updateBooksId(npcId);
     }
 
     public void deleteUser(Long userId) {
