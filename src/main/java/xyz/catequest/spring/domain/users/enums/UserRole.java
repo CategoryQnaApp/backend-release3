@@ -6,9 +6,7 @@ import org.springframework.security.core.GrantedAuthority;
 import xyz.catequest.spring.global.enums.ErrorMessage;
 import xyz.catequest.spring.global.exception.InvalidRequestException;
 
-/**
- * 작성자 : 문성준 일시 : 2025.04.03 - v1
- */
+/** 작성자 : 문성준 일시 : 2025.04.03 - v1 */
 @Getter
 @RequiredArgsConstructor
 public enum UserRole implements GrantedAuthority {
