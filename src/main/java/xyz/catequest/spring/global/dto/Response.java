@@ -14,6 +14,10 @@ public interface Response<T> {
     return new SuccessResponse<>(data);
   }
 
+  static <T> Response<T> success() {
+    return new SuccessResponse<>(null);
+  }
+
   static <T> Response<T> fail(HttpStatus status, T error) {
     return new ErrorResponse<>(status, error);
   }

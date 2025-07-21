@@ -1,58 +1,65 @@
 package xyz.catequest.spring.domain.users.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import xyz.catequest.spring.domain.users.dto.response.GetUserResponse;
 import xyz.catequest.spring.domain.users.entity.User;
 import xyz.catequest.spring.domain.users.repository.UserRepository;
-
-import java.util.Arrays;
+import xyz.catequest.spring.global.enums.ErrorMessage;
+import xyz.catequest.spring.global.exception.InvalidRequestException;
+import xyz.catequest.spring.global.exception.NotFoundException;
 
 @Service
 @RequiredArgsConstructor
 public class UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-
-    // 내 정보 조회
+    @Transactional(readOnly = true)
     public GetUserResponse myInfo(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(
-                () -> new RuntimeException("User not found"));
+                () -> new NotFoundException(ErrorMessage.USER_NOT_FOUND));
         return GetUserResponse.from(user);
     }
 
+    @Transactional
     public void updateProfileImage(Long userId, byte[] image) {
-
         User user = userRepository.findById(userId).orElseThrow(
-                () -> new RuntimeException("User not found"));
+            () -> new NotFoundException(ErrorMessage.USER_NOT_FOUND));
 
         // todo : s3 추가
 //        user.setProfileImage("s3 주소 링크");
     }
 
+    @Transactional
     public void updateNickname(Long userId, String nickname) {
         User user = userRepository.findById(userId).orElseThrow(
-                () -> new RuntimeException("User not found"));
-
+            () -> new NotFoundException(ErrorMessage.USER_NOT_FOUND));
         user.updateNickname(nickname);
     }
 
-    public void updatePassword(Long userId, String password) {
+    @Transactional
+    public void updatePassword(Long userId, String oldPassword, String newPassword) {
         User user = userRepository.findById(userId).orElseThrow(
-                () -> new RuntimeException("User not found"));
-
-        // todo : 비밀번호 체크 및 변경될 비밀번호 암호화 후 저장
+            () -> new NotFoundException(ErrorMessage.USER_NOT_FOUND));
+        if(!passwordEncoder.matches(oldPassword, user.getPassword())) {
+            throw new InvalidRequestException(ErrorMessage.WRONG_PASSWORD);
+        }
+        user.updatePassword(passwordEncoder.encode(newPassword));
     }
 
+    @Transactional
     public void updateBookId(Long userId, Long npcId) {
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new RuntimeException("User not found"));
-
         user.updateBooksId(npcId);
     }
 
-    public void deleteUser(Long userId) {
+    @Transactional
+    public void deleteUser(Long userId, String password) {
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new RuntimeException("User not found"));
         // todo : soft delete

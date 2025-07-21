@@ -8,6 +8,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import xyz.catequest.spring.domain.users.enums.UserRole;
 import xyz.catequest.spring.global.Regexp.RegularExpression;
 import xyz.catequest.spring.global.entity.BaseEntity;
 
@@ -31,6 +32,9 @@ public class User extends BaseEntity {
     @Column(nullable = false, length = 20)
     private String nickname;
 
+    @Column(nullable = false)
+    private UserRole role;
+
     @Column(nullable = false, length = 30)
     private String profileImage;
 
@@ -44,5 +48,8 @@ public class User extends BaseEntity {
     }
     public void updateBooksId(Long booksId) {
         this.booksId = booksId;
+    }
+    public void updatePassword(String password) {
+        this.password = password;
     }
 }

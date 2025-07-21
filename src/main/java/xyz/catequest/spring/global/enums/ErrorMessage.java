@@ -10,20 +10,23 @@ import org.springframework.http.HttpStatus;
 @RequiredArgsConstructor
 public enum ErrorMessage {
 
-  /* 4xx */
-  INVALID_JWT_SIGNATURE(BAD_REQUEST,"유효하지 않는 JWT 서명 입니다."),
-  INVALID_REFRESH_TOKEN(BAD_REQUEST, "유효하지 않은 Refresh Token입니다."),
-  EXPIRED_REFRESH_TOKEN(BAD_REQUEST, "만료된 Refresh Token입니다."),
-
-  UNSUPPORTED_JWT_TOKEN(BAD_REQUEST, "지원되지 않는 JWT 토큰 입니다."),
+  /* 4xx other */
   TYPE_MISMATCH(BAD_REQUEST, "올바른 값을 입력해주세요."),
   FORBIDDEN_USER(FORBIDDEN, "권한이 없습니다."),
   INVALID_USER_ROLE(BAD_REQUEST, "유효하지 않는 권한입니다."),
-
   NO_HANDLER_FOUND(NOT_FOUND, "요청한 리소스를 찾을 수 없습니다."),
-
   FILE_SIZE_LIMIT_EXCEEDED(PAYLOAD_TOO_LARGE, "전송하려는 개별 파일의 크기가 너무 큽니다."),
   SIZE_LIMIT_EXCEEDED(PAYLOAD_TOO_LARGE, "전송하려는 모든 파일의 크기가 너무 큽니다."),
+
+  /* 4xx jwt*/
+  INVALID_JWT_SIGNATURE(BAD_REQUEST,"유효하지 않는 JWT 서명 입니다."),
+  INVALID_REFRESH_TOKEN(BAD_REQUEST, "유효하지 않은 Refresh Token입니다."),
+  EXPIRED_REFRESH_TOKEN(BAD_REQUEST, "만료된 Refresh Token입니다."),
+  UNSUPPORTED_JWT_TOKEN(BAD_REQUEST, "지원되지 않는 JWT 토큰 입니다."),
+
+  /* 4xx user */
+  USER_NOT_FOUND(NOT_FOUND, "사용자를 찾을 수 없습니다."),
+  WRONG_PASSWORD(UNAUTHORIZED, "비밀번호가 일치하지 않습니다."),
 
   /* 5xx */
   INTERNAL_ERROR(INTERNAL_SERVER_ERROR, "내부 서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요."),
