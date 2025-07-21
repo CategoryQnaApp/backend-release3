@@ -1,6 +1,5 @@
 package xyz.catequest.spring.domain.answer.service;
 
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import xyz.catequest.spring.domain.answer.dto.response.GetAnswerResponse;
