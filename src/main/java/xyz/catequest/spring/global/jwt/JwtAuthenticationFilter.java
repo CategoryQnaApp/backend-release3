@@ -2,6 +2,7 @@ package xyz.catequest.spring.global.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;
 import jakarta.servlet.FilterChain;
@@ -14,8 +15,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import xyz.catequest.spring.domain.auth.service.AuthService;
 import xyz.catequest.spring.domain.users.enums.UserRole;
-import xyz.catequest.spring.domain.users.repository.UserRepository;
+import xyz.catequest.spring.global.dto.AccessTokenResponse;
 import xyz.catequest.spring.global.dto.CustomException;
 import xyz.catequest.spring.global.dto.Response;
 import xyz.catequest.spring.global.entity.AuthUser;
@@ -30,18 +32,16 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
   private static final String APP_JSON = "application/json";
   private static final String UTF = "UTF-8";
+  private static final String AUTHORIZATION_HEADER = "Authorization";
 
   private final JwtProvider jwtProvider;
-
-  //	private final RefreshTokenRepository refreshTokenRepository;
-
-  private final UserRepository userRepository;
+  private final AuthService authService;
 
   @Override
   protected void doFilterInternal(
       HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
       throws IOException, ServletException {
-    String authHeader = request.getHeader("Authorization");
+    String authHeader = request.getHeader(AUTHORIZATION_HEADER);
 
     try {
       if (authHeader != null && authHeader.startsWith("Bearer ")) {
@@ -56,10 +56,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
       response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
       sendError(response, ErrorMessage.INVALID_JWT_SIGNATURE);
       return;
-    } /*catch (ExpiredJwtException e) {
-      	handleExpiredToken( request, response);
-      	return;
-      }*/ catch (UnsupportedJwtException e) {
+    } catch (ExpiredJwtException e) {
+      handleExpiredToken( request, response);
+      return;
+    } catch (UnsupportedJwtException e) {
       response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
       sendError(response, ErrorMessage.UNSUPPORTED_JWT_TOKEN);
       return;
@@ -73,10 +73,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
   private void setAuthentication(Claims claims) {
     Long userId = Long.valueOf(claims.getSubject());
-    String email = claims.get("email", String.class);
     UserRole userRole = UserRole.of(claims.get("role", String.class));
 
-    AuthUser authUser = AuthUser.of(userId, email, userRole);
+    AuthUser authUser = AuthUser.of(userId, userRole);
     JwtAuthenticationToken authenticationToken = JwtAuthenticationToken.of(authUser);
     SecurityContextHolder.getContext().setAuthentication(authenticationToken);
   }
@@ -105,39 +104,25 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     response.getWriter().write(redirect);
   }
 
-  //	private void handleExpiredToken(HttpServletRequest request, HttpServletResponse response)
-  // throws IOException {
-  //		log.info("accessToken 재발급");
-  //		String refreshToken = request.getHeader("refreshToken");
-  //
-  //		if (refreshToken == null) {
-  //			response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
-  //			sendRedirect(response, RedirectionMessage.EXPIRED_JWT_ACCESS_TOKEN);
-  //			return;
-  //		}
-  //
-  //		RefreshToken getToken =
-  // refreshTokenRepository.findByTokenAndDeletedAtIsNull(refreshToken).orElseThrow(
-  //			() -> new InvalidRequestException(ErrorMessage.INVALID_REFRESH_TOKEN));
-  //		if( getToken.getExpiredAt().isBefore(java.time.LocalDateTime.now()) ) {
-  //			throw new InvalidRequestException(ErrorMessage.EXPIRED_REFRESH_TOKEN);
-  //		}
-  //		if( !getToken.getToken().equals(refreshToken) ) {
-  //			throw new InvalidRequestException(ErrorMessage.INVALID_REFRESH_TOKEN);
-  //		}
-  //
-  //		User getUser = userRepository.findById(getToken.getUserId()).orElseThrow(
-  //			() -> new InvalidRequestException(ErrorMessage.USER_NOT_FOUND));
-  //
-  //		String accessToken = jwtProvider.createAccessToken(getUser.getId(), getUser.getEmail(),
-  // getUser.getRole());
-  //
-  //		ObjectMapper objectMapper = new ObjectMapper();
-  //		String returnToken =
-  // objectMapper.writeValueAsString(Response.success(AccessTokenResponse.of(accessToken)));
-  //
-  //		response.setContentType(APP_JSON);
-  //		response.setCharacterEncoding(UTF);
-  //		response.getWriter().write(returnToken);
-  //	}
+  private void handleExpiredToken(HttpServletRequest request, HttpServletResponse response)
+      throws IOException {
+    log.info("accessToken 재발급");
+    String refreshToken = request.getHeader("refreshToken");
+
+    if (refreshToken == null) {
+      response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
+      sendRedirect(response, RedirectionMessage.EXPIRED_JWT_ACCESS_TOKEN);
+      return;
+    }
+
+    String accessToken = authService.signin(refreshToken);
+
+    ObjectMapper objectMapper = new ObjectMapper();
+    String returnToken =
+        objectMapper.writeValueAsString(Response.success(AccessTokenResponse.of(accessToken)));
+
+    response.setContentType(APP_JSON);
+    response.setCharacterEncoding(UTF);
+    response.getWriter().write(returnToken);
+  }
 }

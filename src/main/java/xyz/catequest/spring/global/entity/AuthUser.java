@@ -16,7 +16,6 @@ import xyz.catequest.spring.global.exception.ServerException;
 @RequiredArgsConstructor(staticName = "of")
 public class AuthUser {
   private final Long userId;
-  private final String email;
   private final List<GrantedAuthority> authorities;
 
   public String getRole() {
@@ -26,13 +25,13 @@ public class AuthUser {
     return authorities.getFirst().getAuthority();
   }
 
-  public static AuthUser of(Long userId, String email, UserRole role) {
+  public static AuthUser of(Long userId, UserRole role) {
     List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
     grantedAuthorities.add(new SimpleGrantedAuthority(role.name()));
-    return new AuthUser(userId, email, grantedAuthorities);
+    return new AuthUser(userId, grantedAuthorities);
   }
 
   public static AuthUser from(User user) {
-    return AuthUser.of(user.getId(), user.getEmail(), user.getRole());
+    return AuthUser.of(user.getId(), user.getRole());
   }
 }

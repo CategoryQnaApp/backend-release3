@@ -31,7 +31,7 @@ public class UserService {
             () -> new NotFoundException(ErrorMessage.USER_NOT_FOUND));
 
         // todo : s3 추가
-//        user.setProfileImage("s3 주소 링크");
+        user.updateProfileImage("s3 주소 링크");
     }
 
     @Transactional

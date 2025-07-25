@@ -13,18 +13,16 @@ import java.util.Date;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import xyz.catequest.spring.domain.users.entity.User;
 import xyz.catequest.spring.domain.users.enums.UserRole;
 
 @Slf4j
 @Component
 public class JwtProvider {
-
-  private static final String CLAIM_EMAIL = "email";
-  private static final String CLAIM_ROLE = "role";
-
   private static final String BEARER_PREFIX = "Bearer ";
-  private static final long ACCESS_TOKEN_VALIDITY = 1000L * 60 * 30;
-  private static final long REFRESH_TOKEN_VALIDITY = 1000L * 60 * 60 * 24 * 14;
+  private static final String CLAIM_ROLE = "role";
+  private static final long ACCESS_TOKEN_VALIDITY = 1000L * 60 * 30; // 30분
+  private static final long REFRESH_TOKEN_VALIDITY = 1000L * 60 * 60 * 24 * 14; // 2주
 
   @Value("${jwt.secret.key}")
   private String secretKey;
@@ -38,14 +36,13 @@ public class JwtProvider {
     this.key = Keys.hmacShaKeyFor(decodingKey);
   }
 
-  private String generateToken(Long userId, String email, UserRole role, long validMillis) {
+  private String generateAccessToken(Long userId, UserRole role) {
     Date now = new Date();
-    Date end = new Date(now.getTime() + validMillis);
+    Date end = new Date(now.getTime() + ACCESS_TOKEN_VALIDITY);
 
     return BEARER_PREFIX
         + Jwts.builder()
             .setSubject(String.valueOf(userId))
-            .claim(CLAIM_EMAIL, email)
             .claim(CLAIM_ROLE, role.name())
             .setIssuedAt(now)
             .setExpiration(end)
@@ -53,12 +50,33 @@ public class JwtProvider {
             .compact();
   }
 
-  public String createAccessToken(Long userId, String email, UserRole userRole) {
-    return generateToken(userId, email, userRole, ACCESS_TOKEN_VALIDITY);
+  private String generateRefreshToken(Long userId) {
+    Date now = new Date();
+    Date end = new Date(now.getTime() + REFRESH_TOKEN_VALIDITY);
+
+    return BEARER_PREFIX
+        + Jwts.builder()
+        .setSubject(String.valueOf(userId))
+        .setIssuedAt(now)
+        .setExpiration(end)
+        .signWith(key, algorithm)
+        .compact();
   }
 
-  public String createRefreshToken(Long userId, String email, UserRole userRole) {
-    return generateToken(userId, email, userRole, REFRESH_TOKEN_VALIDITY);
+  public String createAccessToken(Long userId, UserRole userRole) {
+    return generateAccessToken(userId, userRole);
+  }
+
+  public String createAccessToken(User user) {
+    return generateAccessToken(user.getId(), user.getRole());
+  }
+
+  public String createRefreshToken(Long userId) {
+    return generateRefreshToken(userId);
+  }
+
+  public String createRefreshToken(User user) {
+    return generateRefreshToken(user.getId());
   }
 
   public Claims extractClaims(String token) {

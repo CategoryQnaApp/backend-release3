@@ -25,8 +25,12 @@ public enum ErrorMessage {
   UNSUPPORTED_JWT_TOKEN(BAD_REQUEST, "지원되지 않는 JWT 토큰 입니다."),
 
   /* 4xx user */
-  USER_NOT_FOUND(NOT_FOUND, "사용자를 찾을 수 없습니다."),
-  WRONG_PASSWORD(UNAUTHORIZED, "비밀번호가 일치하지 않습니다."),
+  NOT_FOUND_EMAIL(BAD_REQUEST, "인증부터 다시 시작해주세요."),
+  DUPLICATED_EMAIL(BAD_REQUEST, "이미 회원가입된 이메일입니다."),
+  INCORRECT_AUTH_NUMBER(BAD_REQUEST, "잘못된 인증번호입니다."),
+  UNVERIFIED_EMAIL(BAD_REQUEST, "인증되지 않은 이메일입니다."),
+  USER_NOT_FOUND(NOT_FOUND, "아이디가 없거나, 비밀번호가 틀렸습니다."),
+  WRONG_PASSWORD(UNAUTHORIZED, "아이디가 없거나, 비밀번호가 틀렸습니다."),
 
   /* 5xx */
   INTERNAL_ERROR(INTERNAL_SERVER_ERROR, "내부 서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요."),
