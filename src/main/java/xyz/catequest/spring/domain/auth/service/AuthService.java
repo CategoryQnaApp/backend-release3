@@ -1,6 +1,5 @@
 package xyz.catequest.spring.domain.auth.service;
 
-
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
@@ -35,7 +34,7 @@ public class AuthService {
 
   @Transactional
   public SignAuthResponse signup(String email, String password, String nickname) {
-    if( !userRepository.existsByEmail(email) ) {
+    if (!userRepository.existsByEmail(email)) {
       throw new InvalidRequestException(ErrorMessage.DUPLICATED_EMAIL);
     }
     isVerifiedEmail(email);
@@ -51,18 +50,22 @@ public class AuthService {
   }
 
   private void isVerifiedEmail(String email) {
-    Email verifiedEmail = emailAuthRepository.findByEmail(email).orElseThrow(
-        () -> new NotFoundException(ErrorMessage.NOT_FOUND_EMAIL));
-    if( !EmailStatus.isVerified(verifiedEmail.getEmailStatus()) ) {
+    Email verifiedEmail =
+        emailAuthRepository
+            .findByEmail(email)
+            .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_EMAIL));
+    if (!EmailStatus.isVerified(verifiedEmail.getEmailStatus())) {
       throw new InvalidRequestException(ErrorMessage.UNVERIFIED_EMAIL);
     }
   }
 
   @Transactional
   public SignAuthResponse signin(String email, String password) {
-    User findUser = userRepository.findByEmail(email).orElseThrow(
-        () -> new NotFoundException(ErrorMessage.USER_NOT_FOUND));
-    if(!passwordEncoder.matches(password, findUser.getPassword())) {
+    User findUser =
+        userRepository
+            .findByEmail(email)
+            .orElseThrow(() -> new NotFoundException(ErrorMessage.USER_NOT_FOUND));
+    if (!passwordEncoder.matches(password, findUser.getPassword())) {
       throw new InvalidRequestException(ErrorMessage.WRONG_PASSWORD);
     }
 
@@ -75,7 +78,7 @@ public class AuthService {
 
   @Transactional(readOnly = true)
   public String signin(String refreshToken) {
-    if(!refreshTokenRepository.existsByRefreshToken(refreshToken)) {
+    if (!refreshTokenRepository.existsByRefreshToken(refreshToken)) {
       throw new InvalidRequestException(ErrorMessage.INVALID_REFRESH_TOKEN);
     }
 
@@ -89,12 +92,13 @@ public class AuthService {
       throw new InvalidRequestException(ErrorMessage.INVALID_REFRESH_TOKEN);
     }
 
-    User findUser = userRepository.findById(userId).orElseThrow(
-        () -> new NotFoundException(ErrorMessage.USER_NOT_FOUND));
+    User findUser =
+        userRepository
+            .findById(userId)
+            .orElseThrow(() -> new NotFoundException(ErrorMessage.USER_NOT_FOUND));
 
     return jwtProvider.createAccessToken(findUser);
   }
-
 
   @Transactional
   public EmailVerificationResponse saveEmail(String email) {
@@ -107,10 +111,12 @@ public class AuthService {
 
   @Transactional
   public void checkEmail(String email, String number) {
-    Email findEmail = emailAuthRepository.findByEmail(email).orElseThrow(
-        () -> new NotFoundException(ErrorMessage.NOT_FOUND_EMAIL));
+    Email findEmail =
+        emailAuthRepository
+            .findByEmail(email)
+            .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_EMAIL));
 
-    if(!findEmail.getVerificationCode().equals(number)) {
+    if (!findEmail.getVerificationCode().equals(number)) {
       throw new InvalidRequestException(ErrorMessage.INCORRECT_AUTH_NUMBER);
     }
 

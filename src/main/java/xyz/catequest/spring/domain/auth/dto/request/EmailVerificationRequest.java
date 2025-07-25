@@ -10,5 +10,6 @@ import xyz.catequest.spring.global.Regexp.RegularExpression;
 public class EmailVerificationRequest {
   @Pattern(regexp = RegularExpression.EMAIL_ROLE)
   private final String email;
+
   private final String verificationCode;
 }

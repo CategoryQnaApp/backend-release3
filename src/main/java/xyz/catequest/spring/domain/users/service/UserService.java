@@ -15,54 +15,62 @@ import xyz.catequest.spring.global.exception.NotFoundException;
 @RequiredArgsConstructor
 public class UserService {
 
-    private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
+  private final UserRepository userRepository;
+  private final PasswordEncoder passwordEncoder;
 
-    @Transactional(readOnly = true)
-    public GetUserResponse myInfo(Long userId) {
-        User user = userRepository.findById(userId).orElseThrow(
-                () -> new NotFoundException(ErrorMessage.USER_NOT_FOUND));
-        return GetUserResponse.from(user);
+  @Transactional(readOnly = true)
+  public GetUserResponse myInfo(Long userId) {
+    User user =
+        userRepository
+            .findById(userId)
+            .orElseThrow(() -> new NotFoundException(ErrorMessage.USER_NOT_FOUND));
+    return GetUserResponse.from(user);
+  }
+
+  @Transactional
+  public void updateProfileImage(Long userId, byte[] image) {
+    User user =
+        userRepository
+            .findById(userId)
+            .orElseThrow(() -> new NotFoundException(ErrorMessage.USER_NOT_FOUND));
+
+    // todo : s3 추가
+    user.updateProfileImage("s3 주소 링크");
+  }
+
+  @Transactional
+  public void updateNickname(Long userId, String nickname) {
+    User user =
+        userRepository
+            .findById(userId)
+            .orElseThrow(() -> new NotFoundException(ErrorMessage.USER_NOT_FOUND));
+    user.updateNickname(nickname);
+  }
+
+  @Transactional
+  public void updatePassword(Long userId, String oldPassword, String newPassword) {
+    User user =
+        userRepository
+            .findById(userId)
+            .orElseThrow(() -> new NotFoundException(ErrorMessage.USER_NOT_FOUND));
+    if (!passwordEncoder.matches(oldPassword, user.getPassword())) {
+      throw new InvalidRequestException(ErrorMessage.WRONG_PASSWORD);
     }
+    user.updatePassword(passwordEncoder.encode(newPassword));
+  }
 
-    @Transactional
-    public void updateProfileImage(Long userId, byte[] image) {
-        User user = userRepository.findById(userId).orElseThrow(
-            () -> new NotFoundException(ErrorMessage.USER_NOT_FOUND));
+  @Transactional
+  public void updateBookId(Long userId, Long npcId) {
+    User user =
+        userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+    user.updateBooksId(npcId);
+  }
 
-        // todo : s3 추가
-        user.updateProfileImage("s3 주소 링크");
-    }
-
-    @Transactional
-    public void updateNickname(Long userId, String nickname) {
-        User user = userRepository.findById(userId).orElseThrow(
-            () -> new NotFoundException(ErrorMessage.USER_NOT_FOUND));
-        user.updateNickname(nickname);
-    }
-
-    @Transactional
-    public void updatePassword(Long userId, String oldPassword, String newPassword) {
-        User user = userRepository.findById(userId).orElseThrow(
-            () -> new NotFoundException(ErrorMessage.USER_NOT_FOUND));
-        if(!passwordEncoder.matches(oldPassword, user.getPassword())) {
-            throw new InvalidRequestException(ErrorMessage.WRONG_PASSWORD);
-        }
-        user.updatePassword(passwordEncoder.encode(newPassword));
-    }
-
-    @Transactional
-    public void updateBookId(Long userId, Long npcId) {
-        User user = userRepository.findById(userId).orElseThrow(
-                () -> new RuntimeException("User not found"));
-        user.updateBooksId(npcId);
-    }
-
-    @Transactional
-    public void deleteUser(Long userId, String password) {
-        User user = userRepository.findById(userId).orElseThrow(
-                () -> new RuntimeException("User not found"));
-        // todo : soft delete
-        userRepository.delete(user);
-    }
+  @Transactional
+  public void deleteUser(Long userId, String password) {
+    User user =
+        userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+    // todo : soft delete
+    userRepository.delete(user);
+  }
 }

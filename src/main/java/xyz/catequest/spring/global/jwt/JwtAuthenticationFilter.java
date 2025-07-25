@@ -57,7 +57,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
       sendError(response, ErrorMessage.INVALID_JWT_SIGNATURE);
       return;
     } catch (ExpiredJwtException e) {
-      handleExpiredToken( request, response);
+      handleExpiredToken(request, response);
       return;
     } catch (UnsupportedJwtException e) {
       response.setStatus(HttpServletResponse.SC_BAD_REQUEST);

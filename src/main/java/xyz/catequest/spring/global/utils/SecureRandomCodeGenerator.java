@@ -9,7 +9,7 @@ public class SecureRandomCodeGenerator {
 
   public static String generateRandomCode() {
     int randomInt = secureRandom.nextInt();
-    String randomCode = String.format("%06d",randomInt);
+    String randomCode = String.format("%06d", randomInt);
     return randomCode;
   }
 }

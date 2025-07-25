@@ -16,6 +16,5 @@ public class SignUpAuthRequest {
   @Pattern(regexp = RegularExpression.PASSWORDS_ROLE)
   private final String password;
 
-  @NotBlank
-  private final String nickname;
+  @NotBlank private final String nickname;
 }
