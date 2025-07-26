@@ -10,6 +10,7 @@ import xyz.catequest.spring.domain.auth.dto.request.EmailRequest;
 import xyz.catequest.spring.domain.auth.dto.request.EmailVerificationRequest;
 import xyz.catequest.spring.domain.auth.dto.request.SignInAuthRequest;
 import xyz.catequest.spring.domain.auth.dto.request.SignUpAuthRequest;
+import xyz.catequest.spring.domain.auth.dto.response.EmailVerificationResponse;
 import xyz.catequest.spring.domain.auth.dto.response.SignAuthResponse;
 import xyz.catequest.spring.domain.auth.service.AuthService;
 import xyz.catequest.spring.global.dto.Response;
@@ -38,11 +39,11 @@ public class AuthController {
   }
 
   @PostMapping("/v1/auth/email")
-  public Response<Void> saveEmail(
+  public Response<EmailVerificationResponse> saveEmail(
       @Valid @RequestBody EmailRequest request
   ) {
-    authService.saveEmail(request.getEmail());
-    return Response.success();
+    EmailVerificationResponse response = authService.saveEmail(request.getEmail());
+    return Response.success(response);
   }
 
   @PostMapping("/v1/auth/verify")

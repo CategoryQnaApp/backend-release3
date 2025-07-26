@@ -18,5 +18,16 @@ public abstract class BaseEntity {
   @Column(updatable = false)
   private LocalDateTime createdAt;
 
-  @LastModifiedDate private LocalDateTime updatedAt;
+  @LastModifiedDate
+  private LocalDateTime updatedAt;
+
+  private LocalDateTime deletedAt;
+
+  public void softDelete() {
+    this.deletedAt = LocalDateTime.now();
+  }
+
+  public boolean isDeleted() {
+    return this.deletedAt != null;
+  }
 }

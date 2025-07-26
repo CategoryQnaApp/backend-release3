@@ -1,14 +1,13 @@
 package xyz.catequest.spring.domain.auth.dto.request;
 
-import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import xyz.catequest.spring.global.Regexp.RegularExpression;
+import xyz.catequest.spring.global.annotation.ValidEmail;
 
 @Getter
 @RequiredArgsConstructor
 public class EmailVerificationRequest {
-  @Pattern(regexp = RegularExpression.EMAIL_ROLE)
+  @ValidEmail
   private final String email;
   private final String verificationCode;
 }

@@ -35,7 +35,7 @@ public class AuthService {
 
   @Transactional
   public SignAuthResponse signup(String email, String password, String nickname) {
-    if( !userRepository.existsByEmail(email) ) {
+    if( userRepository.existsByEmail(email) ) {
       throw new InvalidRequestException(ErrorMessage.DUPLICATED_EMAIL);
     }
     isVerifiedEmail(email);
@@ -98,6 +98,9 @@ public class AuthService {
 
   @Transactional
   public EmailVerificationResponse saveEmail(String email) {
+    if( emailAuthRepository.existsByEmail(email)) {
+      throw new InvalidRequestException(ErrorMessage.DUPLICATED_EMAIL);
+    }
     Email verification = Email.of(email, SecureRandomCodeGenerator.generateRandomCode());
     emailAuthRepository.save(verification);
 

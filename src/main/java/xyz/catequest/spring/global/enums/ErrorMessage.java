@@ -12,6 +12,7 @@ public enum ErrorMessage {
 
   /* 4xx other */
   TYPE_MISMATCH(BAD_REQUEST, "올바른 값을 입력해주세요."),
+  NOT_SUPPORTED_METHOD(BAD_REQUEST, "잘못된 메소드로 요청하셨습니다."),
   FORBIDDEN_USER(FORBIDDEN, "권한이 없습니다."),
   INVALID_USER_ROLE(BAD_REQUEST, "유효하지 않는 권한입니다."),
   NO_HANDLER_FOUND(NOT_FOUND, "요청한 리소스를 찾을 수 없습니다."),
@@ -25,6 +26,7 @@ public enum ErrorMessage {
   UNSUPPORTED_JWT_TOKEN(BAD_REQUEST, "지원되지 않는 JWT 토큰 입니다."),
 
   /* 4xx user */
+  INVALID_EMAIL(BAD_REQUEST, "올바르지 않은 이메일 형식입니다."),
   NOT_FOUND_EMAIL(BAD_REQUEST, "인증부터 다시 시작해주세요."),
   DUPLICATED_EMAIL(BAD_REQUEST, "이미 회원가입된 이메일입니다."),
   INCORRECT_AUTH_NUMBER(BAD_REQUEST, "잘못된 인증번호입니다."),

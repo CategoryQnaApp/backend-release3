@@ -62,7 +62,7 @@ public class UserService {
     public void deleteUser(Long userId, String password) {
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new RuntimeException("User not found"));
-        // todo : soft delete
-        userRepository.delete(user);
+
+        user.softDelete();
     }
 }

@@ -6,4 +6,6 @@ import xyz.catequest.spring.domain.auth.Entity.Email;
 
 public interface EmailAuthRepository extends JpaRepository<Email, Long> {
   Optional<Email> findByEmail(String email);
+
+  boolean existsByEmail(String email);
 }

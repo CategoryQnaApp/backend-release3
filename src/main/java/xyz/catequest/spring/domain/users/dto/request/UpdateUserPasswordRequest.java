@@ -1,9 +1,8 @@
 package xyz.catequest.spring.domain.users.dto.request;
 
-import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import xyz.catequest.spring.global.Regexp.RegularExpression;
+import xyz.catequest.spring.global.annotation.ValidPassword;
 
 @Getter
 @RequiredArgsConstructor
@@ -11,6 +10,6 @@ public class UpdateUserPasswordRequest {
 
   private final String oldPassword;
 
-  @Pattern(regexp = RegularExpression.PASSWORDS_ROLE)
+  @ValidPassword
   private final String newPassword;
 }

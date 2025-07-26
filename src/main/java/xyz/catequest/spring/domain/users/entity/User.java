@@ -2,12 +2,15 @@ package xyz.catequest.spring.domain.users.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLRestriction;
 import xyz.catequest.spring.domain.users.enums.UserRole;
 import xyz.catequest.spring.domain.users.enums.UserStatus;
 import xyz.catequest.spring.global.entity.BaseEntity;
@@ -16,6 +19,7 @@ import xyz.catequest.spring.global.entity.BaseEntity;
 @NoArgsConstructor
 @Entity
 @Table(name = "USERS")
+@SQLRestriction("user_status = 'ACTIVE'")
 public class User extends BaseEntity {
 
   @Id
@@ -25,7 +29,7 @@ public class User extends BaseEntity {
   @Column(unique = true, nullable = false, length = 30)
   private String email;
 
-  @Column(nullable = false, length = 30)
+  @Column(nullable = false)
   private String password;
 
   @Column(nullable = false, length = 20)
@@ -37,7 +41,8 @@ public class User extends BaseEntity {
   @Column(nullable = false, length = 30)
   private String profileImage;
 
-  @Column(nullable = false)
+  @Enumerated(EnumType.STRING)
+  @Column(name = "user_status",nullable = false)
   private UserStatus status;
 
   private Long booksId;
@@ -63,6 +68,12 @@ public class User extends BaseEntity {
   }
   public void updatePassword(String password) {
     this.password = password;
+  }
+
+  @Override
+  public void softDelete() {
+    super.softDelete();
+    this.status = UserStatus.DELETE;
   }
 
   public static User of(String email, String password, String nickname) {

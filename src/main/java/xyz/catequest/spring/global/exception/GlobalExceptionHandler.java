@@ -9,6 +9,7 @@ import org.apache.tomcat.util.http.fileupload.impl.SizeLimitExceededException;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -28,7 +29,8 @@ public class GlobalExceptionHandler {
   public Response<CustomException> invalidRequestExHandler(
       final InvalidRequestException ex, HttpServletResponse response) {
     HttpStatus status = ex.getErrorMessage().getStatus();
-    log.error("[InvalidRequestException] name: {}, ", ex.getErrorMessage().name(), ex);
+    log.error("[InvalidRequestException] name: {}", ex.getErrorMessage().name());
+    log.error("[InvalidRequestException] exStackTrace: {}",  ex.getStackTrace()[0].toString());
 
     response.setStatus(status.value());
     return Response.fail(status, new CustomException(ex.getErrorMessage()));
@@ -48,7 +50,8 @@ public class GlobalExceptionHandler {
   public Response<CustomException> notFoundExHandler(
       final NotFoundException ex, HttpServletResponse response) {
     HttpStatus status = ex.getErrorMessage().getStatus();
-    log.error("[NotFoundException] name: {}, ", ex.getErrorMessage().name(), ex);
+    log.error("[InvalidRequestException] name: {}", ex.getErrorMessage().name());
+    log.error("[InvalidRequestException] exStackTrace: {}",  ex.getStackTrace()[0].toString());
 
     response.setStatus(status.value());
     return Response.fail(status, new CustomException(ex.getErrorMessage()));
@@ -159,6 +162,18 @@ public class GlobalExceptionHandler {
       final NoHandlerFoundException ex, HttpServletResponse response) {
     ErrorMessage errorMessage = ErrorMessage.NO_HANDLER_FOUND;
     log.error("[NoHandlerFoundException]: ", ex);
+
+    response.setStatus(errorMessage.getStatus().value());
+    return Response.fail(errorMessage.getStatus(), new CustomException(errorMessage));
+  }
+
+  @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+  public Response<CustomException> httpRequestMethodNotSupportedExHandler(
+      final HttpRequestMethodNotSupportedException ex, HttpServletResponse response
+  ) {
+    ErrorMessage errorMessage = ErrorMessage.NOT_SUPPORTED_METHOD;
+    log.error("[InvalidRequestException] name: {}", errorMessage.getStatus().name());
+    log.error("[InvalidRequestException] exStackTrace: {}",  ex.getStackTrace()[0].toString());
 
     response.setStatus(errorMessage.getStatus().value());
     return Response.fail(errorMessage.getStatus(), new CustomException(errorMessage));
