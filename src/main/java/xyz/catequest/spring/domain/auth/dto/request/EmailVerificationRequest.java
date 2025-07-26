@@ -9,5 +9,6 @@ import xyz.catequest.spring.global.annotation.ValidEmail;
 public class EmailVerificationRequest {
   @ValidEmail
   private final String email;
+
   private final String verificationCode;
 }

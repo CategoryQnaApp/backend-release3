@@ -20,7 +20,7 @@ public enum ErrorMessage {
   SIZE_LIMIT_EXCEEDED(PAYLOAD_TOO_LARGE, "전송하려는 모든 파일의 크기가 너무 큽니다."),
 
   /* 4xx jwt*/
-  INVALID_JWT_SIGNATURE(BAD_REQUEST,"유효하지 않는 JWT 서명 입니다."),
+  INVALID_JWT_SIGNATURE(BAD_REQUEST, "유효하지 않는 JWT 서명 입니다."),
   INVALID_REFRESH_TOKEN(BAD_REQUEST, "유효하지 않은 Refresh Token입니다."),
   EXPIRED_REFRESH_TOKEN(BAD_REQUEST, "만료된 Refresh Token입니다."),
   UNSUPPORTED_JWT_TOKEN(BAD_REQUEST, "지원되지 않는 JWT 토큰 입니다."),

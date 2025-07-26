@@ -16,6 +16,5 @@ public class SignUpAuthRequest {
   @ValidPassword
   private final String password;
 
-  @NotBlank
-  private final String nickname;
+  @NotBlank private final String nickname;
 }

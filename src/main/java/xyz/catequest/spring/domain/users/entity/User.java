@@ -60,12 +60,15 @@ public class User extends BaseEntity {
   public void updateProfileImage(String profileImage) {
     this.profileImage = profileImage;
   }
+
   public void updateNickname(String nickname) {
     this.nickname = nickname;
   }
+
   public void updateBooksId(Long booksId) {
     this.booksId = booksId;
   }
+
   public void updatePassword(String password) {
     this.password = password;
   }
@@ -79,5 +82,4 @@ public class User extends BaseEntity {
   public static User of(String email, String password, String nickname) {
     return new User(email, password, nickname);
   }
-
 }

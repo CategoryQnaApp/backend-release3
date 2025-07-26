@@ -56,11 +56,11 @@ public class JwtProvider {
 
     return BEARER_PREFIX
         + Jwts.builder()
-        .setSubject(String.valueOf(userId))
-        .setIssuedAt(now)
-        .setExpiration(end)
-        .signWith(key, algorithm)
-        .compact();
+            .setSubject(String.valueOf(userId))
+            .setIssuedAt(now)
+            .setExpiration(end)
+            .signWith(key, algorithm)
+            .compact();
   }
 
   public String createAccessToken(Long userId, UserRole userRole) {

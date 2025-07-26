@@ -9,5 +9,6 @@ import xyz.catequest.spring.domain.auth.Entity.RefreshToken;
 public interface RefreshTokenRepository extends JpaRepository<RefreshToken, Long> {
 
   Optional<RefreshToken> findByRefreshToken(String token);
+
   boolean existsByRefreshToken(String token);
 }
