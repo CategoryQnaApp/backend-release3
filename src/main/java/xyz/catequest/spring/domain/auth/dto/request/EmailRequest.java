@@ -7,6 +7,5 @@ import xyz.catequest.spring.global.annotation.ValidEmail;
 @Getter
 @RequiredArgsConstructor
 public class EmailRequest {
-  @ValidEmail
-  private final String email;
+  @ValidEmail private final String email;
 }

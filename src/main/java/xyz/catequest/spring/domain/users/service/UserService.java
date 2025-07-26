@@ -66,11 +66,11 @@ public class UserService {
     user.updateBooksId(npcId);
   }
 
-    @Transactional
-    public void deleteUser(Long userId, String password) {
-        User user = userRepository.findById(userId).orElseThrow(
-                () -> new RuntimeException("User not found"));
+  @Transactional
+  public void deleteUser(Long userId, String password) {
+    User user =
+        userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
 
-        user.softDelete();
-    }
+    user.softDelete();
+  }
 }
