@@ -11,7 +11,7 @@ public class SecureRandomCodeGenerator {
     int randomInt = secureRandom.nextInt();
     randomInt = Math.abs(randomInt);
     randomInt %= 1000000;
-    String randomCode = String.format("%06d",randomInt);
+    String randomCode = String.format("%06d", randomInt);
     return randomCode;
   }
 }

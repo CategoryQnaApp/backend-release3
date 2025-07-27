@@ -30,7 +30,7 @@ public class GlobalExceptionHandler {
       final InvalidRequestException ex, HttpServletResponse response) {
     HttpStatus status = ex.getErrorMessage().getStatus();
     log.error("[InvalidRequestException] name: {}", ex.getErrorMessage().name());
-    log.error("[InvalidRequestException] exStackTrace: {}",  ex.getStackTrace()[0].toString());
+    log.error("[InvalidRequestException] exStackTrace: {}", ex.getStackTrace()[0].toString());
 
     response.setStatus(status.value());
     return Response.fail(status, new CustomException(ex.getErrorMessage()));
@@ -51,7 +51,7 @@ public class GlobalExceptionHandler {
       final NotFoundException ex, HttpServletResponse response) {
     HttpStatus status = ex.getErrorMessage().getStatus();
     log.error("[InvalidRequestException] name: {}", ex.getErrorMessage().name());
-    log.error("[InvalidRequestException] exStackTrace: {}",  ex.getStackTrace()[0].toString());
+    log.error("[InvalidRequestException] exStackTrace: {}", ex.getStackTrace()[0].toString());
 
     response.setStatus(status.value());
     return Response.fail(status, new CustomException(ex.getErrorMessage()));
@@ -169,11 +169,10 @@ public class GlobalExceptionHandler {
 
   @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
   public Response<CustomException> httpRequestMethodNotSupportedExHandler(
-      final HttpRequestMethodNotSupportedException ex, HttpServletResponse response
-  ) {
+      final HttpRequestMethodNotSupportedException ex, HttpServletResponse response) {
     ErrorMessage errorMessage = ErrorMessage.NOT_SUPPORTED_METHOD;
     log.error("[InvalidRequestException] name: {}", errorMessage.getStatus().name());
-    log.error("[InvalidRequestException] exStackTrace: {}",  ex.getStackTrace()[0].toString());
+    log.error("[InvalidRequestException] exStackTrace: {}", ex.getStackTrace()[0].toString());
 
     response.setStatus(errorMessage.getStatus().value());
     return Response.fail(errorMessage.getStatus(), new CustomException(errorMessage));

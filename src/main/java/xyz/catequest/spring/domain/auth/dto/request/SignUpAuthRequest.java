@@ -10,11 +10,9 @@ import xyz.catequest.spring.global.annotation.ValidPassword;
 @RequiredArgsConstructor
 public class SignUpAuthRequest {
 
-  @ValidEmail
-  private final String email;
+  @ValidEmail private final String email;
 
-  @ValidPassword
-  private final String password;
+  @ValidPassword private final String password;
 
   @NotBlank private final String nickname;
 }
