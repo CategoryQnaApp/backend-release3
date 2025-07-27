@@ -28,8 +28,11 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x ./gradlew
 
+    - name: Build with Gra,dle Wrapper
+      run: ./gradlew spotlessApply
+
     - name: Build with Gradle Wrapper
-      run: ./gradlew build
+      run: ./gradlew clean build
 
     - name: Code Style Check
       run: ./gradlew spotlessCheck
