@@ -42,7 +42,7 @@ public class User extends BaseEntity {
   private String profileImage;
 
   @Enumerated(EnumType.STRING)
-  @Column(name = "user_status",nullable = false)
+  @Column(name = "user_status", nullable = false)
   private UserStatus status;
 
   private Long booksId;
