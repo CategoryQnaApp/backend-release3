@@ -5,6 +5,6 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor(staticName = "of")
-public class EmailVerificationResponse {
+public class EmailAuthResponse {
   private final String verificationCode;
 }

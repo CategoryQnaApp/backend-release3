@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import xyz.catequest.spring.domain.auth.dto.request.EmailRequest;
-import xyz.catequest.spring.domain.auth.dto.request.EmailVerificationRequest;
+import xyz.catequest.spring.domain.auth.dto.request.EmailAuthRequest;
 import xyz.catequest.spring.domain.auth.dto.request.SignInAuthRequest;
 import xyz.catequest.spring.domain.auth.dto.request.SignUpAuthRequest;
-import xyz.catequest.spring.domain.auth.dto.response.EmailVerificationResponse;
+import xyz.catequest.spring.domain.auth.dto.response.EmailAuthResponse;
 import xyz.catequest.spring.domain.auth.dto.response.SignAuthResponse;
 import xyz.catequest.spring.domain.auth.service.AuthService;
 import xyz.catequest.spring.global.dto.Response;
@@ -36,13 +36,13 @@ public class AuthController {
   }
 
   @PostMapping("/v1/auth/email")
-  public Response<EmailVerificationResponse> saveEmail(@Valid @RequestBody EmailRequest request) {
-    EmailVerificationResponse response = authService.saveEmail(request.getEmail());
+  public Response<EmailAuthResponse> saveEmail(@Valid @RequestBody EmailRequest request) {
+    EmailAuthResponse response = authService.saveEmail(request.getEmail());
     return Response.success(response);
   }
 
   @PostMapping("/v1/auth/verify")
-  public Response<Void> verifyEmail(@Valid @RequestBody EmailVerificationRequest request) {
+  public Response<Void> verifyEmail(@Valid @RequestBody EmailAuthRequest request) {
     authService.verifyEmail(request.getEmail(), request.getVerificationCode());
     return Response.success();
   }

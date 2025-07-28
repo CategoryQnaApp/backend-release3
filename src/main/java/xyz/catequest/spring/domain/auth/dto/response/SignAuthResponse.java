@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor(staticName = "of")
 public class SignAuthResponse {
-
   private final String accessToken;
   private final String refreshToken;
 }

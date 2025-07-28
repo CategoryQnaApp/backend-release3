@@ -13,8 +13,8 @@ import xyz.catequest.spring.domain.auth.enums.EmailStatus;
 @Entity
 @Getter
 @NoArgsConstructor
-@Table(name = "EMAIL")
-public class Email {
+@Table(name = "EMAIL_AUTH")
+public class EmailAuth {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,14 +27,14 @@ public class Email {
 
   private EmailStatus emailStatus;
 
-  public Email(String email, String verificationCode) {
+  public EmailAuth(String email, String verificationCode) {
     this.email = email;
     this.emailStatus = EmailStatus.PENDING_VERIFICATION;
     this.verificationCode = verificationCode;
   }
 
-  public static Email of(String email, String verificationCode) {
-    return new Email(email, verificationCode);
+  public static EmailAuth of(String email, String verificationCode) {
+    return new EmailAuth(email, verificationCode);
   }
 
   public void markAsVerified() {

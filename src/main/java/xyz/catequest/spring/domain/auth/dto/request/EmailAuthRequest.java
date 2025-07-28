@@ -7,7 +7,7 @@ import xyz.catequest.spring.global.annotation.ValidEmail;
 
 @Getter
 @RequiredArgsConstructor
-public class EmailVerificationRequest {
+public class EmailAuthRequest {
   @ValidEmail private final String email;
 
   @NotBlank(message = "인증 코드는 필수 입니다.")

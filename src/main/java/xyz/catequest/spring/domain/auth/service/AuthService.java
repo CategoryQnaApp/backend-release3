@@ -7,9 +7,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import xyz.catequest.spring.domain.auth.entity.Email;
+import xyz.catequest.spring.domain.auth.entity.EmailAuth;
 import xyz.catequest.spring.domain.auth.entity.RefreshToken;
-import xyz.catequest.spring.domain.auth.dto.response.EmailVerificationResponse;
+import xyz.catequest.spring.domain.auth.dto.response.EmailAuthResponse;
 import xyz.catequest.spring.domain.auth.dto.response.SignAuthResponse;
 import xyz.catequest.spring.domain.auth.enums.EmailStatus;
 import xyz.catequest.spring.domain.auth.repository.EmailAuthRepository;
@@ -50,7 +50,7 @@ public class AuthService {
   }
 
   private void isVerifiedEmail(String email) {
-    Email verifiedEmail =
+    EmailAuth verifiedEmail =
         emailAuthRepository
             .findByEmail(email)
             .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_EMAIL));
@@ -102,20 +102,20 @@ public class AuthService {
   }
 
   @Transactional
-  public EmailVerificationResponse saveEmail(String email) {
+  public EmailAuthResponse saveEmail(String email) {
     if (emailAuthRepository.existsByEmail(email)) {
       throw new InvalidRequestException(ErrorMessage.DUPLICATED_EMAIL);
     }
-    Email verification = Email.of(email, SecureRandomCodeGenerator.generateRandomCode());
+    EmailAuth verification = EmailAuth.of(email, SecureRandomCodeGenerator.generateRandomCode());
     emailAuthRepository.save(verification);
 
     // todo: aws sqs && ses 적용
-    return EmailVerificationResponse.of(verification.getVerificationCode());
+    return EmailAuthResponse.of(verification.getVerificationCode());
   }
 
   @Transactional
   public void verifyEmail(String email, String number) {
-    Email findEmail =
+    EmailAuth findEmail =
         emailAuthRepository
             .findByEmail(email)
             .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_EMAIL));
