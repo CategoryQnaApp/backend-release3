@@ -10,8 +10,20 @@ import org.springframework.http.HttpStatus;
 @JsonInclude(Include.NON_NULL)
 public interface Response<T> {
 
+  static <T> Response<T> success() {
+    return new SuccessResponse<>(HttpStatus.OK);
+  }
+
   static <T> Response<T> success(T data) {
-    return new SuccessResponse<>(data);
+    return new SuccessResponse<>(HttpStatus.OK, data);
+  }
+
+  static <T> Response<T> created() {
+    return new SuccessResponse<>(HttpStatus.CREATED);
+  }
+
+  static <T> Response<T> created(T data) {
+    return new SuccessResponse<>(HttpStatus.CREATED, data);
   }
 
   static <T> Response<T> fail(HttpStatus status, T error) {
@@ -29,7 +41,13 @@ public interface Response<T> {
   @Getter
   @RequiredArgsConstructor
   class SuccessResponse<T> implements Response<T> {
-    private final T data;
+    private final HttpStatus status;
+    private T data;
+
+    public SuccessResponse(HttpStatus status, T data) {
+      this.status = status;
+      this.data = data;
+    }
 
     @Override
     public T getError() {

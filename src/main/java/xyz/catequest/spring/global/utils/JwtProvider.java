@@ -1,0 +1,113 @@
+package xyz.catequest.spring.global.utils;
+
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
+import jakarta.annotation.PostConstruct;
+import java.security.Key;
+import java.util.Base64;
+import java.util.Date;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+import xyz.catequest.spring.domain.users.entity.User;
+import xyz.catequest.spring.domain.users.enums.UserRole;
+
+@Slf4j
+@Component
+public class JwtProvider {
+  private static final String BEARER_PREFIX = "Bearer ";
+  private static final String CLAIM_ROLE = "role";
+  private static final long ACCESS_TOKEN_VALIDITY = 1000L * 60 * 30; // 30분
+  private static final long REFRESH_TOKEN_VALIDITY = 1000L * 60 * 60 * 24 * 14; // 2주
+
+  @Value("${jwt.secret.key}")
+  private String secretKey;
+
+  private Key key;
+  private final SignatureAlgorithm algorithm = SignatureAlgorithm.HS256;
+
+  @PostConstruct
+  public void init() {
+    byte[] decodingKey = Base64.getDecoder().decode(secretKey);
+    this.key = Keys.hmacShaKeyFor(decodingKey);
+  }
+
+  private String generateAccessToken(Long userId, UserRole role) {
+    Date now = new Date();
+    Date end = new Date(now.getTime() + ACCESS_TOKEN_VALIDITY);
+
+    return BEARER_PREFIX
+        + Jwts.builder()
+            .setSubject(String.valueOf(userId))
+            .claim(CLAIM_ROLE, role.name())
+            .setIssuedAt(now)
+            .setExpiration(end)
+            .signWith(key, algorithm)
+            .compact();
+  }
+
+  private String generateRefreshToken(Long userId) {
+    Date now = new Date();
+    Date end = new Date(now.getTime() + REFRESH_TOKEN_VALIDITY);
+
+    return BEARER_PREFIX
+        + Jwts.builder()
+            .setSubject(String.valueOf(userId))
+            .setIssuedAt(now)
+            .setExpiration(end)
+            .signWith(key, algorithm)
+            .compact();
+  }
+
+  public String createAccessToken(Long userId, UserRole userRole) {
+    return generateAccessToken(userId, userRole);
+  }
+
+  public String createAccessToken(User user) {
+    return generateAccessToken(user.getId(), user.getRole());
+  }
+
+  public String createRefreshToken(Long userId) {
+    return generateRefreshToken(userId);
+  }
+
+  public String createRefreshToken(User user) {
+    return generateRefreshToken(user.getId());
+  }
+
+  public Claims extractClaims(String token) {
+    try {
+      return Jwts.parserBuilder()
+          .setSigningKey(key)
+          .build()
+          .parseClaimsJws(removeBearerPrefix(token))
+          .getBody();
+    } catch (ExpiredJwtException e) {
+      log.warn("만료된 토큰입니다\t{}", e.getMessage());
+      throw e;
+    } catch (JwtException e) {
+      log.warn("잘못된 Jwt 입니다\t{}", e.getMessage());
+      throw e;
+    }
+  }
+
+  public boolean isTokenValid(String token) {
+    try {
+      extractClaims(token);
+      return true;
+    } catch (JwtException e) {
+      return false;
+    }
+  }
+
+  public String removeBearerPrefix(String token) {
+    if (token != null && token.startsWith(BEARER_PREFIX)) {
+      return token.substring(BEARER_PREFIX.length());
+    }
+    return token;
+  }
+}
