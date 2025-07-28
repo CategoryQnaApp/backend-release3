@@ -2,7 +2,7 @@ name: Deploy to AWS EC2
 
 on:
   push:
-    branches: [ "docs/cd" ]
+    branches: [ "docs/ci" ]
 
 permissions:
   contents: read
@@ -30,9 +30,7 @@ jobs:
 
       - name: Upload Build Artifact
         run: |
-          mkdir -p artifact
-          cp build/libs/*.jar artifact/app.jar
-
+          cp build/libs/*.jar app.jar
       - name: Stop Previous Application on EC2
         uses: appleboy/ssh-action@v0.1.8
         with:
@@ -51,9 +49,7 @@ jobs:
             
             echo "[EC2] Preparing app directory..."
             mkdir -p ~/app
-            rm -f ~/app/artifact/app.jar
-
-
+            rm -f ~/app/app.jar
       - name: Copy JAR to EC2
         uses: appleboy/scp-action@v0.1.5
         with:
@@ -71,5 +67,5 @@ jobs:
           key: ${{ secrets.EC2_KEY }}
           script: |
             echo "[EC2] Starting new server..."
-            nohup java -Dspring.profiles.active=dev -jar ~/app/artifact/app.jar > ~/app/app.log 2>&1 &
+            nohup java -Dspring.profiles.active=dev -jar ~/app/app.jar > ~/app/app.log 2>&1 &
             echo "✅ Deployed Successfully!"
