@@ -15,7 +15,7 @@ public class CreateAnswerRequest {
 
   @NotBlank private final Long questionId;
 
-  private final String envlope;
+  private final String envelope;
 
   private final Long characterLimitItemCount;
 }
