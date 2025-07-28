@@ -37,7 +37,7 @@ public class Email {
     return new Email(email, verificationCode);
   }
 
-  public void isVerified() {
+  public void markAsVerified() {
     this.emailStatus = EmailStatus.VERIFIED;
   }
 }
