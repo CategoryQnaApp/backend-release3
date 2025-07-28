@@ -71,13 +71,14 @@ public class AuthService {
 
     String accessToken = jwtProvider.createAccessToken(findUser);
     String refreshToken = jwtProvider.createRefreshToken(findUser);
+    refreshTokenRepository.deleteByUserId(findUser.getId());
     refreshTokenRepository.save(RefreshToken.of(findUser, refreshToken));
 
     return SignAuthResponse.of(accessToken, refreshToken);
   }
 
   @Transactional(readOnly = true)
-  public String signin(String refreshToken) {
+  public String refreshAccessToken(String refreshToken) {
     if (!refreshTokenRepository.existsByRefreshToken(refreshToken)) {
       throw new InvalidRequestException(ErrorMessage.INVALID_REFRESH_TOKEN);
     }

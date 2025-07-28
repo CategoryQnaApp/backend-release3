@@ -115,7 +115,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
       return;
     }
 
-    String accessToken = authService.signin(refreshToken);
+    String accessToken = authService.refreshAccessToken(refreshToken);
 
     ObjectMapper objectMapper = new ObjectMapper();
     String returnToken =
