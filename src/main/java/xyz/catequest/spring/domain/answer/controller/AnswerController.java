@@ -1,4 +1,4 @@
-package xyz.catequest.spring.domain.answer.contoller;
+package xyz.catequest.spring.domain.answer.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
