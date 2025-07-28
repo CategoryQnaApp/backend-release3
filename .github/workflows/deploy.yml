@@ -2,7 +2,7 @@ name: Deploy to AWS EC2
 
 on:
   push:
-    branches: [ "develop", "main" ]
+    branches: [ "develop" ]
 
 permissions:
   contents: read
@@ -31,7 +31,6 @@ jobs:
       - name: Upload Build Artifact
         run: |
           cp build/libs/*.jar app.jar
-
       - name: Stop Previous Application on EC2
         uses: appleboy/ssh-action@v0.1.8
         with:
@@ -51,8 +50,6 @@ jobs:
             echo "[EC2] Preparing app directory..."
             mkdir -p ~/app
             rm -f ~/app/app.jar
-
-
       - name: Copy JAR to EC2
         uses: appleboy/scp-action@v0.1.5
         with:
