@@ -36,8 +36,7 @@ public class SecurityConfig {
                     request -> {
                       CorsConfiguration config = new CorsConfiguration();
                       config.addAllowedOriginPattern("*"); // 테스트용 실제 배포시 실제 도메인만 허용하도록 변경
-                      config.setAllowedMethods(
-                          List.of("GET", "POST", "PATCH", "DELETE"));
+                      config.setAllowedMethods(List.of("GET", "POST", "PATCH", "DELETE"));
                       config.setAllowedHeaders(List.of("Authorization", "Content-Type"));
                       config.setAllowCredentials(true);
                       return config;
@@ -52,12 +51,23 @@ public class SecurityConfig {
         .httpBasic(AbstractHttpConfigurer::disable)
         .logout(AbstractHttpConfigurer::disable)
         .rememberMe(AbstractHttpConfigurer::disable)
-        .authorizeHttpRequests(auth -> auth
-            .requestMatchers("/api/v*/auth/**").permitAll()
-            .requestMatchers(HttpMethod.PATCH, "/api/v*/users/*/role").hasAuthority(UserRole.ADMIN.getRoleName())
-            .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html", "/swagger-resources/**", "/webjars/**").permitAll() // swagger
-            .requestMatchers("/actuator", "/actuator/**", "/_cluster/health").permitAll() // Spring Actuator
-            .anyRequest().authenticated()
-        ).build();
+        .authorizeHttpRequests(
+            auth ->
+                auth.requestMatchers("/api/v*/auth/**")
+                    .permitAll()
+                    .requestMatchers(HttpMethod.PATCH, "/api/v*/users/*/role")
+                    .hasAuthority(UserRole.ADMIN.getRoleName())
+                    .requestMatchers(
+                        "/v3/api-docs/**",
+                        "/swagger-ui/**",
+                        "/swagger-ui.html",
+                        "/swagger-resources/**",
+                        "/webjars/**")
+                    .permitAll() // swagger
+                    .requestMatchers("/actuator", "/actuator/**", "/_cluster/health")
+                    .permitAll() // Spring Actuator
+                    .anyRequest()
+                    .authenticated())
+        .build();
   }
 }
