@@ -1,5 +1,6 @@
 package xyz.catequest.spring.domain.users.dto.request;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import xyz.catequest.spring.global.annotation.ValidPassword;
@@ -8,7 +9,7 @@ import xyz.catequest.spring.global.annotation.ValidPassword;
 @RequiredArgsConstructor
 public class UpdateUserPasswordRequest {
 
-  private final String oldPassword;
+  @NotBlank private final String oldPassword;
 
   @ValidPassword private final String newPassword;
 }
