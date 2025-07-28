@@ -1,6 +1,5 @@
 package xyz.catequest.spring.domain.auth.repository;
 
-import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import xyz.catequest.spring.domain.auth.entity.RefreshToken;
