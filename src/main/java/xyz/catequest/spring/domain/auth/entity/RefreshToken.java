@@ -1,4 +1,4 @@
-package xyz.catequest.spring.domain.auth.Entity;
+package xyz.catequest.spring.domain.auth.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
