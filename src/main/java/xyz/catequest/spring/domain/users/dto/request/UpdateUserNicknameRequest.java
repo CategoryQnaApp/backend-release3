@@ -8,6 +8,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UpdateUserNicknameRequest {
 
-  @Size(min = 1, max = 30)
+  @Size(min = 1, max = 20)
   private final String nickname;
 }
