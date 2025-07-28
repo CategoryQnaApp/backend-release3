@@ -6,5 +6,3 @@ public enum UserStatus {
   SUSPENDED, // 정지 (약관 위반 등으로 인한 제재)
   DELETE// 탈퇴/비활성화 요청 (일정 기간 후 영구 삭제 예정)
 }
-
-
