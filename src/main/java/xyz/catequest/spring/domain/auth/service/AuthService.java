@@ -19,6 +19,7 @@ import xyz.catequest.spring.domain.users.repository.UserRepository;
 import xyz.catequest.spring.global.enums.ErrorMessage;
 import xyz.catequest.spring.global.exception.InvalidRequestException;
 import xyz.catequest.spring.global.exception.NotFoundException;
+import xyz.catequest.spring.global.utils.EmailChecker;
 import xyz.catequest.spring.global.utils.JwtProvider;
 import xyz.catequest.spring.global.utils.SecureRandomCodeGenerator;
 
@@ -34,10 +35,13 @@ public class AuthService {
 
   @Transactional
   public SignAuthResponse signup(String email, String password, String nickname) {
-    isVerifiedEmail(email);
+    if( EmailChecker.isValid(email) ) {
+      throw new InvalidRequestException(ErrorMessage.INVALID_EMAIL);
+    }
     if (userRepository.existsByEmail(email)) {
       throw new InvalidRequestException(ErrorMessage.DUPLICATED_EMAIL);
     }
+    isVerifiedEmail(email);
 
     String encodedPassword = passwordEncoder.encode(password);
     User savedUser = userRepository.save(User.of(email, encodedPassword, nickname));
@@ -57,6 +61,7 @@ public class AuthService {
     if (!EmailStatus.isVerified(verifiedEmail.getEmailStatus())) {
       throw new InvalidRequestException(ErrorMessage.UNVERIFIED_EMAIL);
     }
+    emailAuthRepository.delete(verifiedEmail);
   }
 
   @Transactional

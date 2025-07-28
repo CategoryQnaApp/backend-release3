@@ -17,7 +17,7 @@ import java.lang.annotation.Target;
 @Documented
 @Pattern(
     regexp =
-        "^(?![.])(?!.*[.]{2})[A-Za-z0-9+_.-]+(?<![.])@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*\\.[A-Za-z]{2,}$")
+        "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")
 public @interface ValidEmail {
   String message() default "올바르지 않은 이메일 형식입니다.";
 
