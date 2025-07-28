@@ -2,7 +2,7 @@ name: Deploy to AWS EC2
 
 on:
   push:
-    branches: [ "docs/ci" ]
+    branches: [ "docs/cd" ]
 
 permissions:
   contents: read
@@ -67,5 +67,5 @@ jobs:
           key: ${{ secrets.EC2_KEY }}
           script: |
             echo "[EC2] Starting new server..."
-            nohup java -Dspring.profiles.active=dev -jar ~/app/app.jar > ~/app/app2.log 2>&1 &
+            nohup java -Dspring.profiles.active=dev -jar ~/app/app.jar > ~/app/app.log 2>&1 &
             echo "✅ Deployed Successfully!"
