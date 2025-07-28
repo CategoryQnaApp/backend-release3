@@ -36,6 +36,7 @@ public class UserController {
   public Response<Void> updateProfileImage(
       @AuthenticationPrincipal AuthUser authUser, @RequestPart MultipartFile profileImage)
       throws IOException {
+    // todo : images 검사 로직 추가
     userService.updateProfileImage(authUser.getUserId(), profileImage.getBytes());
     return Response.success();
   }

@@ -22,7 +22,7 @@ public class AuthUser {
     if (authorities.isEmpty()) {
       throw new ServerException(ErrorMessage.UNKNOWN_ERROR);
     }
-    return authorities.getFirst().getAuthority();
+    return authorities.get(0).getAuthority();
   }
 
   public static AuthUser of(Long userId, UserRole role) {

@@ -63,10 +63,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
       response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
       sendError(response, ErrorMessage.UNSUPPORTED_JWT_TOKEN);
       return;
-    } catch (Exception e) {
-      response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-      sendError(response, ErrorMessage.INTERNAL_ERROR);
-      return;
     }
     filterChain.doFilter(request, response);
   }
