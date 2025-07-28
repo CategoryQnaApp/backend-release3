@@ -2,8 +2,7 @@ name: Deploy to AWS EC2
 
 on:
   push:
-    branches:
-      - develop
+    branches: [ "docs/ci" ]
 
 permissions:
   contents: read
@@ -23,45 +22,53 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
+      - name: gradlew 권한 부여
+        run: chmod +x ./gradlew
+
       - name: Build Application
         run: ./gradlew clean build
 
       - name: Upload Build Artifact
         run: |
-          mkdir artifacts
-          cp build/libs/*.jar artifacts/app.jar
+          cp build/libs/*.jar app.jar
 
-      - name: Deploy to EC2
-        uses: appleboy/ssh-action@v1.0.3
+      - name: Stop Previous Application on EC2
+        uses: appleboy/ssh-action@v0.1.8
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_KEY }}
           script: |
             echo "[EC2] Stopping previous server..."
-            pkill -f 'java -jar' || true
-
-            echo "[EC2] Replacing jar..."
-            rm -f ~/app/app.jar
+            PID=$(pgrep -f 'java -Dspring.profiles.active=dev -jar app.jar')
+            if [ -n "$PID" ]; then
+            echo "Killing PID: $PID"
+            (sleep 1 && kill $PID) &
+            else
+            echo "No running app.jar process found."
+            fi
+            
+            echo "[EC2] Preparing app directory..."
             mkdir -p ~/app
-            exit
+            rm -f ~/app/app.jar
+
 
       - name: Copy JAR to EC2
-        uses: appleboy/scp-action@v1.0.3
+        uses: appleboy/scp-action@v0.1.5
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_KEY }}
-          source: "artifacts/app.jar"
+          source: "app.jar"
           target: "~/app/"
 
       - name: Start Application on EC2
-        uses: appleboy/ssh-action@v1.0.3
+        uses: appleboy/ssh-action@v0.1.8
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_KEY }}
           script: |
             echo "[EC2] Starting new server..."
-            nohup java -jar ~/app/app.jar > ~/app/app.log 2>&1 &
+            nohup java -Dspring.profiles.active=dev -jar ~/app/app.jar > ~/app/app.log 2>&1 &
             echo "✅ Deployed Successfully!"
