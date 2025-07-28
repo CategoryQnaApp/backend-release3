@@ -44,7 +44,7 @@ public class AuthService {
 
     String accessToken = jwtProvider.createAccessToken(savedUser);
     String refreshToken = jwtProvider.createRefreshToken(savedUser);
-    refreshTokenRepository.save(RefreshToken.of(savedUser.getId(), refreshToken));
+    refreshTokenRepository.save(RefreshToken.of(savedUser, refreshToken));
 
     return SignAuthResponse.of(accessToken, refreshToken);
   }
@@ -71,7 +71,7 @@ public class AuthService {
 
     String accessToken = jwtProvider.createAccessToken(findUser);
     String refreshToken = jwtProvider.createRefreshToken(findUser);
-    refreshTokenRepository.save(RefreshToken.of(findUser.getId(), refreshToken));
+    refreshTokenRepository.save(RefreshToken.of(findUser, refreshToken));
 
     return SignAuthResponse.of(accessToken, refreshToken);
   }
@@ -123,6 +123,6 @@ public class AuthService {
       throw new InvalidRequestException(ErrorMessage.INCORRECT_AUTH_NUMBER);
     }
 
-    findEmail.isVerified();
+    findEmail.markAsVerified();
   }
 }
