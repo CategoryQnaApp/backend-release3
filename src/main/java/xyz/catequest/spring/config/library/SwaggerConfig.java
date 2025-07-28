@@ -1,4 +1,4 @@
-package xyz.catequest.spring.config.libary;
+package xyz.catequest.spring.config.library;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
