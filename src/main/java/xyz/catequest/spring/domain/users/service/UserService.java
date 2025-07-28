@@ -62,15 +62,17 @@ public class UserService {
   @Transactional
   public void updateBookId(Long userId, Long npcId) {
     User user =
-        userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+        userRepository.findById(userId).orElseThrow(() -> new NotFoundException(ErrorMessage.USER_NOT_FOUND));
     user.updateBooksId(npcId);
   }
 
   @Transactional
   public void deleteUser(Long userId, String password) {
     User user =
-        userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
-
+        userRepository.findById(userId).orElseThrow(() -> new NotFoundException(ErrorMessage.USER_NOT_FOUND));
+    if (!passwordEncoder.matches(password, user.getPassword())) {
+      throw new InvalidRequestException(ErrorMessage.WRONG_PASSWORD);
+    }
     user.softDelete();
   }
 }
