@@ -76,7 +76,9 @@ public class AuthService {
 
     String accessToken = jwtProvider.createAccessToken(findUser);
     String refreshToken = jwtProvider.createRefreshToken(findUser);
-    refreshTokenRepository.deleteByUserId(findUser.getId());
+    if( refreshTokenRepository.existsByUserId(findUser.getId()) ) {
+      refreshTokenRepository.deleteByUserId(findUser.getId());
+    }
     refreshTokenRepository.save(RefreshToken.of(findUser, refreshToken));
 
     return SignAuthResponse.of(accessToken, refreshToken);
