@@ -39,7 +39,7 @@ jobs:
           key: ${{ secrets.EC2_KEY }}
           script: |
             echo "[EC2] Stopping previous server..."
-            PID=$(pgrep -f 'java -Dspring.profiles.active=dev -jar app.jar')
+            PID=$(pgrep -f 'java -Dspring.profiles.active=dev -jar /home/ubuntu/app/app.jar')
             if [ -n "$PID" ]; then
             echo "Killing PID: $PID"
             (sleep 1 && kill $PID) &
