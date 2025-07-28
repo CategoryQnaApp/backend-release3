@@ -44,14 +44,16 @@ public class UserController {
 
   @PatchMapping("/v1/users/nickname")
   public Response<Void> updateNickname(
-      @AuthenticationPrincipal AuthUser authUser, @Valid @RequestBody UpdateUserNicknameRequest request) {
+      @AuthenticationPrincipal AuthUser authUser,
+      @Valid @RequestBody UpdateUserNicknameRequest request) {
     userService.updateNickname(authUser.getUserId(), request.getNickname());
     return Response.success();
   }
 
   @PatchMapping("/v1/users/password")
   public Response<Void> updatePassword(
-      @AuthenticationPrincipal AuthUser authUser, @Valid @RequestBody UpdateUserPasswordRequest request) {
+      @AuthenticationPrincipal AuthUser authUser,
+      @Valid @RequestBody UpdateUserPasswordRequest request) {
     userService.updatePassword(
         authUser.getUserId(), request.getOldPassword(), request.getNewPassword());
     return Response.success();

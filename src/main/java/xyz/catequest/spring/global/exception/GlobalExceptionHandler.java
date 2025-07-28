@@ -172,7 +172,9 @@ public class GlobalExceptionHandler {
       final HttpRequestMethodNotSupportedException ex, HttpServletResponse response) {
     ErrorMessage errorMessage = ErrorMessage.NOT_SUPPORTED_METHOD;
     log.error("[HttpRequestMethodNotSupportedException] name: {}", errorMessage.getStatus().name());
-    log.error("[HttpRequestMethodNotSupportedException] exStackTrace: {}", ex.getStackTrace()[0].toString());
+    log.error(
+        "[HttpRequestMethodNotSupportedException] exStackTrace: {}",
+        ex.getStackTrace()[0].toString());
 
     response.setStatus(errorMessage.getStatus().value());
     return Response.fail(errorMessage.getStatus(), new CustomException(errorMessage));
