@@ -30,7 +30,8 @@ jobs:
 
       - name: Upload Build Artifact
         run: |
-          cp build/libs/*.jar /app.jar
+          mkdir -p artifact
+          cp build/libs/*.jar artifact/app.jar
 
       - name: Stop Previous Application on EC2
         uses: appleboy/ssh-action@v0.1.8
@@ -50,7 +51,7 @@ jobs:
             
             echo "[EC2] Preparing app directory..."
             mkdir -p ~/app
-            rm -f ~/app/app.jar
+            rm -f ~/app/artifact/app.jar
 
 
       - name: Copy JAR to EC2
@@ -70,5 +71,5 @@ jobs:
           key: ${{ secrets.EC2_KEY }}
           script: |
             echo "[EC2] Starting new server..."
-            nohup java -Dspring.profiles.active=dev -jar ~/app/app.jar > ~/app/app.log 2>&1 &
+            nohup java -Dspring.profiles.active=dev -jar ~/app/artifact/app.jar > ~/app/app.log 2>&1 &
             echo "✅ Deployed Successfully!"
