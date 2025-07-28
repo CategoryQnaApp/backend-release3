@@ -15,11 +15,11 @@ import java.lang.annotation.Target;
 @Retention(RUNTIME)
 @Constraint(validatedBy = {})
 @Documented
-@Pattern(
-    regexp =
-        "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")
+@Pattern(regexp = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")
 public @interface ValidEmail {
   String message() default "올바르지 않은 이메일 형식입니다.";
+
   Class<?>[] groups() default {};
+
   Class<? extends Payload>[] payload() default {};
 }

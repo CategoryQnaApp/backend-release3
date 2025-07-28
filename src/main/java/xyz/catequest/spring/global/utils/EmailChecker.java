@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class EmailChecker {
   public static boolean isValid(String email) {
-    if (email == null ) return false;
+    if (email == null) return false;
 
     // 추가 검사 (SonarQube-friendly 방식)
     if (email.length() > 320) return false; // 전체 길이 제한

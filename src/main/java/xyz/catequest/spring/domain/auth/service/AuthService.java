@@ -35,7 +35,7 @@ public class AuthService {
 
   @Transactional
   public SignAuthResponse signup(String email, String password, String nickname) {
-    if( EmailChecker.isValid(email) ) {
+    if (EmailChecker.isValid(email)) {
       throw new InvalidRequestException(ErrorMessage.INVALID_EMAIL);
     }
     if (userRepository.existsByEmail(email)) {
@@ -76,7 +76,7 @@ public class AuthService {
 
     String accessToken = jwtProvider.createAccessToken(findUser);
     String refreshToken = jwtProvider.createRefreshToken(findUser);
-    if( refreshTokenRepository.existsByUserId(findUser.getId()) ) {
+    if (refreshTokenRepository.existsByUserId(findUser.getId())) {
       refreshTokenRepository.deleteByUserId(findUser.getId());
     }
     refreshTokenRepository.save(RefreshToken.of(findUser, refreshToken));
