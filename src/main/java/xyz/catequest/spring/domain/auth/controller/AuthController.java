@@ -43,7 +43,7 @@ public class AuthController {
 
   @PostMapping("/v1/auth/verify")
   public Response<Void> verifyEmail(@Valid @RequestBody EmailVerificationRequest request) {
-    authService.checkEmail(request.getEmail(), request.getVerificationCode());
+    authService.verifyEmail(request.getEmail(), request.getVerificationCode());
     return Response.success();
   }
 }

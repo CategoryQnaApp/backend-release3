@@ -34,10 +34,10 @@ public class AuthService {
 
   @Transactional
   public SignAuthResponse signup(String email, String password, String nickname) {
+    isVerifiedEmail(email);
     if (userRepository.existsByEmail(email)) {
       throw new InvalidRequestException(ErrorMessage.DUPLICATED_EMAIL);
     }
-    isVerifiedEmail(email);
 
     String encodedPassword = passwordEncoder.encode(password);
     User savedUser = userRepository.save(User.of(email, encodedPassword, nickname));
@@ -114,7 +114,7 @@ public class AuthService {
   }
 
   @Transactional
-  public void checkEmail(String email, String number) {
+  public void verifyEmail(String email, String number) {
     Email findEmail =
         emailAuthRepository
             .findByEmail(email)
