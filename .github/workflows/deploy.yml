@@ -42,8 +42,13 @@ jobs:
             echo "[EC2] Stopping previous server..."
             PID=$(pgrep -f 'java -Dspring.profiles.active=dev -jar app.jar')
             if [ -n "$PID" ]; then
-            echo "Killing PID: $PID"
-            (sleep 1 && kill $PID) &
+            echo "Stopping PID: $PID"
+            kill -15 "$PID"            # graceful SIGTERM
+            for i in {1..15}; do       # wait up to 15 s
+              if ! kill -0 "$PID" 2>/dev/null; then break; fi
+              sleep 1
+            done
+            kill -9 "$PID" 2>/dev/null || true  # hard kill if still alive
             else
             echo "No running app.jar process found."
             fi
