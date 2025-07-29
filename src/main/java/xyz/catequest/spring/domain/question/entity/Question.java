@@ -30,16 +30,13 @@ public class Question extends BaseEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Setter
   @Column(nullable = false)
   private String question;
 
-  @Setter
   @Column(nullable = false)
   @Enumerated(EnumType.STRING)
   private Category category;
 
-  @Setter
   @Column(name = "category_in_id", nullable = false)
   private Long categoryInId;
 
@@ -59,5 +56,17 @@ public class Question extends BaseEntity {
 
   public static Question of(String question, Category category, Long categoryInId) {
     return new Question(question, category, categoryInId);
+  }
+
+  public void updateQuestion(String question) {
+    this.question = question;
+  }
+
+  public void updateCategory(Category category) {
+    this.category = category;
+  }
+
+  public void updateCategoryInId(Long categoryInId) {
+    this.categoryInId = categoryInId;
   }
 }

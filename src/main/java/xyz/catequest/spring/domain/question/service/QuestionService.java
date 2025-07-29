@@ -58,10 +58,12 @@ public class QuestionService {
             .findById(id)
             .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_QUESTION));
     if (!request.questionIsNull()) {
-      updateQuestion.setQuestion(request.getQuestion());
+      updateQuestion.updateQuestion(request.getQuestion());
     }
     if (!request.categoryIsNull()) {
-      updateQuestion.setCategory(request.getCategory());
+      updateQuestion.updateCategory(request.getCategory());
+      Long categoryInId = questionRepository.countByCategory(request.getCategory());
+      updateQuestion.updateCategoryInId(categoryInId);
     }
     questionRepository.save(updateQuestion);
   }
