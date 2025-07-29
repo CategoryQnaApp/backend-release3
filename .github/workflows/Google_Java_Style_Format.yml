@@ -1,4 +1,4 @@
-name: google-java-format # 워크플로우의 이름
+name: Google_Java_Style_Format # 워크플로우의 이름
 on:
   push:
     branches: [ "feat/**", "test/**", "refactor/**" ]
