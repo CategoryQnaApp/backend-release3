@@ -2,6 +2,7 @@ package xyz.catequest.spring.domain.question.controller;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -34,13 +35,13 @@ public class QuestionController {
 
   @GetMapping("/v1/questions/{category}/{categoryInId}")
   public Response<QuestionResponse> getQuestion(
-      @NotBlank @PathVariable Category category, @Positive @PathVariable Long categoryInId) {
+      @NotNull @PathVariable Category category, @Positive @PathVariable Long categoryInId) {
     QuestionResponse response = questionService.getCategoryAndCategoryInId(category, categoryInId);
     return Response.success(response);
   }
 
   @GetMapping("/v1/questions/{category}")
-  public Response<List<QuestionResponse>> getQuestions(@NotBlank @PathVariable Category category) {
+  public Response<List<QuestionResponse>> getQuestions(@NotNull @PathVariable Category category) {
     List<QuestionResponse> responses = questionService.getQuestions(category);
     return Response.success(responses);
   }
@@ -62,7 +63,7 @@ public class QuestionController {
   }
 
   @DeleteMapping("/v1/questions/{id}")
-  public Response<Void> deleteQuestion(@PathVariable Long id) {
+  public Response<Void> deleteQuestion(@Positive @PathVariable Long id) {
     questionService.deleteQuestion(id);
     return Response.success();
   }

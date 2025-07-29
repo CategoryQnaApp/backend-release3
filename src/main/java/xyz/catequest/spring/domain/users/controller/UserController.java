@@ -1,6 +1,7 @@
 package xyz.catequest.spring.domain.users.controller;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
 import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -61,14 +62,14 @@ public class UserController {
 
   @PatchMapping("/v1/users/bookId/{bookId}")
   public Response<Void> updateBook(
-      @AuthenticationPrincipal AuthUser authUser, @PathVariable Long bookId) {
+      @AuthenticationPrincipal AuthUser authUser, @Positive @PathVariable Long bookId) {
     userService.updateBookId(authUser.getUserId(), bookId);
     return Response.success();
   }
 
   @PostMapping("/v1/users/delete")
   public Response<Void> deleteUsers(
-      @AuthenticationPrincipal AuthUser authUser, @RequestBody DeleteUserRequest request) {
+      @AuthenticationPrincipal AuthUser authUser, @Valid @RequestBody DeleteUserRequest request) {
     userService.deleteUser(authUser.getUserId(), request.getPassword());
     return Response.success();
   }
