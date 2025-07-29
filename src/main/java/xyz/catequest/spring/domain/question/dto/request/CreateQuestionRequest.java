@@ -13,6 +13,5 @@ public class CreateQuestionRequest {
   @Size(min = 4, max = 255)
   private final String question;
 
-  @NotBlank
-  private final Category category;
+  @NotBlank private final Category category;
 }

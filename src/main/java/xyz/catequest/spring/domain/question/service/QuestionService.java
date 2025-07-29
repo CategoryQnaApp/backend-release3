@@ -19,9 +19,7 @@ public class QuestionService {
 
   @Transactional(readOnly = true)
   public List<QuestionResponse> findQuestions(String category) {
-    return questionRepository
-        .findByCategory(category)
-        .stream()
+    return questionRepository.findByCategory(category).stream()
         .map(QuestionResponse::from)
         .toList();
   }
@@ -38,7 +36,8 @@ public class QuestionService {
   @Transactional
   public QuestionResponse saveQuestion(String question, Category category) {
     Long categoryInId = questionRepository.countByCategory(category);
-    Question saveQuestion = Question.of(question, category, categoryInId == 0 ? 1L : categoryInId + 1);
+    Question saveQuestion =
+        Question.of(question, category, categoryInId == 0 ? 1L : categoryInId + 1);
     Question saved = questionRepository.save(saveQuestion);
     return QuestionResponse.from(saved);
   }
@@ -49,10 +48,10 @@ public class QuestionService {
         questionRepository
             .findById(id)
             .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_QUESTION));
-    if( !request.questionIsNull()) {
+    if (!request.questionIsNull()) {
       updateQuestion.setQuestion(request.getQuestion());
     }
-    if( !request.categoryIsNull()) {
+    if (!request.categoryIsNull()) {
       updateQuestion.setCategory(request.getCategory());
     }
     questionRepository.save(updateQuestion);

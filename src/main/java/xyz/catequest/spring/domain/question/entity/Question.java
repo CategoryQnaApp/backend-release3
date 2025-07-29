@@ -30,7 +30,8 @@ public class Question extends BaseEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Setter @Column(nullable = false)
+  @Setter
+  @Column(nullable = false)
   private String question;
 
   @Setter
