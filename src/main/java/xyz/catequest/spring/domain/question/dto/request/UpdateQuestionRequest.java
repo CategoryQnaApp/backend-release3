@@ -7,7 +7,6 @@ import xyz.catequest.spring.global.enums.ErrorMessage;
 import xyz.catequest.spring.global.exception.InvalidRequestException;
 
 @Getter
-@AllArgsConstructor
 public class UpdateQuestionRequest {
   private String question;
   private Category category;
@@ -23,6 +22,14 @@ public class UpdateQuestionRequest {
     if (category == null) {
       throw new InvalidRequestException(ErrorMessage.TYPE_MISMATCH);
     }
+    this.category = category;
+  }
+
+  public UpdateQuestionRequest(String question, Category category) {
+    if (question == null || question.isBlank() || category == null) {
+      throw new InvalidRequestException(ErrorMessage.TYPE_MISMATCH);
+    }
+    this.question = question;
     this.category = category;
   }
 
