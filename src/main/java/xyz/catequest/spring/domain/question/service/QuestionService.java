@@ -9,7 +9,6 @@ import xyz.catequest.spring.domain.question.dto.response.QuestionResponse;
 import xyz.catequest.spring.domain.question.entity.Question;
 import xyz.catequest.spring.domain.question.enums.Category;
 import xyz.catequest.spring.domain.question.repository.QuestionRepository;
-import xyz.catequest.spring.global.dto.Response;
 import xyz.catequest.spring.global.enums.ErrorMessage;
 import xyz.catequest.spring.global.exception.NotFoundException;
 
@@ -20,9 +19,10 @@ public class QuestionService {
 
   @Transactional(readOnly = true)
   public QuestionResponse getQuestion(Long id) {
-    Question question = questionRepository
-        .findById(id)
-        .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_QUESTION));
+    Question question =
+        questionRepository
+            .findById(id)
+            .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_QUESTION));
     return QuestionResponse.from(question);
   }
 

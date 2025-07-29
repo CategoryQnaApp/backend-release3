@@ -27,8 +27,7 @@ public class QuestionController {
   private final QuestionService questionService;
 
   @GetMapping("/v1/questions/{id}")
-  public Response<QuestionResponse> getQuestion(
-      @Positive @PathVariable Long id) {
+  public Response<QuestionResponse> getQuestion(@Positive @PathVariable Long id) {
     QuestionResponse response = questionService.getQuestion(id);
     return Response.success(response);
   }
