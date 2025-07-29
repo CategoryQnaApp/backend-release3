@@ -27,14 +27,14 @@ public class QuestionService {
   }
 
   @Transactional(readOnly = true)
-  public List<QuestionResponse> getQuestions(String category) {
+  public List<QuestionResponse> getQuestions(Category category) {
     return questionRepository.findByCategory(category).stream()
         .map(QuestionResponse::from)
         .toList();
   }
 
   @Transactional(readOnly = true)
-  public QuestionResponse getCategoryAndCategoryInId(String category, Long categoryInId) {
+  public QuestionResponse getCategoryAndCategoryInId(Category category, Long categoryInId) {
     Question question =
         questionRepository
             .findByCategoryAndCategoryInId(category, categoryInId)
@@ -61,8 +61,8 @@ public class QuestionService {
       updateQuestion.updateQuestion(request.getQuestion());
     }
     if (!request.categoryIsNull()) {
-      updateQuestion.updateCategory(request.getCategory());
       Long categoryInId = questionRepository.countByCategory(request.getCategory());
+      updateQuestion.updateCategory(request.getCategory());
       updateQuestion.updateCategoryInId(categoryInId);
     }
     questionRepository.save(updateQuestion);

@@ -9,9 +9,9 @@ import xyz.catequest.spring.domain.question.enums.Category;
 public interface QuestionRepository extends JpaRepository<Question, Long> {
   Optional<Question> findById(Long id);
 
-  List<Question> findByCategory(String category);
+  List<Question> findByCategory(Category category);
 
-  Optional<Question> findByCategoryAndCategoryInId(String category, Long categoryInId);
+  Optional<Question> findByCategoryAndCategoryInId(Category category, Long categoryInId);
 
   Long countByCategory(Category category);
 

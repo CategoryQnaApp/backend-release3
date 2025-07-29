@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import xyz.catequest.spring.domain.question.dto.request.CreateQuestionRequest;
 import xyz.catequest.spring.domain.question.dto.request.UpdateQuestionRequest;
 import xyz.catequest.spring.domain.question.dto.response.QuestionResponse;
+import xyz.catequest.spring.domain.question.enums.Category;
 import xyz.catequest.spring.domain.question.service.QuestionService;
 import xyz.catequest.spring.global.dto.Response;
 
@@ -34,13 +35,13 @@ public class QuestionController {
 
   @GetMapping("/v1/questions/{category}/{categoryInId}")
   public Response<QuestionResponse> getQuestion(
-      @NotBlank @PathVariable String category, @Positive @PathVariable Long categoryInId) {
+      @NotBlank @PathVariable Category category, @Positive @PathVariable Long categoryInId) {
     QuestionResponse response = questionService.getCategoryAndCategoryInId(category, categoryInId);
     return Response.success(response);
   }
 
-  @GetMapping("/v1/questions")
-  public Response<List<QuestionResponse>> getQuestions(@NotBlank @RequestParam String category) {
+  @GetMapping("/v1/questions/{category}")
+  public Response<List<QuestionResponse>> getQuestions(@NotBlank @PathVariable Category category) {
     List<QuestionResponse> responses = questionService.getQuestions(category);
     return Response.success(responses);
   }

@@ -19,10 +19,10 @@ import xyz.catequest.spring.global.entity.BaseEntity;
 @Getter
 @NoArgsConstructor
 @Entity
-@Table(name = "USERS")
+@Table(name = "users")
 @SQLRestriction("deleted_at IS NULL")
 @SQLDelete(
-    sql = "UPDATE users SET user_status = 'DELETED', deleted_at = current_timestamp WHERE id = ?")
+    sql = "UPDATE users SET user_status = 'DELETE', deleted_at = current_timestamp WHERE id = ?")
 public class User extends BaseEntity {
 
   @Id
