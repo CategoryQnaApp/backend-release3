@@ -1,6 +1,8 @@
 package xyz.catequest.spring.domain.question.controller;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -12,69 +14,56 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import xyz.catequest.spring.domain.question.dto.request.CreateQuestionRequest;
 import xyz.catequest.spring.domain.question.dto.request.UpdateQuestionRequest;
 import xyz.catequest.spring.domain.question.dto.response.QuestionResponse;
-import xyz.catequest.spring.domain.question.entity.Question;
 import xyz.catequest.spring.domain.question.service.QuestionService;
+import xyz.catequest.spring.global.dto.Response;
 
 @RestController
+@RequestMapping("/api")
 @RequiredArgsConstructor
 public class QuestionController {
   private final QuestionService questionService;
 
-  @GetMapping("/12")
-  public Question questionMethod3(@RequestParam Long id) {
-    return questionService.findQuestionById(id);
+  @GetMapping("/v1/questions")
+  public Response<QuestionResponse> getQuestion(
+      @NotBlank @RequestParam String category, @Positive @RequestParam Long categoryInId) {
+    QuestionResponse response = questionService.getCategoryAndCategoryInId(category, categoryInId);
+    return Response.success(response);
   }
 
-  @PostMapping("/api/v1/question")
-  public ResponseEntity<QuestionResponse> saveQuestion(
+  @GetMapping("/v1/questions")
+  public Response<List<QuestionResponse>> getQuestions(
+      @NotBlank @RequestParam String category) {
+    List<QuestionResponse> responses = questionService.findQuestions(category);
+    return Response.success(responses);
+  }
+
+  @PostMapping("/v1/question")
+  public Response<QuestionResponse> saveQuestion(
       @Valid @RequestBody CreateQuestionRequest createQuestionRequest) {
-    QuestionResponse questionResponse =
+    QuestionResponse response =
         questionService.saveQuestion(
             createQuestionRequest.getQuestion(), createQuestionRequest.getCategory());
-    return new ResponseEntity<>(questionResponse, HttpStatus.CREATED); // httpStatus 201 created 감
+    return Response.created(response);
   }
 
-  @GetMapping("/api/v1/questions")
-  public ResponseEntity<List<QuestionResponse>> getQuestions(@RequestParam String category) {
-    //    QuestionResponse questionResponse = (QuestionResponse)
-    // questionService.findQuestions(category);
-    //    return new ResponseEntity<>(questionResponse, HttpStatus.OK);
-    return new ResponseEntity<>(questionService.findQuestions(category), HttpStatus.OK);
+  @PatchMapping("/v1/question/{id}")
+  public Response<Void> updateQuestion(
+      @Positive @PathVariable Long id,
+      @RequestBody UpdateQuestionRequest request) {
+    questionService.updateQuestion(id, request);
+    return Response.success();
   }
 
-  @GetMapping("/api/v1/questions/1")
-  public ResponseEntity<QuestionResponse> getQuestion(
-      @RequestParam String category, @RequestParam Long categoryInId) {
-    return new ResponseEntity<>(
-        questionService.getCategoryAndCategoryInId(category, categoryInId), HttpStatus.OK);
-  }
-
-  @PatchMapping("/api/v1/question/{id}/{qnc}")
-  public void updateQuestion(
-      @PathVariable Long id,
-      @PathVariable String qnc,
-      @RequestBody UpdateQuestionRequest updateQuestionRequest) {
-    if (qnc.equals("q")) {
-      questionService.updateQuestion(id, updateQuestionRequest.getQuestion());
-    } else {
-      questionService.updateCategory(id, updateQuestionRequest.getCategory());
-    }
-  }
-
-  @PutMapping("/api/v1/question/{id}")
-  public void updateQuestionAndCategory(
-      @PathVariable Long id, @RequestBody UpdateQuestionRequest updateQuestionRequest) {
-    questionService.updateQuestionAndCategory(
-        id, updateQuestionRequest.getQuestion(), updateQuestionRequest.getCategory());
-  }
-
-  @DeleteMapping("/api/v1/question/{id}/del")
-  public void deleteQuestion(@PathVariable Long id) {
+  @DeleteMapping("/v1/question/{id}/del")
+  public Response<Void> deleteQuestion(
+      @PathVariable Long id) {
     questionService.deleteQuestion(id);
+    return Response.success();
   }
 }

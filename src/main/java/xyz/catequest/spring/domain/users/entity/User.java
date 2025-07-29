@@ -10,6 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 import xyz.catequest.spring.domain.users.enums.UserRole;
 import xyz.catequest.spring.domain.users.enums.UserStatus;
@@ -19,7 +20,8 @@ import xyz.catequest.spring.global.entity.BaseEntity;
 @NoArgsConstructor
 @Entity
 @Table(name = "USERS")
-@SQLRestriction("user_status = 'ACTIVE'")
+@SQLRestriction("deleted_at IS NULL")
+@SQLDelete(sql = "UPDATE users SET user_status = 'DELETED', deleted_at = current_timestamp WHERE id = ?")
 public class User extends BaseEntity {
 
   @Id

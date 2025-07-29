@@ -5,17 +5,16 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import xyz.catequest.spring.domain.question.entity.Question;
+import xyz.catequest.spring.domain.question.enums.Category;
 
-@Repository
 public interface QuestionRepository extends JpaRepository<Question, Long> {
-
   Optional<Question> findById(Long id);
 
   List<Question> findByCategory(String category);
 
   Optional<Question> findByCategoryAndCategoryInId(String category, Long categoryInId);
 
-  Long countByCategory(String category);
+  Long countByCategory(Category category);
 
   Long question(String question);
 }
