@@ -35,7 +35,7 @@ public enum ErrorMessage {
   WRONG_PASSWORD(UNAUTHORIZED, "아이디가 없거나, 비밀번호가 틀렸습니다."),
 
   /* 4xx question*/
-  NOT_FOUND_QUESTION(BAD_REQUEST, "없는 질문내용입니다"),
+  NOT_FOUND_QUESTION(BAD_REQUEST, "없는 질문 이거나 변경된 질문입니다"),
 
   /* 5xx */
   INTERNAL_ERROR(INTERNAL_SERVER_ERROR, "내부 서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요."),

@@ -1,12 +1,20 @@
 package xyz.catequest.spring.domain.question.dto.request;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import xyz.catequest.spring.domain.question.enums.Category;
 
 @Getter
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class UpdateQuestionRequest {
-  private final String question;
+  private String question;
+  private Category category;
 
-  private final String category;
+  public boolean questionIsNull() {
+    return question == null || question.isBlank();
+  }
+
+  public boolean categoryIsNull() {
+    return category == null;
+  }
 }

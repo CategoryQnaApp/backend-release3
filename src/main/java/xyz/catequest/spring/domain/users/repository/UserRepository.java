@@ -8,8 +8,4 @@ public interface UserRepository extends JpaRepository<User, Long> {
   Optional<User> findByEmail(String email);
 
   boolean existsByEmail(String email);
-
-  default void delete(User user) {
-    throw new UnsupportedOperationException("Soft delete is used instead of physical delete");
-  }
 }
