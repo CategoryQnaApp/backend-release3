@@ -24,7 +24,7 @@ import xyz.catequest.spring.global.entity.BaseEntity;
 @SQLRestriction("deleted_at IS NULL")
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@SQLDelete(sql = "UPDATE question SET deleted_at = current_timestamp WHERE id = ?")
+@SQLDelete(sql = "UPDATE questions SET deleted_at = current_timestamp WHERE id = ?")
 public class Question extends BaseEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
