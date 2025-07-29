@@ -1,6 +1,5 @@
-package xyz.catequest.spring.domain.answer.contoller;
+package xyz.catequest.spring.domain.answer.controller;
 
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,36 +21,20 @@ public class AnswerController {
 
   private final AnswerService answerService;
 
-  //  답변 전달
   @PostMapping("/v1/questions/{questionId}/answers")
   public ResponseEntity<CreateAnswerResponse> saveAnswer(
       @PathVariable Long questionId, @RequestBody CreateAnswerRequest createAnswerRequest
-      // todo : 인증 추가하기
+      // todo : 인증 추가하기 (이건 아직임)
       ) {
-
     answerService.saveAnswer(questionId, createAnswerRequest.getAnswer());
 
     return new ResponseEntity<>(CreateAnswerResponse.isOk(), HttpStatus.OK);
   }
 
-  //  답변 확인
-  @GetMapping("/v1/questions/{questionId}/answers")
-  public ResponseEntity<List<GetAnswerResponse>> getAnswerByQuestion(
-      @PathVariable Long questionId) {
-    return new ResponseEntity<>(answerService.getAnswerByQuestionId(questionId), HttpStatus.OK);
-  }
-
-  //  답변 단건 조회
-  @GetMapping("/v1/questions/answers/{answerId}")
-  public ResponseEntity<GetAnswerResponse> getAnswer(@PathVariable Long answerId) {
+  @GetMapping("/v1/answers/{answerId}")
+  public ResponseEntity<GetAnswerResponse> getAnswers(@PathVariable Long answerId) {
     GetAnswerResponse answer = answerService.getAnswer(answerId);
 
     return new ResponseEntity<>(answer, HttpStatus.OK);
-  }
-
-  //  답변 다건 조회
-  @GetMapping("/v1/questions/answers")
-  public ResponseEntity<List<GetAnswerResponse>> getAnswers() {
-    return new ResponseEntity<>(answerService.getAnswers(), HttpStatus.OK);
   }
 }

@@ -1,9 +1,13 @@
 package xyz.catequest.spring.global.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import xyz.catequest.spring.domain.users.entity.User;
+import xyz.catequest.spring.domain.users.enums.UserRole;
 import xyz.catequest.spring.global.enums.ErrorMessage;
 import xyz.catequest.spring.global.exception.ServerException;
 
@@ -12,7 +16,6 @@ import xyz.catequest.spring.global.exception.ServerException;
 @RequiredArgsConstructor(staticName = "of")
 public class AuthUser {
   private final Long userId;
-  private final String email;
   private final List<GrantedAuthority> authorities;
 
   public String getRole() {
@@ -22,5 +25,13 @@ public class AuthUser {
     return authorities.get(0).getAuthority();
   }
 
-  // todo : 정적 팩토리 메소드 추가하기 from
+  public static AuthUser of(Long userId, UserRole role) {
+    List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
+    grantedAuthorities.add(new SimpleGrantedAuthority(role.name()));
+    return new AuthUser(userId, grantedAuthorities);
+  }
+
+  public static AuthUser from(User user) {
+    return AuthUser.of(user.getId(), user.getRole());
+  }
 }

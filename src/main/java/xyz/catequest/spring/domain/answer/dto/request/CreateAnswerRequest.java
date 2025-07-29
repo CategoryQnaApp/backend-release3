@@ -13,7 +13,9 @@ public class CreateAnswerRequest {
   @Size(min = 1)
   private final String answer;
 
-  //  private final String envlope;
-  //
-  //  private final Long characterLimitItemCount;
+  @NotBlank private final Long questionId;
+
+  private final String envelope;
+
+  private final Long characterLimitItemCount;
 }

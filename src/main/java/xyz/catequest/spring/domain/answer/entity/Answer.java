@@ -13,12 +13,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import xyz.catequest.spring.domain.question.entity.Question;
+import xyz.catequest.spring.global.entity.BaseEntity;
 
 @Getter
 @NoArgsConstructor
 @Entity
 @Table(name = "ANSWERS")
-public class Answer { // extends BaseEntity {
+public class Answer extends BaseEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,10 +30,10 @@ public class Answer { // extends BaseEntity {
 
   @Setter
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "question_id", updatable = false)
-  //  @JsonIgnore
+  @JoinColumn(name = "question_id", nullable = false)
   private Question question;
 
+  // 이거 CRUD 해야댐
   // @Column(name = "post_page")
   // private String postPage;
   //
