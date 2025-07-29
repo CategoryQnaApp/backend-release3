@@ -9,6 +9,7 @@ import xyz.catequest.spring.domain.question.dto.response.QuestionResponse;
 import xyz.catequest.spring.domain.question.entity.Question;
 import xyz.catequest.spring.domain.question.enums.Category;
 import xyz.catequest.spring.domain.question.repository.QuestionRepository;
+import xyz.catequest.spring.global.dto.Response;
 import xyz.catequest.spring.global.enums.ErrorMessage;
 import xyz.catequest.spring.global.exception.NotFoundException;
 
@@ -18,7 +19,15 @@ public class QuestionService {
   private final QuestionRepository questionRepository;
 
   @Transactional(readOnly = true)
-  public List<QuestionResponse> findQuestions(String category) {
+  public QuestionResponse getQuestion(Long id) {
+    Question question = questionRepository
+        .findById(id)
+        .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_QUESTION));
+    return QuestionResponse.from(question);
+  }
+
+  @Transactional(readOnly = true)
+  public List<QuestionResponse> getQuestions(String category) {
     return questionRepository.findByCategory(category).stream()
         .map(QuestionResponse::from)
         .toList();
@@ -59,6 +68,10 @@ public class QuestionService {
 
   @Transactional
   public void deleteQuestion(Long id) {
-    questionRepository.deleteById(id);
+    Question deleteQuestion =
+        questionRepository
+            .findById(id)
+            .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_QUESTION));
+    questionRepository.delete(deleteQuestion);
   }
 }

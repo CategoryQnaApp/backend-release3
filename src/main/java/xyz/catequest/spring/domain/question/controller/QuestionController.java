@@ -26,20 +26,27 @@ import xyz.catequest.spring.global.dto.Response;
 public class QuestionController {
   private final QuestionService questionService;
 
-  @GetMapping("/v1/questions")
+  @GetMapping("/v1/questions/{id}")
   public Response<QuestionResponse> getQuestion(
-      @NotBlank @RequestParam String category, @Positive @RequestParam Long categoryInId) {
+      @Positive @PathVariable Long id) {
+    QuestionResponse response = questionService.getQuestion(id);
+    return Response.success(response);
+  }
+
+  @GetMapping("/v1/questions/{category}/{categoryInId}")
+  public Response<QuestionResponse> getQuestion(
+      @NotBlank @PathVariable String category, @Positive @PathVariable Long categoryInId) {
     QuestionResponse response = questionService.getCategoryAndCategoryInId(category, categoryInId);
     return Response.success(response);
   }
 
   @GetMapping("/v1/questions")
   public Response<List<QuestionResponse>> getQuestions(@NotBlank @RequestParam String category) {
-    List<QuestionResponse> responses = questionService.findQuestions(category);
+    List<QuestionResponse> responses = questionService.getQuestions(category);
     return Response.success(responses);
   }
 
-  @PostMapping("/v1/question")
+  @PostMapping("/v1/questions")
   public Response<QuestionResponse> saveQuestion(
       @Valid @RequestBody CreateQuestionRequest createQuestionRequest) {
     QuestionResponse response =
@@ -48,14 +55,14 @@ public class QuestionController {
     return Response.created(response);
   }
 
-  @PatchMapping("/v1/question/{id}")
+  @PatchMapping("/v1/questions/{id}")
   public Response<Void> updateQuestion(
       @Positive @PathVariable Long id, @RequestBody UpdateQuestionRequest request) {
     questionService.updateQuestion(id, request);
     return Response.success();
   }
 
-  @DeleteMapping("/v1/question/{id}/del")
+  @DeleteMapping("/v1/questions/{id}")
   public Response<Void> deleteQuestion(@PathVariable Long id) {
     questionService.deleteQuestion(id);
     return Response.success();
