@@ -5,10 +5,13 @@ on:
     branches: [ "develop", "main" ]
   pull_request:
     branches: [ "develop", "main" ]
+  workflow_run:
+    workflows: [ "Google-Java-Style_Format" ]
+    types:
+      - completed
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
     permissions:
       contents: read
