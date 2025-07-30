@@ -3,10 +3,6 @@ name: Java CI with Gradle
 on:
   pull_request:
     branches: [ "develop" ]
-  workflow_run:
-    workflows: [ "Google_Java_Style_Format" ]
-    types:
-      - completed
 
 jobs:
   build:
