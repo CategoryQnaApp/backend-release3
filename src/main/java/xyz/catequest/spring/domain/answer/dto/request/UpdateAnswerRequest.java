@@ -14,9 +14,7 @@ public class UpdateAnswerRequest {
   @Size(min = 1)
   private final String content;
 
-  @NotBlank
-  private final String envelope;
+  @NotBlank private final String envelope;
 
-  @PositiveOrZero
-  private final Long usedItemCount;
+  @PositiveOrZero private final Long usedItemCount;
 }
