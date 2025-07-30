@@ -11,8 +11,9 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+import xyz.catequest.spring.domain.answer.dto.request.CreateAnswerRequest;
 import xyz.catequest.spring.domain.question.entity.Question;
+import xyz.catequest.spring.domain.users.entity.User;
 import xyz.catequest.spring.global.entity.BaseEntity;
 
 @Getter
@@ -28,19 +29,49 @@ public class Answer extends BaseEntity {
   @Column(name = "contents")
   private String contents;
 
-  @Setter
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "question_id", nullable = false)
   private Question question;
 
-  // 이거 CRUD 해야댐
-  // @Column(name = "post_page")
-  // private String postPage;
-  //
-  // @Column(name = "item_count")
-  // private Long characterLimitItemCount;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "user_id", nullable = false)
+  private User user;
 
-  public Answer(String answer) {
-    this.contents = answer;
+  @Column(nullable = false)
+  private String envelope;
+
+  private Long usedItemCount;
+
+  public Answer(String contents, Question question, User user, String envelope) {
+    this.contents = contents;
+    this.question = question;
+    this.user = user;
+    this.envelope = envelope;
+    this.usedItemCount = 0L;
+  }
+
+  public Answer(String contents, Question question, User user, String envelope, Long usedItemCount) {
+    this(contents, question, user, envelope);
+    this.usedItemCount = usedItemCount;
+  }
+
+  public static Answer of(String contents, Question question, User user, String envelope) {
+    return new Answer(contents, question, user, envelope);
+  }
+
+  public static Answer from(CreateAnswerRequest request, User user, Question question) {
+    return new Answer(request.getContent(), question, user, request.getEnvelope(), request.getUsedItemCount());
+  }
+
+  public void updateContents(String newContents) {
+    this.contents = newContents;
+  }
+
+  public void updateEnvelope(String envelope) {
+    this.envelope = envelope;
+  }
+
+  public void updateUsedItemCount(Long usedItemCount) {
+    this.usedItemCount = usedItemCount;
   }
 }

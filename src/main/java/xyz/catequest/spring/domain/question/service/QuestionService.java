@@ -18,6 +18,13 @@ public class QuestionService {
   private final QuestionRepository questionRepository;
 
   @Transactional(readOnly = true)
+  public Question getQuestionEntity(Long id) {
+    return questionRepository
+        .findById(id)
+        .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_QUESTION));
+  }
+
+  @Transactional(readOnly = true)
   public QuestionResponse getQuestion(Long id) {
     Question question =
         questionRepository
