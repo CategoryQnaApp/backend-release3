@@ -16,9 +16,7 @@ public class CreateAnswerRequest {
 
   @NotBlank private final Long questionId;
 
-  @NotBlank
-  private final String envelope;
+  @NotBlank private final String envelope;
 
-  @Positive
-  private final Long usedItemCount;
+  @Positive private final Long usedItemCount;
 }
