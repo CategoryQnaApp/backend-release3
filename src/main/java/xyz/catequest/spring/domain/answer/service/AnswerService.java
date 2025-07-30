@@ -6,8 +6,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import xyz.catequest.spring.domain.answer.dto.request.CreateAnswerRequest;
-import xyz.catequest.spring.domain.answer.dto.request.UpdateAnswerRequest;
+import xyz.catequest.spring.domain.answer.dto.request.AnswerRequest;
 import xyz.catequest.spring.domain.answer.dto.response.GetAnswerResponse;
 import xyz.catequest.spring.domain.answer.entity.Answer;
 import xyz.catequest.spring.domain.answer.repository.AnswerRepository;
@@ -30,7 +29,7 @@ public class AnswerService {
   private final UserService userService;
 
   @Transactional
-  public void saveAnswer(Long questionId, CreateAnswerRequest request, Long userId) {
+  public void saveAnswer(Long questionId, AnswerRequest request, Long userId) {
     User user = userService.getUserEntity(userId);
     Question question = questionService.getQuestionEntity(questionId);
     Answer saveAnswer = Answer.from(request, user, question);
@@ -38,7 +37,7 @@ public class AnswerService {
   }
 
   @Transactional
-  public GetAnswerResponse updateAnswer(Long answerId, UpdateAnswerRequest request, Long userId) {
+  public GetAnswerResponse updateAnswer(Long answerId, AnswerRequest request, Long userId) {
     Answer findAnswer =
         answerRepository
             .findByIdAndUser_Id(answerId, userId)
