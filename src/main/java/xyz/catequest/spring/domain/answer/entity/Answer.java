@@ -11,17 +11,20 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
 import xyz.catequest.spring.domain.answer.dto.request.AnswerRequest;
 import xyz.catequest.spring.domain.question.entity.Question;
 import xyz.catequest.spring.domain.users.entity.User;
 import xyz.catequest.spring.global.entity.BaseEntity;
 
 @Getter
-@NoArgsConstructor
 @Entity
-@Table(name = "ANSWERS")
+@Table(name = "answers")
+@NoArgsConstructor
+@SQLRestriction("deleted_at IS NULL")
+@SQLDelete(sql = "UPDATE answers SET deleted_at = current_timestamp WHERE id = ?")
 public class Answer extends BaseEntity {
-
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;

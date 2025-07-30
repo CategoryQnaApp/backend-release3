@@ -89,4 +89,17 @@ public class AnswerService {
     List<Answer> answers = answerRepository.findByUser_Id(userId);
     return answers.stream().map(GetAnswerResponse::from).toList();
   }
+
+  @Transactional
+  public void deleteAnswer(Long answerId, Long userId) {
+    Answer deleteAnswer =
+        answerRepository
+            .findByIdAndUser_Id(answerId, userId)
+            .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_ANSWER));
+    Duration duration = Duration.between(deleteAnswer.getCreatedAt(), LocalDateTime.now());
+    if (duration.toHours() >= 24) {
+      throw new InvalidRequestException(ErrorMessage.ANSWER_EXPIRED);
+    }
+    answerRepository.delete(deleteAnswer);
+  }
 }
