@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Positive;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -82,5 +83,13 @@ public class AnswerController {
   public Response<List<GetAnswerResponse>> getAnswers(@AuthenticationPrincipal AuthUser authUser) {
     List<GetAnswerResponse> responses = answerService.getAnswersWithUserId(authUser.getUserId());
     return Response.success(responses);
+  }
+
+  @DeleteMapping("/v1/question/answers/{answerId}")
+  public Response<Void> deleteAnswer(
+      @Positive @PathVariable Long answerId, @AuthenticationPrincipal AuthUser authUser
+  ) {
+    answerService.deleteAnswer(answerId, authUser.getUserId());
+    return Response.success();
   }
 }
