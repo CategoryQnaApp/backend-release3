@@ -1,7 +1,6 @@
 package xyz.catequest.spring.domain.answer.dto.response;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import xyz.catequest.spring.domain.answer.entity.Answer;
 import xyz.catequest.spring.domain.question.dto.response.QuestionResponse;
@@ -16,6 +15,10 @@ public class GetAnswerResponse {
   private final QuestionResponse question;
 
   public static GetAnswerResponse from(Answer answer) {
-    return GetAnswerResponse.of(answer.getContents(), answer.getEnvelope(), answer.getUsedItemCount(), QuestionResponse.from(answer.getQuestion()));
+    return GetAnswerResponse.of(
+        answer.getContents(),
+        answer.getEnvelope(),
+        answer.getUsedItemCount(),
+        QuestionResponse.from(answer.getQuestion()));
   }
 }

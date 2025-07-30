@@ -35,7 +35,7 @@ public class AuthService {
 
   @Transactional
   public SignAuthResponse signup(String email, String password, String nickname) {
-    if ( !EmailChecker.isValid(email)) {
+    if (!EmailChecker.isValid(email)) {
       throw new InvalidRequestException(ErrorMessage.INVALID_EMAIL);
     }
     if (userRepository.existsByEmail(email)) {
