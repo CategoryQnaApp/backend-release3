@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public class UpdateAnswerRequest {
+public class AnswerRequest {
 
   @NotBlank
   @Size(min = 1)

@@ -2,19 +2,20 @@ package xyz.catequest.spring.domain.answer.dto.response;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import xyz.catequest.spring.domain.answer.entity.Answer;
+import xyz.catequest.spring.domain.question.dto.response.QuestionResponse;
 
 @Getter
-@NoArgsConstructor
+@RequiredArgsConstructor(staticName = "of")
 public class GetAnswerResponse {
 
-  private String answer;
-
-  public GetAnswerResponse(String answer) {
-    this.answer = answer;
-  }
+  private final String content;
+  private final String envelope;
+  private final Long usedItemCount;
+  private final QuestionResponse question;
 
   public static GetAnswerResponse from(Answer answer) {
-    return new GetAnswerResponse(answer.getContents());
+    return GetAnswerResponse.of(answer.getContents(), answer.getEnvelope(), answer.getUsedItemCount(), QuestionResponse.from(answer.getQuestion()));
   }
 }

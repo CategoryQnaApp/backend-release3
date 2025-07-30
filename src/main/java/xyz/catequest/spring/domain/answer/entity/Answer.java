@@ -11,7 +11,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import xyz.catequest.spring.domain.answer.dto.request.CreateAnswerRequest;
+import xyz.catequest.spring.domain.answer.dto.request.AnswerRequest;
 import xyz.catequest.spring.domain.question.entity.Question;
 import xyz.catequest.spring.domain.users.entity.User;
 import xyz.catequest.spring.global.entity.BaseEntity;
@@ -60,7 +60,7 @@ public class Answer extends BaseEntity {
     return new Answer(contents, question, user, envelope);
   }
 
-  public static Answer from(CreateAnswerRequest request, User user, Question question) {
+  public static Answer from(AnswerRequest request, User user, Question question) {
     return new Answer(
         request.getContent(), question, user, request.getEnvelope(), request.getUsedItemCount());
   }

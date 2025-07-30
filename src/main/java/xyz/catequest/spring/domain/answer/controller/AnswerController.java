@@ -12,8 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import xyz.catequest.spring.domain.answer.dto.request.CreateAnswerRequest;
-import xyz.catequest.spring.domain.answer.dto.request.UpdateAnswerRequest;
+import xyz.catequest.spring.domain.answer.dto.request.AnswerRequest;
 import xyz.catequest.spring.domain.answer.dto.response.GetAnswerResponse;
 import xyz.catequest.spring.domain.answer.service.AnswerService;
 import xyz.catequest.spring.domain.question.enums.Category;
@@ -29,7 +28,7 @@ public class AnswerController {
   @PostMapping("/v1/questions/{questionId}/answers")
   public Response<Void> saveAnswer(
       @Positive @PathVariable Long questionId,
-      @Valid @RequestBody CreateAnswerRequest request,
+      @Valid @RequestBody AnswerRequest request,
       @AuthenticationPrincipal AuthUser authuser) {
     answerService.saveAnswer(questionId, request, authuser.getUserId());
     return Response.created();
@@ -38,7 +37,7 @@ public class AnswerController {
   @PostMapping("/v1/questions/answers/{answerId}")
   public Response<GetAnswerResponse> updateAnswer(
       @Positive @PathVariable Long answerId,
-      @Valid @RequestBody UpdateAnswerRequest request,
+      @Valid @RequestBody AnswerRequest request,
       @AuthenticationPrincipal AuthUser authuser) {
     GetAnswerResponse response =
         answerService.updateAnswer(answerId, request, authuser.getUserId());
@@ -60,7 +59,7 @@ public class AnswerController {
     return Response.success(responses);
   }
 
-  @GetMapping("/v1/questions/{category}/answers")
+  @GetMapping("/v1/questions/category/{category}/answers")
   public Response<List<GetAnswerResponse>> getAnswersWithCategory(
       @NotNull @PathVariable Category category, @AuthenticationPrincipal AuthUser authUser) {
     List<GetAnswerResponse> responses =
@@ -68,7 +67,7 @@ public class AnswerController {
     return Response.success(responses);
   }
 
-  @GetMapping("/v1/questions/{category}/{categoryInId}/answers")
+  @GetMapping("/v1/questions/category/{category}/{categoryInId}/answers")
   public Response<List<GetAnswerResponse>> getAnswersWithCategoryAndCategoryInId(
       @NotNull @PathVariable Category category,
       @PathVariable Long categoryInId,
