@@ -19,6 +19,13 @@ public class UserService {
   private final PasswordEncoder passwordEncoder;
 
   @Transactional(readOnly = true)
+  public User getUserEntity(Long userId) {
+    return userRepository
+        .findById(userId)
+        .orElseThrow(() -> new NotFoundException(ErrorMessage.USER_NOT_FOUND));
+  }
+
+  @Transactional(readOnly = true)
   public GetUserResponse myInfo(Long userId) {
     User user =
         userRepository

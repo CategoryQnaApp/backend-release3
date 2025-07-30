@@ -1,35 +1,92 @@
 package xyz.catequest.spring.domain.answer.service;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
+import xyz.catequest.spring.domain.answer.dto.request.CreateAnswerRequest;
+import xyz.catequest.spring.domain.answer.dto.request.UpdateAnswerRequest;
 import xyz.catequest.spring.domain.answer.dto.response.GetAnswerResponse;
 import xyz.catequest.spring.domain.answer.entity.Answer;
 import xyz.catequest.spring.domain.answer.repository.AnswerRepository;
 import xyz.catequest.spring.domain.question.entity.Question;
-import xyz.catequest.spring.domain.question.repository.QuestionRepository;
+import xyz.catequest.spring.domain.question.enums.Category;
+import xyz.catequest.spring.domain.question.service.QuestionService;
+import xyz.catequest.spring.domain.users.entity.User;
+import xyz.catequest.spring.domain.users.service.UserService;
+import xyz.catequest.spring.global.enums.ErrorMessage;
+import xyz.catequest.spring.global.exception.InvalidRequestException;
+import xyz.catequest.spring.global.exception.NotFoundException;
 
 @Service
 @RequiredArgsConstructor
 public class AnswerService {
 
   private final AnswerRepository answerRepository;
-  private final QuestionRepository questionRepository;
 
-  public void saveAnswer(Long questionId, String answer) {
-    // todo : question 추가하기
-    Question question =
-        questionRepository
-            .findById(questionId)
-            .orElseThrow(() -> new RuntimeException("에러코드 이유가없ㅇ등ㄹ등"));
-    Answer saveAnswer = new Answer(answer);
-    saveAnswer.setQuestion(question);
+  private final QuestionService questionService;
+  private final UserService userService;
 
+  @Transactional
+  public void saveAnswer(Long questionId, CreateAnswerRequest request, Long userId) {
+    User user = userService.getUserEntity(userId);
+    Question question = questionService.getQuestionEntity(questionId);
+    Answer saveAnswer = Answer.from(request, user, question);
     answerRepository.save(saveAnswer);
   }
 
-  public GetAnswerResponse getAnswer(Long answerId) {
+  @Transactional
+  public GetAnswerResponse updateAnswer(Long answerId, UpdateAnswerRequest request, Long userId) {
     Answer findAnswer =
-        answerRepository.findById(answerId).orElseThrow(() -> new RuntimeException("NotFound"));
+        answerRepository
+            .findByIdAndUser_Id(answerId, userId)
+            .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_ANSWER));
+    // Note: Answer 가 24시간이 지났다면 Exception
+    Duration duration = Duration.between(findAnswer.getCreatedAt(), LocalDateTime.now());
+    if( duration.toHours() >= 24) {
+      throw new InvalidRequestException(ErrorMessage.ANSWER_EXPIRED);
+    }
+    findAnswer.updateContents(request.getContent());
+    findAnswer.updateEnvelope(request.getEnvelope());
+    findAnswer.updateUsedItemCount(request.getUsedItemCount());
+    answerRepository.save(findAnswer);
     return GetAnswerResponse.from(findAnswer);
+  }
+
+  @Transactional(readOnly = true)
+  public GetAnswerResponse getAnswer(Long answerId, Long userId) {
+    Answer findAnswer =
+        answerRepository
+            .findByIdAndUser_Id(answerId, userId)
+            .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_ANSWER));
+    return GetAnswerResponse.from(findAnswer);
+  }
+
+  @Transactional(readOnly = true)
+  public List<GetAnswerResponse> getAnswersWithQuestionId(Long questionId, Long userId) {
+    List<Answer> answers = answerRepository.findByQuestion_IdAndUser_Id(questionId, userId);
+    return answers.stream().map(GetAnswerResponse::from).toList();
+  }
+
+  @Transactional(readOnly = true)
+  public List<GetAnswerResponse> getAnswersWithCategory(Category category, Long userId) {
+    List<Answer> answers = answerRepository.findByQuestion_CategoryAndUser_Id(category, userId);
+    return answers.stream().map(GetAnswerResponse::from).toList();
+  }
+
+  @Transactional(readOnly = true)
+  public List<GetAnswerResponse> getAnswersWithCategoryAndCategoryInId(Category category, Long categoryInId, Long userId) {
+    List<Answer> answers = answerRepository.findByQuestion_CategoryAndQuestion_CategoryInIdAndUser_Id(category, categoryInId, userId);
+    return answers.stream().map(GetAnswerResponse::from).toList();
+  }
+
+  @Transactional(readOnly = true)
+  public List<GetAnswerResponse> getAnswersWithUserId(Long userId) {
+    List<Answer> answers = answerRepository.findByUser_Id(userId);
+    return answers.stream().map(GetAnswerResponse::from).toList();
   }
 }
