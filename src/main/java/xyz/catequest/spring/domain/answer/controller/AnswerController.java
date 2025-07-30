@@ -59,7 +59,6 @@ public class AnswerController {
         answerService.getAnswersWithQuestionId(questionId, authUser.getUserId());
     return Response.success(responses);
   }
-
   @GetMapping("/v1/questions/category/{category}/answers")
   public Response<List<GetAnswerResponse>> getAnswersWithCategory(
       @NotNull @PathVariable Category category, @AuthenticationPrincipal AuthUser authUser) {
@@ -78,7 +77,7 @@ public class AnswerController {
             category, categoryInId, authUser.getUserId());
     return Response.success(responses);
   }
-
+  
   @GetMapping("/v1/question/answers")
   public Response<List<GetAnswerResponse>> getAnswers(@AuthenticationPrincipal AuthUser authUser) {
     List<GetAnswerResponse> responses = answerService.getAnswersWithUserId(authUser.getUserId());
