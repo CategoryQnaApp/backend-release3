@@ -80,5 +80,3 @@ public class Answer extends BaseEntity {
     this.usedItemCount = usedItemCount;
   }
 }
-
-

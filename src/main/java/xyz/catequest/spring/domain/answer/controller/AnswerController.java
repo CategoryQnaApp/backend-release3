@@ -59,6 +59,7 @@ public class AnswerController {
         answerService.getAnswersWithQuestionId(questionId, authUser.getUserId());
     return Response.success(responses);
   }
+
   @GetMapping("/v1/questions/category/{category}/answers")
   public Response<List<GetAnswerResponse>> getAnswersWithCategory(
       @NotNull @PathVariable Category category, @AuthenticationPrincipal AuthUser authUser) {
@@ -77,7 +78,7 @@ public class AnswerController {
             category, categoryInId, authUser.getUserId());
     return Response.success(responses);
   }
-  
+
   @GetMapping("/v1/question/answers")
   public Response<List<GetAnswerResponse>> getAnswers(@AuthenticationPrincipal AuthUser authUser) {
     List<GetAnswerResponse> responses = answerService.getAnswersWithUserId(authUser.getUserId());
@@ -86,8 +87,7 @@ public class AnswerController {
 
   @DeleteMapping("/v1/question/answers/{answerId}")
   public Response<Void> deleteAnswer(
-      @Positive @PathVariable Long answerId, @AuthenticationPrincipal AuthUser authUser
-  ) {
+      @Positive @PathVariable Long answerId, @AuthenticationPrincipal AuthUser authUser) {
     answerService.deleteAnswer(answerId, authUser.getUserId());
     return Response.success();
   }

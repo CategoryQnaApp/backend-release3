@@ -1,6 +1,5 @@
 package xyz.catequest.spring.domain.answer.service;
 
-import jakarta.validation.constraints.Positive;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
