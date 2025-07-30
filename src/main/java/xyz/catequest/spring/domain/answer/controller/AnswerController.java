@@ -28,61 +28,60 @@ public class AnswerController {
 
   @PostMapping("/v1/questions/{questionId}/answers")
   public Response<Void> saveAnswer(
-      @Positive @PathVariable Long questionId, @Valid @RequestBody CreateAnswerRequest request, @AuthenticationPrincipal AuthUser authuser
-  ) {
+      @Positive @PathVariable Long questionId,
+      @Valid @RequestBody CreateAnswerRequest request,
+      @AuthenticationPrincipal AuthUser authuser) {
     answerService.saveAnswer(questionId, request, authuser.getUserId());
     return Response.created();
   }
 
   @PostMapping("/v1/questions/answers/{answerId}")
   public Response<GetAnswerResponse> updateAnswer(
-      @Positive @PathVariable Long answerId, @Valid @RequestBody UpdateAnswerRequest request, @AuthenticationPrincipal AuthUser authuser
-  ) {
-    GetAnswerResponse response = answerService.updateAnswer(answerId, request, authuser.getUserId());
+      @Positive @PathVariable Long answerId,
+      @Valid @RequestBody UpdateAnswerRequest request,
+      @AuthenticationPrincipal AuthUser authuser) {
+    GetAnswerResponse response =
+        answerService.updateAnswer(answerId, request, authuser.getUserId());
     return Response.success(response);
   }
 
   @GetMapping("/v1/questions/answers/{answerId}")
   public Response<GetAnswerResponse> getAnswer(
-      @Positive @PathVariable Long answerId, @AuthenticationPrincipal AuthUser authUser
-  ) {
+      @Positive @PathVariable Long answerId, @AuthenticationPrincipal AuthUser authUser) {
     GetAnswerResponse getAnswerResponse = answerService.getAnswer(answerId, authUser.getUserId());
     return Response.success(getAnswerResponse);
   }
 
   @GetMapping("/v1/questions/{questionId}/answers")
   public Response<List<GetAnswerResponse>> getAnswerWithQuestionId(
-      @Positive @PathVariable Long questionId, @AuthenticationPrincipal AuthUser authUser
-  ) {
-    List<GetAnswerResponse> responses = answerService
-        .getAnswersWithQuestionId(questionId, authUser.getUserId());
+      @Positive @PathVariable Long questionId, @AuthenticationPrincipal AuthUser authUser) {
+    List<GetAnswerResponse> responses =
+        answerService.getAnswersWithQuestionId(questionId, authUser.getUserId());
     return Response.success(responses);
   }
 
   @GetMapping("/v1/questions/{category}/answers")
   public Response<List<GetAnswerResponse>> getAnswersWithCategory(
-      @NotNull @PathVariable Category category, @AuthenticationPrincipal AuthUser authUser
-  ) {
-    List<GetAnswerResponse> responses = answerService
-        .getAnswersWithCategory(category, authUser.getUserId());
+      @NotNull @PathVariable Category category, @AuthenticationPrincipal AuthUser authUser) {
+    List<GetAnswerResponse> responses =
+        answerService.getAnswersWithCategory(category, authUser.getUserId());
     return Response.success(responses);
   }
 
   @GetMapping("/v1/questions/{category}/{categoryInId}/answers")
   public Response<List<GetAnswerResponse>> getAnswersWithCategoryAndCategoryInId(
-      @NotNull @PathVariable Category category, @PathVariable Long categoryInId, @AuthenticationPrincipal AuthUser authUser
-  ) {
-    List<GetAnswerResponse> responses = answerService.getAnswersWithCategoryAndCategoryInId(
-        category, categoryInId, authUser.getUserId());
+      @NotNull @PathVariable Category category,
+      @PathVariable Long categoryInId,
+      @AuthenticationPrincipal AuthUser authUser) {
+    List<GetAnswerResponse> responses =
+        answerService.getAnswersWithCategoryAndCategoryInId(
+            category, categoryInId, authUser.getUserId());
     return Response.success(responses);
   }
 
   @GetMapping("/v1/question/answers")
-  public Response<List<GetAnswerResponse>> getAnswers(
-      @AuthenticationPrincipal AuthUser authUser
-  ) {
-    List<GetAnswerResponse> responses = answerService.getAnswersWithUserId(
-        authUser.getUserId());
+  public Response<List<GetAnswerResponse>> getAnswers(@AuthenticationPrincipal AuthUser authUser) {
+    List<GetAnswerResponse> responses = answerService.getAnswersWithUserId(authUser.getUserId());
     return Response.success(responses);
   }
 }

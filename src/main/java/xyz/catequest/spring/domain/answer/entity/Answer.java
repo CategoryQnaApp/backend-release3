@@ -50,7 +50,8 @@ public class Answer extends BaseEntity {
     this.usedItemCount = 0L;
   }
 
-  public Answer(String contents, Question question, User user, String envelope, Long usedItemCount) {
+  public Answer(
+      String contents, Question question, User user, String envelope, Long usedItemCount) {
     this(contents, question, user, envelope);
     this.usedItemCount = usedItemCount;
   }
@@ -60,7 +61,8 @@ public class Answer extends BaseEntity {
   }
 
   public static Answer from(CreateAnswerRequest request, User user, Question question) {
-    return new Answer(request.getContent(), question, user, request.getEnvelope(), request.getUsedItemCount());
+    return new Answer(
+        request.getContent(), question, user, request.getEnvelope(), request.getUsedItemCount());
   }
 
   public void updateContents(String newContents) {

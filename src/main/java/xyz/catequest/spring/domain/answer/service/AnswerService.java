@@ -3,11 +3,9 @@ package xyz.catequest.spring.domain.answer.service;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.ObjectUtils;
 import xyz.catequest.spring.domain.answer.dto.request.CreateAnswerRequest;
 import xyz.catequest.spring.domain.answer.dto.request.UpdateAnswerRequest;
 import xyz.catequest.spring.domain.answer.dto.response.GetAnswerResponse;
@@ -47,7 +45,7 @@ public class AnswerService {
             .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_ANSWER));
     // Note: Answer 가 24시간이 지났다면 Exception
     Duration duration = Duration.between(findAnswer.getCreatedAt(), LocalDateTime.now());
-    if( duration.toHours() >= 24) {
+    if (duration.toHours() >= 24) {
       throw new InvalidRequestException(ErrorMessage.ANSWER_EXPIRED);
     }
     findAnswer.updateContents(request.getContent());
@@ -79,8 +77,11 @@ public class AnswerService {
   }
 
   @Transactional(readOnly = true)
-  public List<GetAnswerResponse> getAnswersWithCategoryAndCategoryInId(Category category, Long categoryInId, Long userId) {
-    List<Answer> answers = answerRepository.findByQuestion_CategoryAndQuestion_CategoryInIdAndUser_Id(category, categoryInId, userId);
+  public List<GetAnswerResponse> getAnswersWithCategoryAndCategoryInId(
+      Category category, Long categoryInId, Long userId) {
+    List<Answer> answers =
+        answerRepository.findByQuestion_CategoryAndQuestion_CategoryInIdAndUser_Id(
+            category, categoryInId, userId);
     return answers.stream().map(GetAnswerResponse::from).toList();
   }
 
