@@ -80,6 +80,8 @@ public class DiaryService {
 
   @Transactional(readOnly = true)
   public List<DiaryResponse> getDiariesByTag(String tag, Long userId) {
+    // bug : 입력된 태그 전부가 안보이고 검색한 태그만 보임.
+    // 그냥 쓸까..
     List<DiaryFlatProjection> flats =
         diaryRepository.findDiariesWithTagsByTagNameAndUserId(tag, userId);
     Map<Long, DiaryResponse> diaryMap = new LinkedHashMap<>();
