@@ -77,7 +77,7 @@ public class DiaryController {
       @Positive @PathVariable Long diaryId,
       @Valid @RequestBody TagRequest request,
       @AuthenticationPrincipal AuthUser user) {
-    diaryTagService.updateDiaryTag(diaryId, request.getHashTagList(), user.getUserId());
+    diaryTagService.updateDiaryTag(diaryId, request.getTagList(), user.getUserId());
     return Response.success();
   }
 
@@ -86,7 +86,7 @@ public class DiaryController {
       @Positive @PathVariable Long diaryId,
       @Valid @RequestBody TagRequest request,
       @AuthenticationPrincipal AuthUser user) {
-    diaryTagService.addTagToDiary(diaryId, request.getHashTagList(), user.getUserId());
+    diaryTagService.addTagToDiary(diaryId, request.getTagList(), user.getUserId());
     return Response.success();
   }
 
@@ -95,7 +95,7 @@ public class DiaryController {
       @Positive @PathVariable Long diaryId,
       @Valid @RequestBody TagRequest request,
       @AuthenticationPrincipal AuthUser user) {
-    diaryTagService.removeTagFromDiary(diaryId, request.getHashTagList(), user.getUserId());
+    diaryTagService.removeTagFromDiary(diaryId, request.getTagList(), user.getUserId());
     return Response.success();
   }
 
