@@ -10,7 +10,7 @@ public interface TagRepository extends JpaRepository<Tag, Long> {
 
   List<Tag> findByCreator_Id(Long userId);
 
-  List<Tag> findAllByNameInAndCreator_Id(List<String> tagNames, Long userId);
+  List<Tag> findAllByNameInAndCreator_Id(List<String> names, Long creatorId);
 
-  boolean existsByNameAndCreator_Id(String tagName, Long userId);
+  boolean existsByNameAndCreator_Id(String tagName, Long creatorId);
 }

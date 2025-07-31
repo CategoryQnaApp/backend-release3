@@ -40,7 +40,7 @@ public class DiaryTagService {
             user, request.getContent(), request.getEmoticons(), request.getSavedTime());
 
     saveDiaryTag(request.getTagList(), savedDiary, user);
-    return DiaryResponse.from(savedDiary);
+    return DiaryResponse.from(savedDiary, request.getTagList());
   }
 
   @Transactional
@@ -86,7 +86,10 @@ public class DiaryTagService {
         existingTags.stream().collect(Collectors.toMap(Tag::getName, Function.identity()));
 
     for (String tagName : tagNames) {
-      Tag tag = tagMap.getOrDefault(tagName, tagService.saveTag(tagName, user));
+      Tag tag = tagMap.get(tagName);
+      if (tag == null) {
+        tag = tagService.saveTag(tagName, user);
+      }
       DiaryTag diaryTag = DiaryTag.createDiaryTag(diary, tag);
       diaryTagRepository.save(diaryTag);
     }
