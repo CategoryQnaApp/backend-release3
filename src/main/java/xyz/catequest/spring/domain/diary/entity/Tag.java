@@ -26,7 +26,7 @@ public class Tag {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column private String name; // '#공부' 등 (보통 '#' 없이 저장)
+  @Column private String name;
 
   @ManyToOne(fetch = FetchType.LAZY)
   private User creator;
@@ -35,7 +35,7 @@ public class Tag {
   private List<DiaryTag> diaryTags = new ArrayList<>();
 
   public Tag(String name, User creator) {
-    this.name = name;
+    this.name = name.replace("#", "");
     this.creator = creator;
   }
 
