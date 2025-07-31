@@ -86,8 +86,7 @@ public class DiaryTagService {
         existingTags.stream().collect(Collectors.toMap(Tag::getName, Function.identity()));
 
     for (String tagName : tagNames) {
-      Tag tag = tagMap
-          .getOrDefault(tagName, tagService.saveTag(tagName, user));
+      Tag tag = tagMap.getOrDefault(tagName, tagService.saveTag(tagName, user));
       DiaryTag diaryTag = DiaryTag.createDiaryTag(diary, tag);
       diaryTagRepository.save(diaryTag);
     }
