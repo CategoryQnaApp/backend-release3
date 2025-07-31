@@ -26,8 +26,7 @@ public class Tag {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column
-  private String name; // '#공부' 등 (보통 '#' 없이 저장)
+  @Column private String name; // '#공부' 등 (보통 '#' 없이 저장)
 
   @ManyToOne(fetch = FetchType.LAZY)
   private User creator;
