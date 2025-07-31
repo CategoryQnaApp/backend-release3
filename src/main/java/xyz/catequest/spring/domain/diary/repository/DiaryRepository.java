@@ -19,13 +19,13 @@ public interface DiaryRepository extends JpaRepository<Diary, Long> {
   Optional<Diary> findByIdWithTags(@Param("diaryId") Long diaryId, @Param("userId") Long userId);
 
   @Query(
-      """
+"""
 SELECT d.id as diaryId,
        d.content as content,
        d.imageUrl as imageUrl,
        d.emoticons as emoticons,
        t.name as tagName,
-       d.createdAt as savedAt
+       d.savedAt as savedAt
 FROM Diary d
 LEFT JOIN d.diaryTags dt
 LEFT JOIN dt.tag t
@@ -40,7 +40,7 @@ SELECT d.id as diaryId,
        d.imageUrl as imageUrl,
        d.emoticons as emoticons,
        t.name as tagName,
-       d.createdAt as savedAt
+       d.savedAt as savedAt
 FROM Diary d
 LEFT JOIN d.diaryTags dt
 LEFT JOIN dt.tag t
