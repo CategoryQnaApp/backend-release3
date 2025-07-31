@@ -27,7 +27,8 @@ public class Tag {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column private String name;
+  @Column(nullable = false, length = 50)
+  private String name;
 
   @ManyToOne(fetch = FetchType.LAZY)
   private User creator;
