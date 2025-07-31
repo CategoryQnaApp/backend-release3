@@ -9,8 +9,6 @@ import xyz.catequest.spring.domain.diary.entity.Diary;
 import xyz.catequest.spring.domain.diary.projection.DiaryFlatProjection;
 
 public interface DiaryRepository extends JpaRepository<Diary, Long> {
-  List<Diary> findByUser_Id(Long userId);
-
   Optional<Diary> findByIdAndUser_id(Long id, Long userId);
 
   @Query(
