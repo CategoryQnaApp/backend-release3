@@ -17,12 +17,12 @@ public class DiaryRequest {
   @Size(max = 5)
   @Valid
   @NotEmpty
-  private final List<@NotBlank String> emoticons;
+  private final List<@NotBlank @Size(min = 1, max = 20) String> emoticons;
 
   @Size(max = 5)
   @Valid
   @NotEmpty
-  private final List<@NotBlank String> tagList;
+  private final List<@NotBlank @Size(min = 1, max = 20) String> tagList;
 
   // todo : 시간 format 정하기 ex) 2024-10-03 10:50
   private final LocalDateTime savedTime;
