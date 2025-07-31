@@ -86,7 +86,7 @@ public class AuthService {
 
   @Transactional(readOnly = true)
   public String refreshAccessToken(String refreshToken) {
-    if (!refreshTokenRepository.existsByRefreshToken(refreshToken)) {
+    if (!refreshTokenRepository.existsByToken(refreshToken)) {
       throw new InvalidRequestException(ErrorMessage.INVALID_REFRESH_TOKEN);
     }
 

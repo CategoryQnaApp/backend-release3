@@ -16,7 +16,7 @@ public class QuestionResponse {
   public static QuestionResponse from(Question question) {
     return new QuestionResponse(
         question.getId(),
-        question.getQuestion(),
+        question.getContent(),
         question.getCategory(),
         question.getCategoryInId());
   }
