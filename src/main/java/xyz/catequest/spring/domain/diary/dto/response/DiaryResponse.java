@@ -26,4 +26,14 @@ public class DiaryResponse {
         diary.getDiaryTags().stream().map(d -> d.getTag().getName()).toList(),
         diary.getSavedAt());
   }
+
+  public static DiaryResponse from(Diary diary, List<String> tagNames) {
+    return new DiaryResponse(
+        diary.getId(),
+        diary.getContent(),
+        diary.getImageUrl(),
+        EmoticonUtils.fromString(diary.getEmoticons()),
+        tagNames,
+        diary.getSavedAt());
+  }
 }

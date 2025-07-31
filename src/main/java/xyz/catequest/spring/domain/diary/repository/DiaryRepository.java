@@ -19,34 +19,40 @@ public interface DiaryRepository extends JpaRepository<Diary, Long> {
   Optional<Diary> findByIdWithTags(@Param("diaryId") Long diaryId, @Param("userId") Long userId);
 
   @Query(
-"""
-SELECT d.id as diaryId,
-       d.content as content,
-       d.imageUrl as imageUrl,
-       d.emoticons as emoticons,
-       t.name as tagName,
-       d.savedAt as savedAt
-FROM Diary d
-LEFT JOIN d.diaryTags dt
-LEFT JOIN dt.tag t
-WHERE d.user.id = :userId
-""")
+      """
+      SELECT d.id as diaryId,
+             d.content as content,
+             d.imageUrl as imageUrl,
+             d.emoticons as emoticons,
+             t.name as tagName,
+             d.savedAt as savedAt
+      FROM Diary d
+      LEFT JOIN d.diaryTags dt
+      LEFT JOIN dt.tag t
+      WHERE d.user.id = :userId
+      """)
   List<DiaryFlatProjection> findDiariesWithTagsByUserId(@Param("userId") Long userId);
 
   @Query(
       """
-SELECT d.id as diaryId,
-       d.content as content,
-       d.imageUrl as imageUrl,
-       d.emoticons as emoticons,
-       t.name as tagName,
-       d.savedAt as savedAt
-FROM Diary d
-LEFT JOIN d.diaryTags dt
-LEFT JOIN dt.tag t
-WHERE d.user.id = :userId AND
-      t.name = :tagName
-""")
+      SELECT d.id as diaryId,
+             d.content as content,
+             d.imageUrl as imageUrl,
+             d.emoticons as emoticons,
+             t.name as tagName,
+             d.savedAt as savedAt
+      FROM Diary d
+      LEFT JOIN d.diaryTags dt
+      LEFT JOIN dt.tag t
+      WHERE d.user.id = :userId
+            AND EXISTS (
+                      SELECT 1 FROM Diary d2
+                      JOIN d2.diaryTags dt2
+                      JOIN dt2.tag t2
+                      WHERE d2.id = d.id
+                        AND t2.name = :tagName
+                    )
+      """)
   List<DiaryFlatProjection> findDiariesWithTagsByTagNameAndUserId(
       @Param("tagName") String tagName, @Param("userId") Long userId);
 }
