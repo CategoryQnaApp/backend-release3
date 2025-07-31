@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import xyz.catequest.spring.domain.diary.dto.response.TagResponse;
 import xyz.catequest.spring.domain.diary.entity.Tag;
 import xyz.catequest.spring.domain.diary.service.TagService;
+import xyz.catequest.spring.global.dto.Response;
 import xyz.catequest.spring.global.entity.AuthUser;
 
 @RestController
@@ -18,8 +19,8 @@ public class TagController {
   private final TagService tagService;
 
   @GetMapping("/v1/tags")
-  public TagResponse getTags(@AuthenticationPrincipal AuthUser user) {
+  public Response<TagResponse> getTags(@AuthenticationPrincipal AuthUser user) {
     List<Tag> tags = tagService.getTagsByCreator(user.getUserId());
-    return TagResponse.from(tags);
+    return Response.success(TagResponse.from(tags));
   }
 }
