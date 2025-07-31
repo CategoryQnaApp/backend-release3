@@ -39,7 +39,7 @@ public class DiaryTagService {
         diaryService.saveDiary(
             user, request.getContent(), request.getEmoticons(), request.getSavedTime());
 
-    saveDiaryTag(request.getHashTagList(), savedDiary, user);
+    saveDiaryTag(request.getTagList(), savedDiary, user);
     return DiaryResponse.from(savedDiary);
   }
 
@@ -51,7 +51,7 @@ public class DiaryTagService {
     // Note1: 일기 업데이트 시 Diary 와 Tag의 연결을 끊음
     diaryTagRepository.deleteByDiary(updateDiary);
     // Note2: 연결을 끊은 후 새롭게 다시 연결
-    saveDiaryTag(request.getHashTagList(), updateDiary, user);
+    saveDiaryTag(request.getTagList(), updateDiary, user);
     return DiaryResponse.from(updateDiary);
   }
 

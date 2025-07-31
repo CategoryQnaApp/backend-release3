@@ -49,45 +49,45 @@ public class Diary extends BaseEntity {
   @OneToMany(mappedBy = "diary", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<DiaryTag> diaryTags = new ArrayList<>();
 
-  public Diary(User user, String content, String emotions, LocalDateTime savedAt) {
+  public Diary(User user, String content, String emoticons, LocalDateTime savedAt) {
     this.user = user;
     this.content = content;
-    this.emoticons = emotions;
+    this.emoticons = emoticons;
     this.savedAt = savedAt;
   }
 
   public Diary(
       User user,
       String content,
-      String emotions,
+      String emoticons,
       LocalDateTime savedTime,
       String emojiSrc,
       String imageSrc) {
-    this(user, content, emotions, savedTime);
+    this(user, content, emoticons, savedTime);
     this.emojiUrl = emojiSrc;
     this.imageUrl = imageSrc;
   }
 
-  public static Diary of(User user, String content, String emotions, LocalDateTime savedTime) {
-    return new Diary(user, content, emotions, savedTime);
+  public static Diary of(User user, String content, String emoticons, LocalDateTime savedTime) {
+    return new Diary(user, content, emoticons, savedTime);
   }
 
   public static Diary of(
       User user,
       String content,
-      String emotions,
+      String emoticons,
       LocalDateTime savedTime,
       String emojiSrc,
       String imageSrc) {
-    return new Diary(user, content, emotions, savedTime, emojiSrc, imageSrc);
+    return new Diary(user, content, emoticons, savedTime, emojiSrc, imageSrc);
   }
 
   public void updateContent(String content) {
     this.content = content;
   }
 
-  public void updateEmoticons(String emotions) {
-    this.emoticons = emotions;
+  public void updateEmoticons(String emoticons) {
+    this.emoticons = emoticons;
   }
 
   public void updateEmojiSrc(String emojiSrc) {

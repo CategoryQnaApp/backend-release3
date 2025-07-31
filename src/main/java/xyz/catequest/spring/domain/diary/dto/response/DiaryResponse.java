@@ -12,7 +12,7 @@ import xyz.catequest.spring.global.utils.EmoticonUtils;
 public class DiaryResponse {
   private final Long id;
   private final String content;
-  private final String imageURl;
+  private final String imageUrl;
   private final List<String> emoticons;
   private final List<String> tags;
   private final LocalDateTime savedAt;
