@@ -15,6 +15,8 @@ import xyz.catequest.spring.domain.diary.entity.Tag;
 import xyz.catequest.spring.domain.diary.repository.DiaryTagRepository;
 import xyz.catequest.spring.domain.users.entity.User;
 import xyz.catequest.spring.domain.users.service.UserService;
+import xyz.catequest.spring.global.enums.ErrorMessage;
+import xyz.catequest.spring.global.exception.NotFoundException;
 
 @Service
 @RequiredArgsConstructor
@@ -74,14 +76,16 @@ public class DiaryTagService {
       DiaryTag diaryTag =
           diaryTagRepository
               .findByDiaryAndTag(diary, tag)
-              .orElseThrow(() -> new RuntimeException("해당 태그가 일기에 없음"));
+              .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_TAG));
 
       diaryTagRepository.delete(diaryTag);
     }
   }
 
   private void saveDiaryTag(List<String> tagNames, Diary diary, User user) {
-    List<Tag> existingTags = tagService.getExistingTags(tagNames, user.getId());
+    // Remove duplicates from input
+    List<String> uniqueTagNames = tagNames.stream().distinct().toList();
+    List<Tag> existingTags = tagService.getExistingTags(uniqueTagNames, user.getId());
     Map<String, Tag> tagMap =
         existingTags.stream().collect(Collectors.toMap(Tag::getName, Function.identity()));
 
