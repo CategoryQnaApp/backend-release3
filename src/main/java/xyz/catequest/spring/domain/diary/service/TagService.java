@@ -17,18 +17,6 @@ public class TagService {
   private final TagRepository tagRepository;
 
   @Transactional
-  public Tag getByNameOrElseSave(String tagName, User user) {
-    return tagRepository
-        .findByNameAndCreator_Id(tagName, user.getId())
-        .orElseGet(
-            () -> {
-              // 태그가 없으면 새로 생성
-              Tag newTag = new Tag(tagName, user);
-              return tagRepository.save(newTag);
-            });
-  }
-
-  @Transactional
   public Tag saveTag(String tagName, User user) {
     if (tagRepository.existsByNameAndCreator_Id(tagName, user.getId())) {
       throw new InvalidRequestException(ErrorMessage.DUPLICATED_TAG);
