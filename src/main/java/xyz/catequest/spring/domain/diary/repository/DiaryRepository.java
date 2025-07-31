@@ -47,8 +47,8 @@ public interface DiaryRepository extends JpaRepository<Diary, Long> {
       WHERE d.user.id = :userId
             AND EXISTS (
                       SELECT 1 FROM Diary d2
-                      JOIN d2.diaryTags dt2
-                      JOIN dt2.tag t2
+                      LEFT JOIN d2.diaryTags dt2
+                      LEFT JOIN dt2.tag t2
                       WHERE d2.id = d.id
                         AND t2.name = :tagName
                     )
