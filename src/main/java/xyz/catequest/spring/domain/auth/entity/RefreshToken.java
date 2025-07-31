@@ -28,11 +28,11 @@ public class RefreshToken {
   private User user;
 
   @Column(unique = true, nullable = false)
-  private String refreshToken;
+  private String token;
 
   public RefreshToken(User user, String refreshToken) {
     this.user = user;
-    this.refreshToken = refreshToken;
+    this.token = refreshToken;
   }
 
   public static RefreshToken of(User user, String refreshToken) {
