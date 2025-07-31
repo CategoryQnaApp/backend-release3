@@ -35,11 +35,6 @@ public class Tag {
   @OneToMany(mappedBy = "tag", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<DiaryTag> diaryTags = new ArrayList<>();
 
-  public Tag(String name, User creator, List<DiaryTag> diaryTags) {
-    this.name = name;
-    this.creator = creator;
-  }
-
   public Tag(String name, User creator) {
     this.name = name;
     this.creator = creator;

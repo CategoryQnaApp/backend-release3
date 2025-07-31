@@ -38,12 +38,13 @@ public class DiaryService {
       String content,
       List<String> emoticonList,
       LocalDateTime savedTime) {
-    Diary diary = getDiaryEntityByUserId(diaryId, userId);
+    Diary diary = diaryRepository
+        .findByIdAndUser_id(diaryId, userId)
+        .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_DIARY));
     diary.updateContent(content);
     diary.updateEmoticons(EmoticonUtils.fromEmoticon(emoticonList));
     diary.updateSavedTime(savedTime);
-    Diary saved = diaryRepository.save(diary);
-    return saved;
+    return diaryRepository.save(diary);
   }
 
   @Transactional(readOnly = true)
@@ -92,7 +93,9 @@ public class DiaryService {
 
   @Transactional
   public void deleteDiary(Long diaryId, Long userId) {
-    Diary diary = getDiaryEntityByUserId(diaryId, userId);
+    Diary diary = diaryRepository
+        .findByIdAndUser_id(diaryId, userId)
+        .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_DIARY));
     diaryRepository.delete(diary);
   }
 

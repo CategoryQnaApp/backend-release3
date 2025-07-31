@@ -21,7 +21,6 @@ import xyz.catequest.spring.domain.diary.dto.request.TagRequest;
 import xyz.catequest.spring.domain.diary.dto.response.DiaryResponse;
 import xyz.catequest.spring.domain.diary.service.DiaryService;
 import xyz.catequest.spring.domain.diary.service.DiaryTagService;
-import xyz.catequest.spring.domain.diary.service.TagService;
 import xyz.catequest.spring.global.dto.Response;
 import xyz.catequest.spring.global.entity.AuthUser;
 
