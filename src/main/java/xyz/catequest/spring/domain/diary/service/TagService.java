@@ -19,7 +19,7 @@ public class TagService {
   @Transactional
   public Tag getByNameOrElseSave(String tagName, User user) {
     return tagRepository
-        .findByNameAndUser_Id(tagName, user.getId())
+        .findByNameAndCreator_Id(tagName, user.getId())
         .orElseGet(
             () -> {
               // 태그가 없으면 새로 생성
@@ -30,7 +30,7 @@ public class TagService {
 
   @Transactional
   public Tag saveTag(String tagName, User user) {
-    if (tagRepository.existsByNameAndUser_Id(tagName, user.getId())) {
+    if (tagRepository.existsByNameAndCreator_Id(tagName, user.getId())) {
       throw new InvalidRequestException(ErrorMessage.DUPLICATED_TAG);
     }
     return tagRepository.save(Tag.create(tagName, user));
@@ -39,7 +39,7 @@ public class TagService {
   @Transactional(readOnly = true)
   public Tag getByName(String tagName, Long userId) {
     return tagRepository
-        .findByNameAndUser_Id(tagName, userId)
+        .findByNameAndCreator_Id(tagName, userId)
         .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_TAG));
   }
 
@@ -50,6 +50,6 @@ public class TagService {
 
   @Transactional(readOnly = true)
   public List<Tag> getExistingTags(List<String> tagNames, Long userId) {
-    return tagRepository.findAllByNameInAndUser_Id(tagNames, userId);
+    return tagRepository.findAllByNameInAndCreator_Id(tagNames, userId);
   }
 }

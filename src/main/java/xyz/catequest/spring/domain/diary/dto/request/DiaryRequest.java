@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor(staticName = "of")
 public class DiaryRequest {
   @NotBlank private final String content;
-  @NotBlank private final List<String> emoticons;
-  @NotBlank private final List<String> hashTagList;
-  @NotBlank private final LocalDateTime savedTime;
+  private final List<String> emoticons;
+  private final List<String> hashTagList;
+  private final LocalDateTime savedTime;
 }

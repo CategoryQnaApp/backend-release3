@@ -22,7 +22,7 @@ import xyz.catequest.spring.global.entity.BaseEntity;
 
 @Getter
 @Entity
-@Table(name = "diarys")
+@Table(name = "diaries")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Diary extends BaseEntity {
 

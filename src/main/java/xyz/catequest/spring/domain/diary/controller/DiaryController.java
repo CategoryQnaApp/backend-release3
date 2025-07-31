@@ -31,7 +31,6 @@ import xyz.catequest.spring.global.entity.AuthUser;
 public class DiaryController {
   private final DiaryTagService diaryTagService;
   private final DiaryService diaryService;
-  private final TagService tagService;
 
   // 일기 내용 저장
   @PostMapping("/v1/diaries")
@@ -57,7 +56,7 @@ public class DiaryController {
   }
 
   // 일기 다건 조회 with hashtag
-  @GetMapping("/v1/diaries")
+  @GetMapping("/v1/diaries/tags")
   public Response<List<DiaryResponse>> getDiariesWithTag(
       @NotBlank @RequestParam String tag, @AuthenticationPrincipal AuthUser user) {
     List<DiaryResponse> responses = diaryService.getDiariesByTag(tag, user.getUserId());
