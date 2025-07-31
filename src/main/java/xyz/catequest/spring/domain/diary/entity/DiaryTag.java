@@ -15,7 +15,9 @@ import lombok.NoArgsConstructor;
 @Getter
 @Entity
 @NoArgsConstructor
-@Table(name = "diary_tags", uniqueConstraints = @UniqueConstraint(columnNames = {"diary_id", "tag_id"}))
+@Table(
+    name = "diary_tags",
+    uniqueConstraints = @UniqueConstraint(columnNames = {"diary_id", "tag_id"}))
 public class DiaryTag {
 
   @Id

@@ -4,9 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.springframework.stereotype.Component;
 
-@Component
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class EmoticonUtils {
   public static String fromEmoticon(List<String> emoticons) {
@@ -18,6 +16,9 @@ public class EmoticonUtils {
   }
 
   public static List<String> fromString(String emoticons) {
-    return Arrays.stream(emoticons.split(" ")).toList();
+    if (emoticons == null || emoticons.trim().isEmpty()) {
+      return List.of();
+    }
+    return Arrays.stream(emoticons.trim().split("\\s+")).filter(s -> !s.isEmpty()).toList();
   }
 }

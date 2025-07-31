@@ -99,7 +99,8 @@ public class DiaryService {
     diaryRepository.delete(diary);
   }
 
-  private void buildDiaryResponseMap(List<DiaryFlatProjection> flats, Map<Long, DiaryResponse> diaryMap) {
+  private void buildDiaryResponseMap(
+      List<DiaryFlatProjection> flats, Map<Long, DiaryResponse> diaryMap) {
     for (DiaryFlatProjection flat : flats) {
       DiaryResponse diary =
           diaryMap.computeIfAbsent(
