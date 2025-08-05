@@ -9,14 +9,14 @@ import xyz.catequest.spring.domain.question.enums.Category;
 @RequiredArgsConstructor
 public class QuestionResponse {
   private final Long id;
-  private final String question;
+  private final String content;
   private final Category category;
   private final Long categoryInId;
 
   public static QuestionResponse from(Question question) {
     return new QuestionResponse(
         question.getId(),
-        question.getQuestion(),
+        question.getContent(),
         question.getCategory(),
         question.getCategoryInId());
   }

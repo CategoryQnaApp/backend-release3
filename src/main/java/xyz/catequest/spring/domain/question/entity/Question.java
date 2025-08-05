@@ -30,7 +30,7 @@ public class Question extends BaseEntity {
   private Long id;
 
   @Column(nullable = false)
-  private String question;
+  private String content;
 
   @Column(nullable = false)
   @Enumerated(EnumType.STRING)
@@ -39,26 +39,26 @@ public class Question extends BaseEntity {
   @Column(name = "category_in_id", nullable = false)
   private Long categoryInId;
 
-  public Question(String question, Category category) {
-    this.question = question;
+  public Question(String content, Category category) {
+    this.content = content;
     this.category = category;
   }
 
-  public Question(String question, Category category, Long categoryInId) {
-    this(question, category);
+  public Question(String content, Category category, Long categoryInId) {
+    this(content, category);
     this.categoryInId = categoryInId;
   }
 
-  public static Question of(String question, Category category) {
-    return new Question(question, category);
+  public static Question of(String content, Category category) {
+    return new Question(content, category);
   }
 
-  public static Question of(String question, Category category, Long categoryInId) {
-    return new Question(question, category, categoryInId);
+  public static Question of(String content, Category category, Long categoryInId) {
+    return new Question(content, category, categoryInId);
   }
 
-  public void updateQuestion(String question) {
-    this.question = question;
+  public void updateQuestion(String content) {
+    this.content = content;
   }
 
   public void updateCategory(Category category) {
