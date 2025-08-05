@@ -1,4 +1,4 @@
-package xyz.catequest.spring.domain.checklist.entity;
+package xyz.catequest.spring.domain.todo.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -17,8 +17,8 @@ import xyz.catequest.spring.domain.users.entity.User;
 @Getter
 @Entity
 @NoArgsConstructor
-@Table(name = "check_list")
-public class CheckList {
+@Table(name = "todo")
+public class Todo {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,7 +29,7 @@ public class CheckList {
   private User user;
 
   @Column(nullable = false)
-  private LocalDate today;
+  private LocalDate date;
 
   private boolean all;
 
@@ -39,16 +39,24 @@ public class CheckList {
 
   private boolean isTalking;
 
-  public CheckList(User user) {
+  public Todo(User user) {
     this.user = user;
-    this.today = LocalDate.now();
+    this.date = LocalDate.now();
     this.all = false;
     this.isDiary = false;
     this.isAnswer = false;
   }
 
-  public static CheckList of(User user) {
-    return new CheckList(user);
+  public Todo(User user, LocalDate date) {
+    this.user = user;
+    this.date = date;
+    this.all = false;
+    this.isDiary = false;
+    this.isAnswer = false;
+  }
+
+  public static Todo of(User user) {
+    return new Todo(user);
   }
 
   public void updateAll(boolean all) {
