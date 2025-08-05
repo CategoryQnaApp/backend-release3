@@ -48,7 +48,7 @@ public class DiaryTagService {
   @Transactional
   public DiaryResponse updateDiary(Long diaryId, DiaryRequest request, Long userId) {
     User user = userService.getUserEntity(userId);
-    Diary updateDiary = diaryService.getDiaryEntityByUserId(diaryId, userId);
+    Diary updateDiary = diaryService.updateDiary(diaryId, userId, request.getContent(), request.getEmoticons(), request.getSavedTime());
 
     // Note1: 일기 업데이트 시 Diary 와 Tag의 연결을 끊음
     diaryTagRepository.deleteByDiary(updateDiary);
