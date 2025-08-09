@@ -30,7 +30,7 @@ public class DiaryService {
       User user, String content, List<String> emoticonList, LocalDateTime savedTime) {
     String emoticons = EmoticonUtils.fromEmoticon(emoticonList);
     Diary diary = Diary.of(user, content, emoticons, savedTime);
-    todoService.answerDone(diary.getId());
+    todoService.diaryDone(user.getId());
     return diaryRepository.save(diary);
   }
 

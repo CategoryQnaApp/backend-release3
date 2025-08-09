@@ -35,7 +35,7 @@ public class AnswerService {
     Question question = questionService.getQuestionEntity(questionId);
     Answer saveAnswer = Answer.from(request, user, question);
     answerRepository.save(saveAnswer);
-    todoService.diaryDone(userId);
+    todoService.answerDone(userId);
   }
 
   @Transactional

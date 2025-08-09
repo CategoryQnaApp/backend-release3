@@ -20,6 +20,6 @@ public class GetTodoResponse {
 
   public static GetTodoResponse from(Todo todo) {
     return new GetTodoResponse(
-        todo.getDate(), todo.isAll(), todo.isDiary(), todo.isAnswer(), todo.isTalking());
+        todo.getDate(), todo.getAllDone(), todo.getDiaryDone(), todo.getAnswerDone(), todo.getTalkingDone());
   }
 }

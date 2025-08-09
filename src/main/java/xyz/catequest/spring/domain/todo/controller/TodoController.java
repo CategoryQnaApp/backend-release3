@@ -2,6 +2,7 @@ package xyz.catequest.spring.domain.todo.controller;
 
 import java.time.LocalDate;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,7 +27,8 @@ public class TodoController {
 
   @GetMapping("/v1/todo/date")
   public Response<GetTodoResponse> getDateTodo(
-      @AuthenticationPrincipal AuthUser user, @RequestParam LocalDate date) {
+      @AuthenticationPrincipal AuthUser user,
+      @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
     GetTodoResponse response = todoService.getTodo(user.getUserId(), date);
     return Response.success(response);
   }
