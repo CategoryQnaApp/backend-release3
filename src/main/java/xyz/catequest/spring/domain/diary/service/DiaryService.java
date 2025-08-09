@@ -8,11 +8,11 @@ import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import xyz.catequest.spring.domain.todo.service.TodoService;
 import xyz.catequest.spring.domain.diary.dto.response.DiaryResponse;
 import xyz.catequest.spring.domain.diary.entity.Diary;
 import xyz.catequest.spring.domain.diary.projection.DiaryFlatProjection;
 import xyz.catequest.spring.domain.diary.repository.DiaryRepository;
+import xyz.catequest.spring.domain.todo.service.TodoService;
 import xyz.catequest.spring.domain.users.entity.User;
 import xyz.catequest.spring.global.enums.ErrorMessage;
 import xyz.catequest.spring.global.exception.NotFoundException;
@@ -22,7 +22,7 @@ import xyz.catequest.spring.global.utils.EmoticonUtils;
 @RequiredArgsConstructor
 public class DiaryService {
   private final DiaryRepository diaryRepository;
-  private final TodoService checkListService;
+  private final TodoService todoService;
 
   // todo: save, update 에 이미지 수정 로직 넣기
   @Transactional
@@ -30,7 +30,7 @@ public class DiaryService {
       User user, String content, List<String> emoticonList, LocalDateTime savedTime) {
     String emoticons = EmoticonUtils.fromEmoticon(emoticonList);
     Diary diary = Diary.of(user, content, emoticons, savedTime);
-    checkListService.answerDone(diary.getId());
+    todoService.answerDone(diary.getId());
     return diaryRepository.save(diary);
   }
 

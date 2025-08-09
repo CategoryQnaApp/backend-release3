@@ -10,10 +10,10 @@ import xyz.catequest.spring.domain.answer.dto.request.AnswerRequest;
 import xyz.catequest.spring.domain.answer.dto.response.GetAnswerResponse;
 import xyz.catequest.spring.domain.answer.entity.Answer;
 import xyz.catequest.spring.domain.answer.repository.AnswerRepository;
-import xyz.catequest.spring.domain.todo.service.TodoService;
 import xyz.catequest.spring.domain.question.entity.Question;
 import xyz.catequest.spring.domain.question.enums.Category;
 import xyz.catequest.spring.domain.question.service.QuestionService;
+import xyz.catequest.spring.domain.todo.service.TodoService;
 import xyz.catequest.spring.domain.users.entity.User;
 import xyz.catequest.spring.domain.users.service.UserService;
 import xyz.catequest.spring.global.enums.ErrorMessage;
@@ -27,7 +27,7 @@ public class AnswerService {
   private final AnswerRepository answerRepository;
   private final QuestionService questionService;
   private final UserService userService;
-  private final TodoService checkListService;
+  private final TodoService todoService;
 
   @Transactional
   public void saveAnswer(Long questionId, AnswerRequest request, Long userId) {
@@ -35,7 +35,7 @@ public class AnswerService {
     Question question = questionService.getQuestionEntity(questionId);
     Answer saveAnswer = Answer.from(request, user, question);
     answerRepository.save(saveAnswer);
-    checkListService.diaryDone(userId);
+    todoService.diaryDone(userId);
   }
 
   @Transactional
