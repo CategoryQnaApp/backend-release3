@@ -48,7 +48,7 @@ public class Todo {
 
   private boolean answerDone;
 
-  private boolean TalkingDone;
+  private boolean talkingDone;
 
   public Todo(User user) {
     this.user = user;
@@ -56,7 +56,7 @@ public class Todo {
     this.all = false;
     this.diaryDone = false;
     this.answerDone = false;
-    this.TalkingDone = false;
+    this.talkingDone = false;
   }
 
   public Todo(User user, LocalDate date) {
@@ -65,7 +65,7 @@ public class Todo {
     this.all = false;
     this.diaryDone = false;
     this.answerDone = false;
-    this.TalkingDone = false;
+    this.talkingDone = false;
   }
 
   public static Todo of(User user) {
@@ -85,14 +85,14 @@ public class Todo {
   }
 
   public boolean getTalkingDone() {
-    return TalkingDone;
+    return talkingDone;
   }
 
   public void updateAll(boolean all) {
     this.all = all;
     this.diaryDone = all;
     this.answerDone = all;
-    this.TalkingDone = all;
+    this.talkingDone = all;
   }
 
   public void updateDiary(boolean diary) {
@@ -106,11 +106,11 @@ public class Todo {
   }
 
   public void updateTalking(boolean talking) {
-    this.TalkingDone = talking;
+    this.talkingDone = talking;
     isAllDone();
   }
 
   private void isAllDone() {
-    this.all = (this.diaryDone && this.answerDone && this.TalkingDone);
+    this.all = (this.diaryDone && this.answerDone && this.talkingDone);
   }
 }

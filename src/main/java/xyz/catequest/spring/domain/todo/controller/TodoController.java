@@ -21,7 +21,7 @@ public class TodoController {
 
   @GetMapping("/v1/todo")
   public Response<GetTodoResponse> getTodayTodo(@AuthenticationPrincipal AuthUser user) {
-    GetTodoResponse response = todoService.getTodo(user.getUserId());
+    GetTodoResponse response = todoService.getTodoByToday(user.getUserId());
     return Response.success(response);
   }
 
@@ -29,7 +29,7 @@ public class TodoController {
   public Response<GetTodoResponse> getDateTodo(
       @AuthenticationPrincipal AuthUser user,
       @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
-    GetTodoResponse response = todoService.getTodo(user.getUserId(), date);
+    GetTodoResponse response = todoService.getTodoByDate(user.getUserId(), date);
     return Response.success(response);
   }
 }
