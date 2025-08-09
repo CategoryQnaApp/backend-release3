@@ -31,8 +31,9 @@ public class TodoService {
 
   @Transactional(readOnly = true)
   public List<GetTodoResponse> getTodoList(Long userId, LocalDate start, LocalDate end) {
-    return todoRepository.findByUser_IdAndDateBetween(userId, start, end)
-        .stream().map(GetTodoResponse::from).toList();
+    return todoRepository.findByUser_IdAndDateBetween(userId, start, end).stream()
+        .map(GetTodoResponse::from)
+        .toList();
   }
 
   // todo: 나중에 보상 추가하기
@@ -63,15 +64,12 @@ public class TodoService {
   private Todo getTodoByTodayAndSave(Long userId) {
     User user = userService.getUserEntity(userId);
     Todo checkList =
-        todoRepository
-            .findByDateAndUser_Id(LocalDate.now(), user.getId())
-            .orElse(Todo.of(user));
+        todoRepository.findByDateAndUser_Id(LocalDate.now(), user.getId()).orElse(Todo.of(user));
     todoRepository.save(checkList);
     return checkList;
   }
 
   private Todo getTodoByDate(LocalDate date, Long userId) {
-    return todoRepository.findByDateAndUser_Id(date, userId)
-        .orElse(null);
+    return todoRepository.findByDateAndUser_Id(date, userId).orElse(null);
   }
 }
