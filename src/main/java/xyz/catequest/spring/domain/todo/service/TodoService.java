@@ -18,13 +18,13 @@ public class TodoService {
   private final TodoRepository todoRepository;
 
   @Transactional
-  public GetTodoResponse getTodo(Long userId) {
+  public GetTodoResponse getTodoByToday(Long userId) {
     Todo today = getTodoByTodayAndSave(userId);
     return GetTodoResponse.from(today);
   }
 
   @Transactional(readOnly = true)
-  public GetTodoResponse getTodo(Long userId, LocalDate date) {
+  public GetTodoResponse getTodoByDate(Long userId, LocalDate date) {
     Todo checkList = getTodoByDate(date, userId);
     return (checkList != null) ? GetTodoResponse.from(checkList) : null;
   }
