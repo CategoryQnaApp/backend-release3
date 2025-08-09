@@ -26,7 +26,7 @@ public class TodoService {
   @Transactional(readOnly = true)
   public GetTodoResponse getTodo(Long userId, LocalDate date) {
     Todo checkList = getTodoByDate(date, userId);
-    return GetTodoResponse.from(checkList);
+    return (checkList != null) ? GetTodoResponse.from(checkList) : null;
   }
 
   @Transactional(readOnly = true)
@@ -40,6 +40,9 @@ public class TodoService {
   @Transactional
   public void allDone(Long userId) {
     Todo today = getTodoByTodayAndSave(userId);
+    today.updateDiary(true);
+    today.updateAnswer(true);
+    today.updateTalking(true);
     today.updateAll(true);
   }
 
