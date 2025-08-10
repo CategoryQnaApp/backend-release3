@@ -51,7 +51,7 @@ public class SecurityConfig {
         .httpBasic(AbstractHttpConfigurer::disable)
         .logout(AbstractHttpConfigurer::disable)
         .rememberMe(AbstractHttpConfigurer::disable)
-        .authorizeHttpRequests(
+        .authorizeHttpRequests( // todo : 실제 배포시 권한 내용 추가하기
             auth ->
                 auth.requestMatchers("/api/v*/auth/**")
                     .permitAll()

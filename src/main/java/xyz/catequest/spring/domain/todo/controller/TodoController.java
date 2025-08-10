@@ -30,6 +30,6 @@ public class TodoController {
       @AuthenticationPrincipal AuthUser user,
       @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
     GetTodoResponse response = todoService.getTodoByDate(user.getUserId(), date);
-    return Response.success(response);
+    return response != null ? Response.success(response) : Response.noContent();
   }
 }
