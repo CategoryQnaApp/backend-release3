@@ -26,6 +26,10 @@ public interface Response<T> {
     return new SuccessResponse<>(HttpStatus.CREATED, data);
   }
 
+  static <T> Response<T> noContent() {
+    return new SuccessResponse<>(HttpStatus.NO_CONTENT);
+  }
+
   static <T> Response<T> fail(HttpStatus status, T error) {
     return new ErrorResponse<>(status, error);
   }

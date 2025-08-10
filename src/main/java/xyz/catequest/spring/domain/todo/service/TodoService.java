@@ -1,6 +1,8 @@
 package xyz.catequest.spring.domain.todo.service;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -66,8 +68,10 @@ public class TodoService {
 
   private Todo getTodoByTodayAndSave(Long userId) {
     User user = userService.getUserEntity(userId);
+    // Note: 한국의 오늘날짜를 알기 위해서 사용함.
+    LocalDate todayInKorea = ZonedDateTime.now(ZoneId.of("Asia/Seoul")).toLocalDate();
     Todo checkList =
-        todoRepository.findByDateAndUser_Id(LocalDate.now(), user.getId()).orElse(Todo.of(user));
+        todoRepository.findByDateAndUser_Id(todayInKorea, user.getId()).orElse(Todo.of(user));
     todoRepository.save(checkList);
     return checkList;
   }
