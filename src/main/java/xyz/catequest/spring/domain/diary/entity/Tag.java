@@ -16,7 +16,7 @@ import java.util.List;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import xyz.catequest.spring.domain.users.entity.User;
+import xyz.catequest.spring.domain.user.entity.User;
 
 @Getter
 @Entity

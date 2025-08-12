@@ -13,8 +13,8 @@ import xyz.catequest.spring.domain.diary.entity.Diary;
 import xyz.catequest.spring.domain.diary.entity.DiaryTag;
 import xyz.catequest.spring.domain.diary.entity.Tag;
 import xyz.catequest.spring.domain.diary.repository.DiaryTagRepository;
-import xyz.catequest.spring.domain.users.entity.User;
-import xyz.catequest.spring.domain.users.service.UserService;
+import xyz.catequest.spring.domain.user.entity.User;
+import xyz.catequest.spring.domain.user.service.UserService;
 import xyz.catequest.spring.global.enums.ErrorMessage;
 import xyz.catequest.spring.global.exception.NotFoundException;
 

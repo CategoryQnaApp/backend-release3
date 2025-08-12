@@ -1,8 +1,8 @@
-package xyz.catequest.spring.domain.users.dto.response;
+package xyz.catequest.spring.domain.user.dto.response;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import xyz.catequest.spring.domain.users.entity.User;
+import xyz.catequest.spring.domain.user.entity.User;
 
 @Getter
 @RequiredArgsConstructor(staticName = "of")

@@ -6,8 +6,8 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import xyz.catequest.spring.domain.users.entity.User;
-import xyz.catequest.spring.domain.users.enums.UserRole;
+import xyz.catequest.spring.domain.user.entity.User;
+import xyz.catequest.spring.domain.user.enums.UserRole;
 import xyz.catequest.spring.global.enums.ErrorMessage;
 import xyz.catequest.spring.global.exception.ServerException;
 

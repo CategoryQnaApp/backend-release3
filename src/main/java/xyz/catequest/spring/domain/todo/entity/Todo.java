@@ -14,7 +14,7 @@ import jakarta.persistence.UniqueConstraint;
 import java.time.LocalDate;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import xyz.catequest.spring.domain.users.entity.User;
+import xyz.catequest.spring.domain.user.entity.User;
 
 @Entity
 @NoArgsConstructor

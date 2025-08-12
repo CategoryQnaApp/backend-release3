@@ -10,8 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 import xyz.catequest.spring.domain.todo.dto.response.GetTodoResponse;
 import xyz.catequest.spring.domain.todo.entity.Todo;
 import xyz.catequest.spring.domain.todo.repository.TodoRepository;
-import xyz.catequest.spring.domain.users.entity.User;
-import xyz.catequest.spring.domain.users.service.UserService;
+import xyz.catequest.spring.domain.user.entity.User;
+import xyz.catequest.spring.domain.user.service.UserService;
 
 @Service
 @RequiredArgsConstructor

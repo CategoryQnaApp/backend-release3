@@ -1,12 +1,12 @@
-package xyz.catequest.spring.domain.users.service;
+package xyz.catequest.spring.domain.user.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import xyz.catequest.spring.domain.users.dto.response.GetUserResponse;
-import xyz.catequest.spring.domain.users.entity.User;
-import xyz.catequest.spring.domain.users.repository.UserRepository;
+import xyz.catequest.spring.domain.user.dto.response.GetUserResponse;
+import xyz.catequest.spring.domain.user.entity.User;
+import xyz.catequest.spring.domain.user.repository.UserRepository;
 import xyz.catequest.spring.global.enums.ErrorMessage;
 import xyz.catequest.spring.global.exception.InvalidRequestException;
 import xyz.catequest.spring.global.exception.NotFoundException;

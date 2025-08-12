@@ -16,7 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import xyz.catequest.spring.domain.auth.service.AuthService;
-import xyz.catequest.spring.domain.users.enums.UserRole;
+import xyz.catequest.spring.domain.user.enums.UserRole;
 import xyz.catequest.spring.global.dto.AccessTokenResponse;
 import xyz.catequest.spring.global.dto.CustomException;
 import xyz.catequest.spring.global.dto.Response;

@@ -1,4 +1,4 @@
-package xyz.catequest.spring.domain.users.entity;
+package xyz.catequest.spring.domain.user.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -12,8 +12,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
-import xyz.catequest.spring.domain.users.enums.UserRole;
-import xyz.catequest.spring.domain.users.enums.UserStatus;
+import xyz.catequest.spring.domain.user.enums.UserRole;
+import xyz.catequest.spring.domain.user.enums.UserStatus;
 import xyz.catequest.spring.global.entity.BaseEntity;
 
 @Getter

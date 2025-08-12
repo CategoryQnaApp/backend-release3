@@ -1,4 +1,4 @@
-package xyz.catequest.spring.domain.users.dto.request;
+package xyz.catequest.spring.domain.user.dto.request;
 
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
