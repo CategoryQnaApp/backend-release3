@@ -84,7 +84,6 @@ public class ItemService {
             .findById(itemId)
             .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_ITEM));
     item.expiredItem();
-    Item update = itemRepository.save(item);
   }
 
   // 아이템 단일 검색
