@@ -103,6 +103,6 @@ public class ItemService {
     if (itemType == null) {
       return itemRepository.findAll().stream().map(ItemResponse::from).toList();
     }
-    return itemRepository.findByItemType(itemType).stream().map(ItemResponse::from).toList();
+    return itemRepository.findByType(itemType).stream().map(ItemResponse::from).toList();
   }
 }

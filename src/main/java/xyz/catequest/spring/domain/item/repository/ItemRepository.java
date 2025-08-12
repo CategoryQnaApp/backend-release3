@@ -6,5 +6,5 @@ import xyz.catequest.spring.domain.item.entity.Item;
 import xyz.catequest.spring.domain.item.enums.ItemType;
 
 public interface ItemRepository extends JpaRepository<Item, Long> {
-  List<Item> findByItemType(ItemType itemType);
+  List<Item> findByType(ItemType type);
 }
