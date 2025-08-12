@@ -48,6 +48,9 @@ public enum ErrorMessage {
   NOT_FOUND_TAG(BAD_REQUEST, "없는 태그거나, 변경된 태그입니다."),
   DUPLICATED_TAG(BAD_REQUEST, "중복된 태그입니다."),
 
+  /* 4xx item */
+  NOT_FOUND_ITEM(BAD_REQUEST, "없는 아이템이거나, 변경된 아이템입니다."),
+
   /* 5xx */
   INTERNAL_ERROR(INTERNAL_SERVER_ERROR, "내부 서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요."),
   OPENAPI_ERROR(INTERNAL_SERVER_ERROR, "외부 API 호출 중 오류가 발생했습니다."),
