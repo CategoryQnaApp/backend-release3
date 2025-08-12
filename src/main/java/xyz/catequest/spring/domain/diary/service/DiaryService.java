@@ -13,7 +13,7 @@ import xyz.catequest.spring.domain.diary.entity.Diary;
 import xyz.catequest.spring.domain.diary.projection.DiaryFlatProjection;
 import xyz.catequest.spring.domain.diary.repository.DiaryRepository;
 import xyz.catequest.spring.domain.todo.service.TodoService;
-import xyz.catequest.spring.domain.users.entity.User;
+import xyz.catequest.spring.domain.user.entity.User;
 import xyz.catequest.spring.global.enums.ErrorMessage;
 import xyz.catequest.spring.global.exception.NotFoundException;
 import xyz.catequest.spring.global.utils.EmoticonUtils;

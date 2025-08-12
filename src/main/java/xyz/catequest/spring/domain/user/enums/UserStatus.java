@@ -1,4 +1,4 @@
-package xyz.catequest.spring.domain.users.enums;
+package xyz.catequest.spring.domain.user.enums;
 
 public enum UserStatus {
   ACTIVE, // 활성 (정상적으로 서비스 이용 가능)

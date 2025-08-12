@@ -1,4 +1,4 @@
-package xyz.catequest.spring.domain.users.controller;
+package xyz.catequest.spring.domain.user.controller;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import xyz.catequest.spring.domain.users.dto.request.DeleteUserRequest;
-import xyz.catequest.spring.domain.users.dto.request.UpdateUserNicknameRequest;
-import xyz.catequest.spring.domain.users.dto.request.UpdateUserPasswordRequest;
-import xyz.catequest.spring.domain.users.dto.response.GetUserResponse;
-import xyz.catequest.spring.domain.users.service.UserService;
+import xyz.catequest.spring.domain.user.dto.request.DeleteUserRequest;
+import xyz.catequest.spring.domain.user.dto.request.UpdateUserNicknameRequest;
+import xyz.catequest.spring.domain.user.dto.request.UpdateUserPasswordRequest;
+import xyz.catequest.spring.domain.user.dto.response.GetUserResponse;
+import xyz.catequest.spring.domain.user.service.UserService;
 import xyz.catequest.spring.global.dto.Response;
 import xyz.catequest.spring.global.entity.AuthUser;
 

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import xyz.catequest.spring.domain.diary.entity.Tag;
 import xyz.catequest.spring.domain.diary.repository.TagRepository;
-import xyz.catequest.spring.domain.users.entity.User;
+import xyz.catequest.spring.domain.user.entity.User;
 import xyz.catequest.spring.global.enums.ErrorMessage;
 import xyz.catequest.spring.global.exception.InvalidRequestException;
 import xyz.catequest.spring.global.exception.NotFoundException;

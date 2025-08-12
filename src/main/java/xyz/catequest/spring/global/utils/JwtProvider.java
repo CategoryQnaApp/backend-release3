@@ -13,8 +13,8 @@ import java.util.Date;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import xyz.catequest.spring.domain.users.entity.User;
-import xyz.catequest.spring.domain.users.enums.UserRole;
+import xyz.catequest.spring.domain.user.entity.User;
+import xyz.catequest.spring.domain.user.enums.UserRole;
 
 @Slf4j
 @Component

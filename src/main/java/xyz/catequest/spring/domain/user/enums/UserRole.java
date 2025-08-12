@@ -1,4 +1,4 @@
-package xyz.catequest.spring.domain.users.enums;
+package xyz.catequest.spring.domain.user.enums;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

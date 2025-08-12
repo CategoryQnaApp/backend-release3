@@ -13,7 +13,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
-import xyz.catequest.spring.domain.users.enums.UserRole;
+import xyz.catequest.spring.domain.user.enums.UserRole;
 import xyz.catequest.spring.global.exception.AccessDeniedHandlerImpl;
 import xyz.catequest.spring.global.jwt.JwtAuthenticationFilter;
 
