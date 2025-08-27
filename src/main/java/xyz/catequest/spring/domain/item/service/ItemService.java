@@ -9,7 +9,6 @@ import xyz.catequest.spring.domain.item.dto.response.ItemResponse;
 import xyz.catequest.spring.domain.item.entity.Item;
 import xyz.catequest.spring.domain.item.enums.ItemType;
 import xyz.catequest.spring.domain.item.repository.ItemRepository;
-import xyz.catequest.spring.domain.user.service.UserService;
 import xyz.catequest.spring.global.enums.ErrorMessage;
 import xyz.catequest.spring.global.exception.NotFoundException;
 
@@ -17,7 +16,6 @@ import xyz.catequest.spring.global.exception.NotFoundException;
 @RequiredArgsConstructor
 public class ItemService {
   private final ItemRepository itemRepository;
-  private final UserService userService;
 
   // 아이템 저장
   @Transactional

@@ -50,6 +50,10 @@ public enum ErrorMessage {
 
   /* 4xx item */
   NOT_FOUND_ITEM(BAD_REQUEST, "없는 아이템이거나, 변경된 아이템입니다."),
+  INVALID_ITEM_NAME(BAD_REQUEST, "name 은(는) 1~20글자를 가져야합니다."),
+  INVALID_ITEM_DESCRIPTION(BAD_REQUEST, "description 은(는) 1~255글자를 가져야합니다."),
+  INVALID_ITEM_PRICE(BAD_REQUEST, "price 은(는) 0원 이상이여야 합니다."),
+  INVALID_ITEM_TYPE(BAD_REQUEST, "잘못된 타입입니다."),
 
   /* 5xx */
   INTERNAL_ERROR(INTERNAL_SERVER_ERROR, "내부 서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요."),
