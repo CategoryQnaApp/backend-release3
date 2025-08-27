@@ -12,11 +12,17 @@ public class ItemResponse {
   private final Long id;
   private final String name;
   private final String description;
+  private final Integer price;
   private final ItemType type;
   private final LocalDateTime createdAt;
 
   public static ItemResponse from(Item item) {
     return new ItemResponse(
-        item.getId(), item.getName(), item.getDescription(), item.getType(), item.getCreatedAt());
+        item.getId(),
+        item.getName(),
+        item.getDescription(),
+        item.getPrice(),
+        item.getType(),
+        item.getCreatedAt());
   }
 }

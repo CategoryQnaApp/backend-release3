@@ -4,7 +4,7 @@ import lombok.Getter;
 
 @Getter
 public enum ItemType {
-  BACK_GROUND,
+  BACKGROUND,
   NPC,
   ENVELOPE,
 }

@@ -14,6 +14,8 @@ import xyz.catequest.spring.domain.item.dto.request.ItemRequest;
 import xyz.catequest.spring.domain.item.enums.ItemStatus;
 import xyz.catequest.spring.domain.item.enums.ItemType;
 import xyz.catequest.spring.global.entity.BaseEntity;
+import xyz.catequest.spring.global.enums.ErrorMessage;
+import xyz.catequest.spring.global.exception.InvalidRequestException;
 
 @Getter
 @Entity
@@ -28,7 +30,7 @@ public class Item extends BaseEntity {
   @Column(nullable = false, length = 20)
   private String name;
 
-  @Column(nullable = false)
+  @Column(nullable = false, length = 255)
   private String description;
 
   private String imageUrl;
@@ -45,18 +47,32 @@ public class Item extends BaseEntity {
   private ItemStatus status;
 
   public void updateName(String newName) {
+    if (newName == null || newName.trim().isEmpty() || newName.length() > 20) {
+      throw new InvalidRequestException(ErrorMessage.INVALID_ITEM_NAME);
+    }
     this.name = newName;
   }
 
   public void updateDescription(String newDescription) {
+    if (newDescription == null
+        || newDescription.trim().isEmpty()
+        || newDescription.length() > 255) {
+      throw new InvalidRequestException(ErrorMessage.INVALID_ITEM_DESCRIPTION);
+    }
     this.description = newDescription;
   }
 
   public void updatePrice(Integer newPrice) {
+    if (newPrice == null || newPrice < 0) {
+      throw new InvalidRequestException(ErrorMessage.INVALID_ITEM_PRICE);
+    }
     this.price = newPrice;
   }
 
   public void updateType(ItemType newType) {
+    if (newType == null) {
+      throw new InvalidRequestException(ErrorMessage.INVALID_ITEM_TYPE);
+    }
     this.type = newType;
   }
 

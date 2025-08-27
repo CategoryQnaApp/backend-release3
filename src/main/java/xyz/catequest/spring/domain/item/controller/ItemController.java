@@ -33,7 +33,7 @@ public class ItemController {
   @PostMapping("/v1/items")
   public Response<ItemResponse> saveItem(@Valid @RequestBody ItemRequest request) {
     ItemResponse response = itemService.saveItem(request);
-    return Response.success(response);
+    return Response.created(response);
   }
 
   // 아이템 수정
@@ -70,7 +70,7 @@ public class ItemController {
   @PatchMapping("/v1/items/{itemId}/expired")
   public Response<Void> updateItemExpired(@Positive @PathVariable Long itemId) {
     itemService.expiredItem(itemId);
-    return Response.success();
+    return Response.noContent();
   }
 
   // 아이템 단일 검색
