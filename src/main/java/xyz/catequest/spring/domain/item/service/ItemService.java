@@ -94,6 +94,13 @@ public class ItemService {
     return ItemResponse.from(item);
   }
 
+  @Transactional(readOnly = true)
+  public Item getItemEntity(Long itemId) {
+    return itemRepository
+        .findById(itemId)
+        .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_ITEM));
+  }
+
   // 아이템 목록 검색 => 타입별
   // 아이템 전목록 검색
   @Transactional(readOnly = true)

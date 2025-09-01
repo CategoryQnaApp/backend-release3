@@ -1,5 +1,6 @@
 package xyz.catequest.spring.domain.user.service;
 
+import java.math.BigInteger;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -85,5 +86,23 @@ public class UserService {
       throw new InvalidRequestException(ErrorMessage.WRONG_PASSWORD);
     }
     user.softDelete();
+  }
+
+  @Transactional
+  public void addMoney(Long userId, BigInteger money) {
+    User user =
+        userRepository
+            .findById(userId)
+            .orElseThrow(() -> new NotFoundException(ErrorMessage.USER_NOT_FOUND));
+    user.addMoney(money);
+  }
+
+  @Transactional
+  public void minusMoney(Long userId, BigInteger money) {
+    User user =
+        userRepository
+            .findById(userId)
+            .orElseThrow(() -> new NotFoundException(ErrorMessage.USER_NOT_FOUND));
+    user.minusMoney(money);
   }
 }

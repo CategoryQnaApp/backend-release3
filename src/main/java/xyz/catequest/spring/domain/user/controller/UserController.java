@@ -3,6 +3,7 @@ package xyz.catequest.spring.domain.user.controller;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import java.io.IOException;
+import java.math.BigInteger;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -72,5 +74,19 @@ public class UserController {
       @AuthenticationPrincipal AuthUser authUser, @Valid @RequestBody DeleteUserRequest request) {
     userService.deleteUser(authUser.getUserId(), request.getPassword());
     return Response.success();
+  }
+
+  @PostMapping("/v1/users/money/add")
+  public Response<Void> addMoney(
+      @AuthenticationPrincipal AuthUser authUser, @Positive @RequestParam Long money) {
+    userService.addMoney(authUser.getUserId(), BigInteger.valueOf(money));
+    return Response.noContent();
+  }
+
+  @PostMapping("/v1/users/money/minus")
+  public Response<Void> minusMoney(
+      @AuthenticationPrincipal AuthUser authUser, @Positive @RequestParam Long money) {
+    userService.minusMoney(authUser.getUserId(), BigInteger.valueOf(money));
+    return Response.noContent();
   }
 }

@@ -8,6 +8,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import java.math.BigInteger;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
@@ -15,9 +17,11 @@ import org.hibernate.annotations.SQLRestriction;
 import xyz.catequest.spring.domain.user.enums.UserRole;
 import xyz.catequest.spring.domain.user.enums.UserStatus;
 import xyz.catequest.spring.global.entity.BaseEntity;
+import xyz.catequest.spring.global.enums.ErrorMessage;
+import xyz.catequest.spring.global.exception.InvalidRequestException;
 
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name = "users")
 @SQLRestriction("deleted_at IS NULL")
@@ -42,6 +46,13 @@ public class User extends BaseEntity {
   @Column(nullable = false)
   private UserRole role;
 
+  /** 실제 돈을 의미함 */
+  @Column(nullable = false)
+  private BigInteger money;
+
+  @Column(nullable = false)
+  private BigInteger ticket;
+
   @Column(nullable = false, length = 30)
   private String profileImage;
 
@@ -51,14 +62,16 @@ public class User extends BaseEntity {
 
   private Long booksId;
 
-  public User(String email, String password, String nickname) {
+  private User(String email, String password, String nickname) {
     this.email = email;
     this.password = password;
     this.nickname = nickname;
     this.status = UserStatus.ACTIVE;
     this.role = UserRole.USER;
-    profileImage = "1";
-    booksId = 0L;
+    this.profileImage = "1";
+    this.booksId = 0L;
+    this.money = BigInteger.ZERO;
+    this.ticket = BigInteger.ZERO;
   }
 
   public void updateProfileImage(String profileImage) {
@@ -75,6 +88,24 @@ public class User extends BaseEntity {
 
   public void updatePassword(String password) {
     this.password = password;
+  }
+
+  public void countNyang(BigInteger price) {
+    if (this.money.compareTo(price) < 0) {
+      throw new InvalidRequestException(ErrorMessage.NO_MONEY);
+    }
+    this.money = this.money.subtract(price); // 가지고 있는돈 - 상품 가격
+  }
+
+  public void addMoney(BigInteger money) {
+    this.money = money.add(money);
+  }
+
+  public void minusMoney(BigInteger money) {
+    if (this.money.compareTo(money) < 0) {
+      throw new InvalidRequestException(ErrorMessage.NO_MONEY);
+    }
+    this.money = this.money.subtract(money);
   }
 
   @Override

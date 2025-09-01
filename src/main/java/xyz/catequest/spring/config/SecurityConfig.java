@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer.FrameOptionsConfig;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -51,6 +52,7 @@ public class SecurityConfig {
         .httpBasic(AbstractHttpConfigurer::disable)
         .logout(AbstractHttpConfigurer::disable)
         .rememberMe(AbstractHttpConfigurer::disable)
+        .headers(headers -> headers.frameOptions(FrameOptionsConfig::sameOrigin))
         .authorizeHttpRequests( // todo : 실제 배포시 권한 내용 추가하기
             auth ->
                 auth.requestMatchers("/api/v*/auth/**")
@@ -66,6 +68,8 @@ public class SecurityConfig {
                     .permitAll() // swagger
                     .requestMatchers("/actuator", "/actuator/**", "/_cluster/health")
                     .permitAll() // Spring Actuator
+                    .requestMatchers("/h2-console/**")
+                    .permitAll()
                     .anyRequest()
                     .authenticated())
         .build();
