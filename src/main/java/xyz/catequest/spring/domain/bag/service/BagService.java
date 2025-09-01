@@ -36,12 +36,12 @@ public class BagService {
 
   @Transactional
   public void payments(Long userId, Long itemId) {
-    if (bagRepository.existsByItem_Id(itemId)) {
+    if (bagRepository.existsByItem_IdAndUser_Id(itemId, userId)) {
       throw new InvalidRequestException(ErrorMessage.ALREADY_THERE);
     }
     User user = userService.getUserEntity(userId);
     Item item = itemService.getItemEntity(itemId);
-    user.countNyang(BigInteger.valueOf(item.getPrice()));
+    user.countMoney(BigInteger.valueOf(item.getPrice()));
     Bag bag = Bag.buy(item, user);
     bagRepository.save(bag);
   }

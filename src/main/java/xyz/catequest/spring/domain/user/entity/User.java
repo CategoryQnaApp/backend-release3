@@ -90,7 +90,8 @@ public class User extends BaseEntity {
     this.password = password;
   }
 
-  public void countNyang(BigInteger price) {
+  public void countMoney(BigInteger price) {
+    requiredPositiveMoney(money);
     if (this.money.compareTo(price) < 0) {
       throw new InvalidRequestException(ErrorMessage.NO_MONEY);
     }
@@ -98,14 +99,22 @@ public class User extends BaseEntity {
   }
 
   public void addMoney(BigInteger money) {
-    this.money = money.add(money);
+    requiredPositiveMoney(money);
+    this.money = this.money.add(money);
   }
 
   public void minusMoney(BigInteger money) {
+    requiredPositiveMoney(money);
     if (this.money.compareTo(money) < 0) {
       throw new InvalidRequestException(ErrorMessage.NO_MONEY);
     }
     this.money = this.money.subtract(money);
+  }
+
+  private void requiredPositiveMoney(BigInteger money) {
+    if(money == null || money.signum() == -1) {
+      throw new InvalidRequestException(ErrorMessage.NOT_MINUS_MONEY);
+    }
   }
 
   @Override

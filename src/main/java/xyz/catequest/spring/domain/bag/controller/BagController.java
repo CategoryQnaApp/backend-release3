@@ -1,5 +1,6 @@
 package xyz.catequest.spring.domain.bag.controller;
 
+import jakarta.validation.constraints.Positive;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -31,9 +32,9 @@ public class BagController {
     return Response.success(bagService.getCurrencies(user.getUserId()));
   }
 
-  @PostMapping("/v1/payments/items/{itemId}")
+  @PostMapping("/v1/users/bags/items/{itemId}")
   public Response<Void> payments(
-      @AuthenticationPrincipal AuthUser user, @PathVariable Long itemId) {
+      @AuthenticationPrincipal AuthUser user, @Positive @PathVariable Long itemId) {
     bagService.payments(user.getUserId(), itemId);
     return Response.noContent();
   }
