@@ -4,6 +4,7 @@ import jakarta.validation.constraints.Positive;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +16,7 @@ import xyz.catequest.spring.domain.bag.service.BagService;
 import xyz.catequest.spring.global.dto.Response;
 import xyz.catequest.spring.global.entity.AuthUser;
 
+@Validated
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
