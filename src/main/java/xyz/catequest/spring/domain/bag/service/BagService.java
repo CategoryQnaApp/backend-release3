@@ -31,13 +31,7 @@ public class BagService {
 
   @Transactional(readOnly = true)
   public List<BagResponse> getBags(Long userId) {
-    System.out.println(
-        "[SERVICE] Received userId: "
-            + userId
-            + " / Type: "
-            + (userId != null ? userId.getClass().getName() : "null"));
-    //    return bagRepository.getBagResponseList(userId);
-    return bagRepository.getBagResponseListWithLogging(userId); // 디버깅용 메서드 호출
+    return bagRepository.getBagResponseList(userId);
   }
 
   @Transactional
