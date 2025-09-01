@@ -112,7 +112,7 @@ public class User extends BaseEntity {
   }
 
   private void requiredPositiveMoney(BigInteger money) {
-    if(money == null || money.signum() == -1) {
+    if (money == null || money.signum() == -1) {
       throw new InvalidRequestException(ErrorMessage.NOT_MINUS_MONEY);
     }
   }
