@@ -91,7 +91,7 @@ public class User extends BaseEntity {
   }
 
   public void countMoney(BigInteger price) {
-    requiredPositiveMoney(money);
+    requiredPositiveMoney(price);
     if (this.money.compareTo(price) < 0) {
       throw new InvalidRequestException(ErrorMessage.NO_MONEY);
     }
