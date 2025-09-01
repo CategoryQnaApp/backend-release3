@@ -15,5 +15,5 @@ public interface BagRepository extends JpaRepository<Bag, Long> {
           + "WHERE bag.user.id =:userId")
   List<BagResponse> getBagResponseList(@Param("userId") Long userId);
 
-  Boolean existsByItem_Id(Long itemId);
+  Boolean existsByItem_IdAndUser_Id(Long itemId, Long userId);
 }

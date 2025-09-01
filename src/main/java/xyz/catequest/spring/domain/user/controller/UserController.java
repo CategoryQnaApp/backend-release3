@@ -78,15 +78,15 @@ public class UserController {
 
   @PostMapping("/v1/users/money/add")
   public Response<Void> addMoney(
-      @AuthenticationPrincipal AuthUser authUser, @Positive @RequestParam Long money) {
-    userService.addMoney(authUser.getUserId(), BigInteger.valueOf(money));
+      @AuthenticationPrincipal AuthUser authUser, @Positive @RequestParam BigInteger money) {
+    userService.addMoney(authUser.getUserId(), money);
     return Response.noContent();
   }
 
   @PostMapping("/v1/users/money/minus")
   public Response<Void> minusMoney(
-      @AuthenticationPrincipal AuthUser authUser, @Positive @RequestParam Long money) {
-    userService.minusMoney(authUser.getUserId(), BigInteger.valueOf(money));
+      @AuthenticationPrincipal AuthUser authUser, @Positive @RequestParam BigInteger money) {
+    userService.minusMoney(authUser.getUserId(), money);
     return Response.noContent();
   }
 }
