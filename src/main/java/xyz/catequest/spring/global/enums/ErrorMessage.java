@@ -33,6 +33,8 @@ public enum ErrorMessage {
   USER_NOT_FOUND(NOT_FOUND, "아이디가 없거나, 비밀번호가 틀렸습니다."),
   WRONG_PASSWORD(UNAUTHORIZED, "아이디가 없거나, 비밀번호가 틀렸습니다."),
   FORBIDDEN_USER(FORBIDDEN, "권한이 없습니다."),
+  NO_MONEY(BAD_REQUEST, "돈이 부족합니다."),
+  NOT_MINUS_MONEY(BAD_REQUEST, "돈은 마이너스가 될 수 없습니다"),
 
   /* 4xx question*/
   NOT_FOUND_QUESTION(BAD_REQUEST, "없는 질문 이거나 변경된 질문입니다"),
@@ -54,6 +56,9 @@ public enum ErrorMessage {
   INVALID_ITEM_DESCRIPTION(BAD_REQUEST, "description 은(는) 1~255글자를 가져야합니다."),
   INVALID_ITEM_PRICE(BAD_REQUEST, "price 은(는) 0원 이상이여야 합니다."),
   INVALID_ITEM_TYPE(BAD_REQUEST, "잘못된 타입입니다."),
+
+  /* 4xx bag */
+  ALREADY_THERE(BAD_REQUEST, "이미 가지고 있는 아이템 입니다."),
 
   /* 5xx */
   INTERNAL_ERROR(INTERNAL_SERVER_ERROR, "내부 서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요."),
