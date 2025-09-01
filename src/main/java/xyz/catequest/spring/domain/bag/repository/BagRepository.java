@@ -15,16 +15,5 @@ public interface BagRepository extends JpaRepository<Bag, Long> {
           + "WHERE bag.user.id =:userId")
   List<BagResponse> getBagResponseList(@Param("userId") Long userId);
 
-  // --- 아래 디버깅용 메서드 추가 ---
-  default List<BagResponse> getBagResponseListWithLogging(Long userId) {
-    System.out.println(
-        "[REPOSITORY] Received userId: "
-            + userId
-            + " / Type: "
-            + (userId != null ? userId.getClass().getName() : "null"));
-    // 실제 쿼리 메서드 호출
-    return getBagResponseList(userId);
-  }
-
   Boolean existsByItem_Id(Long itemId);
 }

@@ -23,12 +23,6 @@ public class BagController {
 
   @GetMapping("/v1/users/bags")
   public Response<List<BagResponse>> getBags(@AuthenticationPrincipal AuthUser user) {
-    Long userId = user.getUserId();
-    System.out.println(
-        "[CONTROLLER] Received userId: "
-            + userId
-            + " / Type: "
-            + (userId != null ? userId.getClass().getName() : "null"));
     return Response.success(bagService.getBags(user.getUserId()));
   }
 
