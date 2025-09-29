@@ -63,6 +63,7 @@ public enum ErrorMessage {
   /* 4xx neighbors */
   NOT_FOUND_TALKS(BAD_REQUEST, "없는 대화입니다."),
   NOT_FOUND_EMOTICON(BAD_REQUEST, "없는 이모티콘입니다."),
+  NOT_FOUND_NEIGHBOR(BAD_REQUEST, "없는 이웃입니다."),
 
   /* 5xx */
   INTERNAL_ERROR(INTERNAL_SERVER_ERROR, "내부 서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요."),

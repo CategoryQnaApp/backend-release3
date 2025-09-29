@@ -1,4 +1,4 @@
-package xyz.catequest.spring.domain.neighbors.entity;
+package xyz.catequest.spring.domain.neighbor.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -21,9 +21,7 @@ import lombok.Setter;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(
     name = "emoticons",
-    indexes = {
-        @Index(name = "idx_neighbor_emoticon", columnList = "neighbor_id")
-    })
+    indexes = {@Index(name = "idx_neighbor_emoticon", columnList = "neighbor_id")})
 public class Emoticon {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,7 +35,7 @@ public class Emoticon {
 
   @ManyToOne(fetch = FetchType.LAZY, optional = false)
   @JoinColumn(name = "neighbor_id", nullable = false)
-  private Neighbors neighbors;
+  private Neighbor neighbor;
 
   public Emoticon(String name, String emoticonUrl) {
     this.name = name;
@@ -52,11 +50,7 @@ public class Emoticon {
     this.emoticonUrl = newEmoticonUrl;
   }
 
-  protected void setNeighbors(Neighbors neighbors) {
-    this.neighbors = neighbors;
+  protected void setNeighbor(Neighbor neighbor) {
+    this.neighbor = neighbor;
   }
-
 }
-
-
-

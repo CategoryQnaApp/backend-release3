@@ -1,4 +1,4 @@
-package xyz.catequest.spring.domain.neighbors.entity;
+package xyz.catequest.spring.domain.neighbor.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -19,9 +19,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(
     name = "talks",
-    indexes = {
-        @Index(name = "idx_neighbor_talk", columnList = "neighbor_id")
-    })
+    indexes = {@Index(name = "idx_neighbor_talk", columnList = "neighbor_id")})
 public class Talk {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,12 +30,10 @@ public class Talk {
 
   @ManyToOne(fetch = FetchType.LAZY, optional = false)
   @JoinColumn(name = "neighbor_id", nullable = false)
-  private Neighbors neighbors;
+  private Neighbor neighbor;
 
-
-
-  protected void setNeighbors(Neighbors neighbors) {
-    this.neighbors = neighbors;
+  protected void setNeighbor(Neighbor neighbor) {
+    this.neighbor = neighbor;
   }
 
   protected void changeContent(String content) {
