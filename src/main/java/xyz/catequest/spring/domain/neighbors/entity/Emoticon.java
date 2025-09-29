@@ -33,12 +33,28 @@ public class Emoticon {
   private String name;
 
   @Column(nullable = false, name = "emoticon_url")
-  private Long emoticonUrl;
+  private String emoticonUrl;
 
   @ManyToOne(fetch = FetchType.LAZY, optional = false)
   @JoinColumn(name = "neighbor_id", nullable = false)
   private Neighbors neighbors;
 
+  public Emoticon(String name, String emoticonUrl) {
+    this.name = name;
+    this.emoticonUrl = emoticonUrl;
+  }
+
+  protected void changeName(String newName) {
+    this.name = newName;
+  }
+
+  protected void changeEmoticonUrl(String newEmoticonUrl) {
+    this.emoticonUrl = newEmoticonUrl;
+  }
+
+  protected void setNeighbors(Neighbors neighbors) {
+    this.neighbors = neighbors;
+  }
 
 }
 

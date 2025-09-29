@@ -33,4 +33,15 @@ public class Talk {
   @ManyToOne(fetch = FetchType.LAZY, optional = false)
   @JoinColumn(name = "neighbor_id", nullable = false)
   private Neighbors neighbors;
+
+
+
+  protected void setNeighbors(Neighbors neighbors) {
+    this.neighbors = neighbors;
+  }
+
+  protected void changeContent(String content) {
+    // todo : 검증 로직 추가
+    this.content = content;
+  }
 }
