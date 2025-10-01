@@ -37,9 +37,13 @@ public class Emoticon {
   @JoinColumn(name = "neighbor_id", nullable = false)
   private Neighbor neighbor;
 
-  public Emoticon(String name, String emoticonUrl) {
+  private Emoticon(String name, String emoticonUrl) {
     this.name = name;
     this.emoticonUrl = emoticonUrl;
+  }
+
+  public static Emoticon create(String name, String emoticonUrl) {
+    return new Emoticon(name, emoticonUrl);
   }
 
   protected void changeName(String newName) {

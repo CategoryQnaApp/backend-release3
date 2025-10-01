@@ -6,14 +6,19 @@ import java.util.List;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
 import xyz.catequest.spring.global.entity.BaseEntity;
 import xyz.catequest.spring.global.enums.ErrorMessage;
+import xyz.catequest.spring.global.exception.InvalidRequestException;
 import xyz.catequest.spring.global.exception.NotFoundException;
 
 @Getter
 @Entity
 @Table(name = "neighbors")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@SQLRestriction("deleted_at IS NULL")
+@SQLDelete(sql = "UPDATE neighbors SET deleted_at = current_timestamp WHERE id = ?")
 public class Neighbor extends BaseEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +30,7 @@ public class Neighbor extends BaseEntity {
   @Column(name = "neighbor_url")
   private String neighborUrl;
 
-  @Column(nullable = false, length = 20)
+  @Column(nullable = false)
   private String description;
 
   @OneToMany(mappedBy = "neighbors", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -50,14 +55,19 @@ public class Neighbor extends BaseEntity {
       String name,
       String neighborUrl,
       String description,
-      List<Talk> talks,
-      List<Emoticon> emoticons) {
-    Neighbor neighbor = new Neighbor(name, neighborUrl, description);
-    for (Talk talk : talks) {
-      neighbor.addTalk(talk);
+      List<String> neighborTalks,
+      List<String> emoticonNames,
+      List<String> emoticonUrls) {
+    if (emoticonNames.size() != emoticonUrls.size()) {
+      throw new InvalidRequestException(ErrorMessage.INVALID_NEIGHBOR_EMOTICONS);
     }
-    for (Emoticon emoticon : emoticons) {
-      neighbor.addEmoticon(emoticon);
+    Neighbor neighbor = new Neighbor(name, neighborUrl, description);
+    for (String talk : neighborTalks) {
+      neighbor.addTalk(Talk.create(talk));
+    }
+
+    for (int i = 0; i < emoticonNames.size(); i++) {
+      neighbor.addEmoticon(Emoticon.create(emoticonNames.get(i), emoticonUrls.get(i)));
     }
     return neighbor;
   }

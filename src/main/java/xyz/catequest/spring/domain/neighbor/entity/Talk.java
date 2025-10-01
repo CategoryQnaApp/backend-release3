@@ -32,6 +32,15 @@ public class Talk {
   @JoinColumn(name = "neighbor_id", nullable = false)
   private Neighbor neighbor;
 
+  private Talk(String content) {
+    this.content = content;
+  }
+
+  // 정적 팩토리 메소드
+  public static Talk create(String content) {
+    return new Talk(content);
+  }
+
   protected void setNeighbor(Neighbor neighbor) {
     this.neighbor = neighbor;
   }
